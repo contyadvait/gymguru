@@ -7,20 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F1223A042B071E81004A2065 /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1223A032B071E81004A2065 /* Pages.swift */; };
+		F1223A072B071FD8004A2065 /* CompactSlider in Frameworks */ = {isa = PBXBuildFile; productRef = F1223A062B071FD8004A2065 /* CompactSlider */; };
 		F12613B42B070F2B00619FD6 /* gymguruApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12613B32B070F2B00619FD6 /* gymguruApp.swift */; };
 		F12613B62B070F2B00619FD6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12613B52B070F2B00619FD6 /* ContentView.swift */; };
 		F12613B82B070F2B00619FD6 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12613B72B070F2B00619FD6 /* Item.swift */; };
 		F12613BA2B070F2D00619FD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F12613B92B070F2D00619FD6 /* Assets.xcassets */; };
 		F12613BD2B070F2D00619FD6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F12613BC2B070F2D00619FD6 /* Preview Assets.xcassets */; };
+		F12613C42B07179F00619FD6 /* SetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12613C32B07179E00619FD6 /* SetUpManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F1223A032B071E81004A2065 /* Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pages.swift; sourceTree = "<group>"; };
 		F12613B02B070F2B00619FD6 /* gymguru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gymguru.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F12613B32B070F2B00619FD6 /* gymguruApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gymguruApp.swift; sourceTree = "<group>"; };
 		F12613B52B070F2B00619FD6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F12613B72B070F2B00619FD6 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		F12613B92B070F2D00619FD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F12613BC2B070F2D00619FD6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F12613C32B07179E00619FD6 /* SetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1223A072B071FD8004A2065 /* CompactSlider in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +61,7 @@
 			children = (
 				F12613B32B070F2B00619FD6 /* gymguruApp.swift */,
 				F12613B52B070F2B00619FD6 /* ContentView.swift */,
+				F12613C52B0717A300619FD6 /* Setup Views */,
 				F12613B72B070F2B00619FD6 /* Item.swift */,
 				F12613B92B070F2D00619FD6 /* Assets.xcassets */,
 				F12613BB2B070F2D00619FD6 /* Preview Content */,
@@ -68,6 +75,15 @@
 				F12613BC2B070F2D00619FD6 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F12613C52B0717A300619FD6 /* Setup Views */ = {
+			isa = PBXGroup;
+			children = (
+				F12613C32B07179E00619FD6 /* SetUpManager.swift */,
+				F1223A032B071E81004A2065 /* Pages.swift */,
+			);
+			path = "Setup Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +102,9 @@
 			dependencies = (
 			);
 			name = gymguru;
+			packageProductDependencies = (
+				F1223A062B071FD8004A2065 /* CompactSlider */,
+			);
 			productName = gymguru;
 			productReference = F12613B02B070F2B00619FD6 /* gymguru.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +133,9 @@
 				Base,
 			);
 			mainGroup = F12613A72B070F2B00619FD6;
+			packageReferences = (
+				F1223A052B071FD8004A2065 /* XCRemoteSwiftPackageReference "CompactSlider" */,
+			);
 			productRefGroup = F12613B12B070F2B00619FD6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -141,6 +163,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F12613B62B070F2B00619FD6 /* ContentView.swift in Sources */,
+				F12613C42B07179F00619FD6 /* SetUpManager.swift in Sources */,
+				F1223A042B071E81004A2065 /* Pages.swift in Sources */,
 				F12613B82B070F2B00619FD6 /* Item.swift in Sources */,
 				F12613B42B070F2B00619FD6 /* gymguruApp.swift in Sources */,
 			);
@@ -348,6 +372,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F1223A052B071FD8004A2065 /* XCRemoteSwiftPackageReference "CompactSlider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/buh/CompactSlider.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F1223A062B071FD8004A2065 /* CompactSlider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F1223A052B071FD8004A2065 /* XCRemoteSwiftPackageReference "CompactSlider" */;
+			productName = CompactSlider;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F12613A82B070F2B00619FD6 /* Project object */;
 }

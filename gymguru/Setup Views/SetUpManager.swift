@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct SetUpManager: View {
+    @Binding var name: String
+    @State var page: Int = 1
+    @State var height: Float = 170
+    @State var weight: Float = 70
+    @State var age: Float = 20
+    @State var workoutTime: Float = 0.0
+    
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        PageOneView(name: "")
     }
 }
 
 #Preview {
-    SetUpManager()
+    SetUpManager(name: .constant("Advait"))
 }
+
