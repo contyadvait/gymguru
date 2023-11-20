@@ -83,42 +83,49 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("Home Screen")
-                List {
-                    ForEach(items) { item in
-                        ScrollView {
-                            Text("Settings Data Retrieved")
-                            Text("Name: \(item.name)")
-                            Text("Time to workout: \(item.timeToWorkout)")
-                            Text("Age: \(item.age)")
-                            Text("Height: \(item.height)")
-                            Text("Weight: \(item.weight)")
-                            Text("Tap to reveal prefered exercises (check console)")
-                                .onTapGesture {
-                                    print(item.preferredExercises)
-                                }
+        TabView {
+            HomeView()
+                .tabItem { Label("Home", systemImage: "house.fill") }
+            
+            NavigationView {
+                VStack {
+                    Text("Home Screen")
+                    List {
+                        ForEach(items) { item in
+                            ScrollView {
+                                Text("Settings Data Retrieved")
+                                Text("Name: \(item.name)")
+                                Text("Time to workout: \(item.timeToWorkout)")
+                                Text("Age: \(item.age)")
+                                Text("Height: \(item.height)")
+                                Text("Weight: \(item.weight)")
+                                Text("Tap to reveal prefered exercises (check console)")
+                                    .onTapGesture {
+                                        print(item.preferredExercises)
+                                    }
+                            }
                         }
+                        .onDelete(perform: deleteItems)
                     }
-                    .onDelete(perform: deleteItems)
+                    Text("Re-do Setup")
+                        .onTapGesture {
+                            setUp = true
+                        }
                 }
-                Text("Re-do Setup")
-                    .onTapGesture {
-                        setUp = true
-                    }
-            }
-            .fullScreenCover(isPresented: $setUp) {
-                OnboardingView(name: $name, height: $height, weight: $weight, age: $age, workoutTime: $workoutTime, favouriteWorkout: $favouriteWorkout)
-                    .onDisappear {
-                        withAnimation {
-                            let newItem = UserData(preferredExercises: favouriteWorkout, timeToWorkout: workoutTime, age: age, height: height, weight: weight, name: name)
-                            modelContext.insert(newItem)
+                .fullScreenCover(isPresented: $setUp) {
+                    OnboardingView(name: $name, height: $height, weight: $weight, age: $age, workoutTime: $workoutTime, favouriteWorkout: $favouriteWorkout)
+                        .onDisappear {
+                            withAnimation {
+                                let newItem = UserData(preferredExercises: favouriteWorkout, timeToWorkout: workoutTime, age: age, height: height, weight: weight, name: name)
+                                modelContext.insert(newItem)
+                            }
                         }
-                    }
+                }
             }
+            .navigationTitle("Home")
+            .tabItem { Label("Debug", systemImage: "ladybug") }
+            
         }
-        .navigationTitle("Home")
     }
 }
 

@@ -9,6 +9,7 @@ import SwiftUI
 import CompactSlider
 import UserNotifications
 import SwiftData
+import HealthKit
 
 struct OnboardingView: View {
     @Namespace var namespace
@@ -25,6 +26,7 @@ struct OnboardingView: View {
     @State var selectedDate = Date()
     @State var nameError = false
     @State var notificationScheduled = false
+    @State var healthKitAlert = false
     let notify = NotificationHandler()
     // -------------------------------------------------------------------
     // Notification Manager
@@ -50,7 +52,29 @@ struct OnboardingView: View {
             }
         }
     }
-    
+    // -------------------------------------------------------------------
+    // HealthKit Manager
+    // -------------------------------------------------------------------
+    func onBoardHealthKit() {
+        if HKHealthStore.isHealthDataAvailable() {
+            let healthStore = HKHealthStore()
+            
+            let allTypes = Set([HKObjectType.workoutType(),
+                                HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
+                                HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
+                                HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+                                HKObjectType.quantityType(forIdentifier: .heartRate)!])
+            
+            
+            healthStore.requestAuthorization(toShare: allTypes, read: allTypes) { (success, error) in
+                if !success {
+                    healthKitAlert = true
+                }
+            }
+        } else {
+            healthKitAlert = true
+        }
+    }
     // -------------------------------------------------------------------
     // Page 3 Buttons
     // -------------------------------------------------------------------
@@ -213,6 +237,7 @@ struct OnboardingView: View {
             buttonView(elementToChange: .jumpingJacks, label: "Jumping Jacks")
             buttonView(elementToChange: .running, label: "Running")
             buttonView(elementToChange: .cycling, label: "Cycling")
+            buttonView(elementToChange: .planks, label: "Planks")
             
             HStack {
                 Button {
@@ -302,6 +327,12 @@ struct OnboardingView: View {
         .matchedGeometryEffect(id: "Whole", in: namespace)
         .alert("Notification Sucessfully scheduled!", isPresented: $notificationScheduled) {
             Button("Ok", role: .cancel) { }
+        }
+        .alert("Are you sure you want to not provide us with your health data? We really need your health data for the app to work", isPresented: $healthKitAlert) {
+            Button("Change preferences", role: .cancel) {
+                // Add code to automatically change to settings app to give access
+            }
+            Button("I am sure", role: .destructive) { }
         }
     }
     

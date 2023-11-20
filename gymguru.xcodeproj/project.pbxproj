@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F10990B02B0AEEC6002665D9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10990AF2B0AEEC6002665D9 /* HomeView.swift */; };
 		F10B86E42B08879F0084255D /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B86E32B08879F0084255D /* Notifications.swift */; };
 		F1223A042B071E81004A2065 /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1223A032B071E81004A2065 /* Pages.swift */; };
 		F1223A072B071FD8004A2065 /* CompactSlider in Frameworks */ = {isa = PBXBuildFile; productRef = F1223A062B071FD8004A2065 /* CompactSlider */; };
@@ -18,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F10990AF2B0AEEC6002665D9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		F10990B22B0AF91A002665D9 /* gymguru.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = gymguru.entitlements; sourceTree = "<group>"; };
 		F10B86E32B08879F0084255D /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		F1223A032B071E81004A2065 /* Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pages.swift; sourceTree = "<group>"; };
 		F12613B02B070F2B00619FD6 /* gymguru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gymguru.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F10990B12B0AEEDD002665D9 /* TabItems */ = {
+			isa = PBXGroup;
+			children = (
+				F10990AF2B0AEEC6002665D9 /* HomeView.swift */,
+			);
+			path = TabItems;
+			sourceTree = "<group>";
+		};
 		F10B86E52B0887AC0084255D /* Notification Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -67,8 +78,10 @@
 		F12613B22B070F2B00619FD6 /* gymguru */ = {
 			isa = PBXGroup;
 			children = (
+				F10990B22B0AF91A002665D9 /* gymguru.entitlements */,
 				F12613B32B070F2B00619FD6 /* gymguruApp.swift */,
 				F12613B52B070F2B00619FD6 /* ContentView.swift */,
+				F10990B12B0AEEDD002665D9 /* TabItems */,
 				F10B86E52B0887AC0084255D /* Notification Manager */,
 				F12613C52B0717A300619FD6 /* Setup Views */,
 				F12613B72B070F2B00619FD6 /* Item.swift */,
@@ -173,6 +186,7 @@
 				F10B86E42B08879F0084255D /* Notifications.swift in Sources */,
 				F12613B62B070F2B00619FD6 /* ContentView.swift in Sources */,
 				F1223A042B071E81004A2065 /* Pages.swift in Sources */,
+				F10990B02B0AEEC6002665D9 /* HomeView.swift in Sources */,
 				F12613B82B070F2B00619FD6 /* Item.swift in Sources */,
 				F12613B42B070F2B00619FD6 /* gymguruApp.swift in Sources */,
 			);
@@ -305,6 +319,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = gymguru/gymguru.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"gymguru/Preview Content\"";
@@ -334,6 +349,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = gymguru/gymguru.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"gymguru/Preview Content\"";

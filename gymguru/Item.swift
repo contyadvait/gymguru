@@ -7,9 +7,10 @@
 
 import Foundation
 import SwiftData
+import HealthKit
 
 enum Exercise: Codable {
-    case burpee, jumpRope, jumpingJacks, running, cycling
+    case burpee, jumpRope, jumpingJacks, running, cycling, planks
 }
 
 @Model
