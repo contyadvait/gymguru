@@ -234,10 +234,13 @@ struct OnboardingView: View {
             
             buttonView(elementToChange: .burpee, label: "Burpees")
             buttonView(elementToChange: .jumpRope, label: "Jump Rope")
-            buttonView(elementToChange: .jumpingJacks, label: "Jumping Jacks")
             buttonView(elementToChange: .running, label: "Running")
             buttonView(elementToChange: .cycling, label: "Cycling")
-            buttonView(elementToChange: .planks, label: "Planks")
+            buttonView(elementToChange: .swimming, label: "Swimming")
+            buttonView(elementToChange: .rockclimbing, label: "Rock Climbing")
+            buttonView(elementToChange: .hiking, label: "Hiking")
+            buttonView(elementToChange: .jogging, label: "Jogging")
+            buttonView(elementToChange: .stairclimbing, label: "Stair Climbing")
             
             HStack {
                 Button {
@@ -276,7 +279,7 @@ struct OnboardingView: View {
                 .multilineTextAlignment(.center)
                 .matchedGeometryEffect(id: "Title", in: namespace)
             
-            Text("Finally, allow us to send reminder notifications, access your location so we can track your workouts during your runs or cycles. You can also set a time for your notifications be automatically deployed.")
+            Text("You're almost there!Just allow us to send reminder notifications and access your location so we can track your workouts during your runs or cycles. You can set the notification timing to your preference.")
                 .multilineTextAlignment(.center)
                 .onAppear {
                     notify.askPermission()
