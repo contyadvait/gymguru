@@ -56,17 +56,74 @@ import SwiftData
 //}
 
 struct ContentView: View {
-    @AppStorage("View") var setUp = true
+    @Environment(\.modelContext) private var modelContext
+    @Namespace var namespace
+    @State var showNameEnter = false
     @State var name: String = ""
-    var body: some View {
-        Text("Home Screen")
-            .fullScreenCover(isPresented: $setUp) {
-                SetUpManager(name: $name)
+    @State var page: Int = 1
+    @State var height: Float = 140
+    @State var weight: Float = 60
+    @State var age: Float = 10
+    @State var workoutTime: Float = 0.5
+    @State var favouriteWorkout: [Exercise] = []
+    @Environment(\.dismiss) var dismiss
+    @State var notificationSettings = false
+    @State var selectedDate = Date()
+    @AppStorage("setup") var setUp = false
+    let notify = NotificationHandler()
+    let notificationTimeInterval = 30.0
+    @Query private var items: [UserData]
+    
+    private func deleteItems(offsets: IndexSet) {
+        withAnimation {
+            for index in offsets {
+                modelContext.delete(items[index])
             }
+        }
     }
     
+    var body: some View {
+        NavigationView {
+            VStack {
+                Text("Home Screen")
+                List {
+                    ForEach(items) { item in
+                        ScrollView {
+                            Text("Settings Data Retrieved")
+                            Text("Name: \(item.name)")
+                            Text("Time to workout: \(item.timeToWorkout)")
+                            Text("Age: \(item.age)")
+                            Text("Height: \(item.height)")
+                            Text("Weight: \(item.weight)")
+                            Text("Tap to reveal prefered exercises (check console)")
+                                .onTapGesture {
+                                    print(item.preferredExercises)
+                                }
+                        }
+                    }
+                    .onDelete(perform: deleteItems)
+                }
+                Text("Re-do Setup")
+                    .onTapGesture {
+                        setUp = true
+                    }
+            }
+            .fullScreenCover(isPresented: $setUp) {
+                OnboardingView(name: $name, height: $height, weight: $weight, age: $age, workoutTime: $workoutTime, favouriteWorkout: $favouriteWorkout)
+                    .onDisappear {
+                        withAnimation {
+                            let newItem = UserData(preferredExercises: favouriteWorkout, timeToWorkout: workoutTime, age: age, height: height, weight: weight, name: name)
+                            modelContext.insert(newItem)
+                        }
+                    }
+            }
+        }
+        .navigationTitle("Home")
+    }
 }
 
+
 #Preview {
-    ContentView()
+    ContentView(name: "Advait")
 }
+

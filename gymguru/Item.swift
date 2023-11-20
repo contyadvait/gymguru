@@ -8,15 +8,6 @@
 import Foundation
 import SwiftData
 
-@Model
-final class Item {
-    var timestamp: Date
-    
-    init(timestamp: Date) {
-        self.timestamp = timestamp
-    }
-}
-
 enum Exercise: Codable {
     case burpee, jumpRope, jumpingJacks, running, cycling
 }
@@ -24,13 +15,13 @@ enum Exercise: Codable {
 @Model
 final class UserData {
     var preferredExercises: [Exercise]
-    var timeToWorkout: Double
-    var age: Int
-    var height: Int
-    var weight: Int
+    var timeToWorkout: Float
+    var age: Float
+    var height: Float
+    var weight: Float
     var name: String
-    
-    init(preferredExercises: [Exercise], timeToWorkout: Double, age: Int, height: Int, weight: Int, name: String) {
+
+    init(preferredExercises: [Exercise], timeToWorkout: Float, age: Float, height: Float, weight: Float, name: String) {
         self.preferredExercises = preferredExercises
         self.timeToWorkout = timeToWorkout
         self.age = age

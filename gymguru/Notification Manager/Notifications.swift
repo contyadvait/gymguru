@@ -21,7 +21,6 @@ class NotificationHandler {
     
     func sendNotification(date: Date, type: String, timeInterval: Double = 10, title: String, body: String) {
         var trigger: UNNotificationTrigger?
-        
         // Create a trigger (either from date or time based)
         if type == "date" {
             let dateComponents = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute], from: date)
