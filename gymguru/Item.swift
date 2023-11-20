@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 enum Exercise: Codable {
-    case burpee, jumpRope, jumpingJacks, running, cycling
+    case burpee, jumpRope, running, cycling, swimming, jogging, hiking, stairclimbing, rockclimbing
 }
 
 @Model
