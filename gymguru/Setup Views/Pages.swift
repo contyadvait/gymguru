@@ -218,6 +218,7 @@ struct OnboardingView: View {
             buttonView(elementToChange: .jogging, label: "Jogging")
             buttonView(elementToChange: .stairclimbing, label: "Stair Climbing")
             
+            
             HStack {
                 Button {
                     withAnimation {
