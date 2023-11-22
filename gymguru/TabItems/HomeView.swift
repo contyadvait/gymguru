@@ -35,6 +35,7 @@ struct HomeView: View {
                     .padding(10.0)
                 Spacer()
             }
+            
             VStack {
                 VStack {
                     HStack {
@@ -111,6 +112,10 @@ struct HomeView: View {
                 .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
             }
             HStack {
+                Text("Your Workout")
+                    .multilineTextAlignment(.leading)
+                    .padding(5.0)
+                    .font(.title2)
                 ScrollView(.horizontal) {
                     HStack {
                         workoutItem(workout: .cycling, sfIcon: "bicycle", name: "Cycle")
