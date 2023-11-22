@@ -205,7 +205,7 @@ struct OnboardingView: View {
     var three: some View {
         VStack {
             
-            Text("We are almost done! So, let's get to know your favourite workout. Select your favourite workouts by tapping on it.")
+            Text("Let's get to know your favourite workout. Select your favourite workouts by tapping on it. If you have none, you do not need to select anything.")
                 .multilineTextAlignment(.center)
             
             buttonView(elementToChange: .burpee, label: "Burpees")
