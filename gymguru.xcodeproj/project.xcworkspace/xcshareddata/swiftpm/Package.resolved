@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "contentful.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/contentful/contentful.swift.git",
+      "state" : {
+        "revision" : "cb73112b021b4dc33a8ddb03f87381fddf4e5eab",
+        "version" : "5.5.7"
+      }
+    },
+    {
       "identity" : "forever",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jiachenyee/Forever",

@@ -40,23 +40,30 @@ struct HomeView: View {
                 VStack {
                     HStack {
                         Text("Daily Challenge")
+                            .foregroundStyle(.white)
                             .font(.system(size: 20, weight: .medium))
                         Spacer()
                         Text("Due in\n1h 30min")
+                            .foregroundStyle(.white)
                             .multilineTextAlignment(.center)
                     }
                     
                     ProgressView(value: item) {
                         HStack {
                             Text("Run 15 km")
+                                .foregroundStyle(.white)
                             Spacer()
                             Text("50%")
+                                .foregroundStyle(.white)
                         }
                     }
+                    .tint(.white)
                     .padding(.top)
                     HStack {
                         Image(systemName: "figure.run")
+                            .foregroundStyle(.white)
                         Image(systemName: "soccerball")
+                            .foregroundStyle(.white)
                         Spacer()
                     }
                     .padding(.top)
@@ -65,8 +72,8 @@ struct HomeView: View {
                     
                 }
                 .padding(10)
-                .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
                 .frame(maxWidth: UIScreen.main.bounds.width - 20, alignment: .leading)
+                .background(.accent)
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
                 

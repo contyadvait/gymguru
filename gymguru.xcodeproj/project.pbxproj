@@ -20,6 +20,7 @@
 		F12613BA2B070F2D00619FD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F12613B92B070F2D00619FD6 /* Assets.xcassets */; };
 		F12613BD2B070F2D00619FD6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F12613BC2B070F2D00619FD6 /* Preview Assets.xcassets */; };
 		F14A59C02B0DD161006246F8 /* BadgesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14A59BF2B0DD161006246F8 /* BadgesView.swift */; };
+		F14A59C32B0DD4BB006246F8 /* Contentful in Frameworks */ = {isa = PBXBuildFile; productRef = F14A59C22B0DD4BB006246F8 /* Contentful */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 			files = (
 				F10D700A2B0C49A400EF9DC9 /* Forever in Frameworks */,
 				F1223A072B071FD8004A2065 /* CompactSlider in Frameworks */,
+				F14A59C32B0DD4BB006246F8 /* Contentful in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +145,7 @@
 			packageProductDependencies = (
 				F1223A062B071FD8004A2065 /* CompactSlider */,
 				F10D70092B0C49A400EF9DC9 /* Forever */,
+				F14A59C22B0DD4BB006246F8 /* Contentful */,
 			);
 			productName = gymguru;
 			productReference = F12613B02B070F2B00619FD6 /* gymguru.app */;
@@ -175,6 +178,7 @@
 			packageReferences = (
 				F1223A052B071FD8004A2065 /* XCRemoteSwiftPackageReference "CompactSlider" */,
 				F10D70082B0C49A400EF9DC9 /* XCRemoteSwiftPackageReference "Forever" */,
+				F14A59C12B0DD4BB006246F8 /* XCRemoteSwiftPackageReference "contentful.swift" */,
 			);
 			productRefGroup = F12613B12B070F2B00619FD6 /* Products */;
 			projectDirPath = "";
@@ -444,6 +448,14 @@
 				minimumVersion = 1.1.5;
 			};
 		};
+		F14A59C12B0DD4BB006246F8 /* XCRemoteSwiftPackageReference "contentful.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/contentful/contentful.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.5.7;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -456,6 +468,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F1223A052B071FD8004A2065 /* XCRemoteSwiftPackageReference "CompactSlider" */;
 			productName = CompactSlider;
+		};
+		F14A59C22B0DD4BB006246F8 /* Contentful */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F14A59C12B0DD4BB006246F8 /* XCRemoteSwiftPackageReference "contentful.swift" */;
+			productName = Contentful;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
