@@ -9,7 +9,7 @@ import SwiftUI
 import Forever
 
 struct ContentView: View {
-    @Forever("userdata") var userData: UserInfo = UserInfo(preferredWorkouts: [], timeToWorkout: 0.5, age: 14.0, height: 173.0, weight: 73.0, name: "", challengeData: [])
+    @Forever("userdata") var userData: UserInfo = UserInfo(preferredWorkouts: [], timeToWorkout: 0.5, age: 17.0, height: <#T##Float#>, weight: <#T##Float#>, name: <#T##String#>, challengeData: <#T##[ChallengeData]#>, medals: <#T##[Medal]#>, exerciseData: <#T##[Exercise : Float]#>)
     @Forever("showSetupModal") var showSetupModal = true
 
     

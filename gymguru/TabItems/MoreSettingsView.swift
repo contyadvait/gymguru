@@ -141,7 +141,3 @@ struct CreditsView: View {
 #Preview {
     CreditsView()
 }
-
-#Preview {
-    MoreSettingsView(userData: .constant(UserInfo(preferredWorkouts: [], timeToWorkout: 0.5, age: 10, height: 150, weight: 75, name: "Sean", challengeData: [])), isSheetOpened: .constant(true))
-}

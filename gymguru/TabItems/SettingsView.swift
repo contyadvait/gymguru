@@ -82,6 +82,3 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
-    SettingsView(item: .constant(UserInfo(preferredWorkouts: [], timeToWorkout: 0.5, age: 10, height: 130, weight: 80, name: "Sam Allardyce", challengeData: [])), setup: .constant(false))
-}

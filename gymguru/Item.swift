@@ -21,7 +21,7 @@ struct UserInfo: Codable, Identifiable {
     var weight: Float
     var name: String
     var challengeData: [ChallengeData]
-    var medals: [Medal]
+    var badges: [Badge]
     var exerciseData: [Exercise: Float]
 }
 
@@ -50,7 +50,7 @@ struct ExerciseItem: Codable, Identifiable {
     var amount: Int
 }
 
-struct Medal: Codable, Identifiable {
+struct Badge: Codable, Identifiable {
     let id = UUID()
     var medal: String
     var sfIcon: String
