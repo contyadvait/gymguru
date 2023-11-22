@@ -9,22 +9,19 @@ import SwiftUI
 import CompactSlider
 import UserNotifications
 import SwiftData
+import HealthKit
 
 struct OnboardingView: View {
     @Namespace var namespace
     @State var showNameEnter = false
-    @Binding var name: String
     @State var page: Int = 1
-    @Binding var height: Float
-    @Binding var weight: Float
-    @Binding var age: Float
-    @Binding var workoutTime: Float
-    @Binding var favouriteWorkout: [Exercise]
     @Environment(\.dismiss) var dismiss
     @State var notificationSettings = false
     @State var selectedDate = Date()
     @State var nameError = false
     @State var notificationScheduled = false
+    @State var healthKitAlert = false
+    @Binding var userData: UserInfo
     let notify = NotificationHandler()
     // -------------------------------------------------------------------
     // Notification Manager
@@ -50,25 +47,46 @@ struct OnboardingView: View {
             }
         }
     }
-    
+    // -------------------------------------------------------------------
+    // HealthKit Manager
+    // -------------------------------------------------------------------
+    func onBoardHealthKit() {
+        if HKHealthStore.isHealthDataAvailable() {
+            let healthStore = HKHealthStore()
+            
+            let allTypes = Set([HKObjectType.workoutType(),
+                                HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
+                                HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
+                                HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+                                HKObjectType.quantityType(forIdentifier: .heartRate)!])
+            
+            healthStore.requestAuthorization(toShare: allTypes, read: allTypes) { (success, error) in
+                if !success {
+                    healthKitAlert = true
+                }
+            }
+        } else {
+            healthKitAlert = true
+        }
+    }
     // -------------------------------------------------------------------
     // Page 3 Buttons
     // -------------------------------------------------------------------
     func buttonView(elementToChange: Exercise, label: String) -> some View {
         ZStack {
             Button {
-                if favouriteWorkout.contains(elementToChange) {
-                    if let index = favouriteWorkout.firstIndex(of: elementToChange) {
-                        favouriteWorkout.remove(at: index)
+                if userData.preferredWorkouts.contains(elementToChange) {
+                    if let index = userData.preferredWorkouts.firstIndex(of: elementToChange) {
+                        userData.preferredWorkouts.remove(at: index)
                     }
                 } else {
-                    favouriteWorkout.append(elementToChange)
+                    userData.preferredWorkouts.append(elementToChange)
                 }
             } label: {
                 HStack {
                     Text(label)
                     Spacer()
-                    if favouriteWorkout.contains(elementToChange) {
+                    if userData.preferredWorkouts.contains(elementToChange) {
                         Image(systemName: "checkmark")
                     }
                 }
@@ -103,14 +121,14 @@ struct OnboardingView: View {
                 VStack {
                     Text("To start, let's get to know about you. Please enter your name or nickname so we know how to call you.")
                         .multilineTextAlignment(.center)
-                    TextField("Name", text: $name)
+                    TextField("Name", text: $userData.name)
                         .textFieldStyle(.roundedBorder)
                 }
                 .transition(.move(edge: .bottom))
             }
             
             Button {
-                if name != "" {
+                if userData.name != "" {
                     withAnimation {
                         page = page + 1
                     }
@@ -141,35 +159,35 @@ struct OnboardingView: View {
             
             VStack {
                 
-                CompactSlider(value: $height, in: 120...220, step: 1) {
+                CompactSlider(value: $userData.height, in: 120...220, step: 1) {
                     HStack {
                         Text("Height")
                         Spacer()
-                        Text("\(Int(height)) cm")
+                        Text("\(Int(userData.height)) cm")
                     }
                 }
                 
-                CompactSlider(value: $weight, in: 20...150, step: 1) {
+                CompactSlider(value: $userData.weight, in: 20...150, step: 1) {
                     HStack {
                         Text("Weight")
                         Spacer()
-                        Text("\(Int(weight)) kg")
+                        Text("\(Int(userData.weight)) kg")
                     }
                 }
                 
-                CompactSlider(value: $age, in: 1...90, step: 1) {
+                CompactSlider(value: $userData.age, in: 1...90, step: 1) {
                     HStack {
                         Text("Age")
                         Spacer()
-                        Text("\(Int(age)) years old")
+                        Text("\(Int(userData.age)) years old")
                     }
                 }
                 
-                CompactSlider(value: $workoutTime, in: 0...6, step: 0.5) {
+                CompactSlider(value: $userData.timeToWorkout, in: 0...6, step: 0.5) {
                     HStack {
                         Text("Time available for workouts")
                         Spacer()
-                        Text("\(String(format: "%.1f", workoutTime)) h")
+                        Text("\(String(format: "%.1f", userData.timeToWorkout)) h")
                     }
                 }
             }
@@ -205,20 +223,22 @@ struct OnboardingView: View {
     var three: some View {
         VStack {
             
-            Text("Let's get to know your favourite workout. Select your favourite workouts by tapping on it. If you have none, you do not need to select anything.")
-                .multilineTextAlignment(.center)
-            
-            buttonView(elementToChange: .burpee, label: "Burpees")
-            buttonView(elementToChange: .jumpRope, label: "Jump Rope")
-            buttonView(elementToChange: .running, label: "Running")
-            buttonView(elementToChange: .cycling, label: "Cycling")
-            buttonView(elementToChange: .swimming, label: "Swimming")
-            buttonView(elementToChange: .rockclimbing, label: "Rock Climbing")
-            buttonView(elementToChange: .hiking, label: "Hiking")
-            buttonView(elementToChange: .jogging, label: "Jogging")
-            buttonView(elementToChange: .stairclimbing, label: "Stair Climbing")
-            
-            
+            ScrollView {
+                Text("We are almost done! So, let's get to know your favourite workout. Select your favourite workouts by tapping on it.")
+                    .multilineTextAlignment(.center)
+                
+                buttonView(elementToChange: .burpee, label: "Burpees")
+                buttonView(elementToChange: .jumpRope, label: "Jump Rope")
+                buttonView(elementToChange: .running, label: "Running")
+                buttonView(elementToChange: .cycling, label: "Cycling")
+                buttonView(elementToChange: .swimming, label: "Swimming")
+                buttonView(elementToChange: .rockclimbing, label: "Rock Climbing")
+                buttonView(elementToChange: .hiking, label: "Hiking")
+                buttonView(elementToChange: .jogging, label: "Jogging")
+                buttonView(elementToChange: .stairclimbing, label: "Stair Climbing")
+                buttonView(elementToChange: .walk, label: "Walking")
+            }
+                
             HStack {
                 Button {
                     withAnimation {
@@ -278,6 +298,18 @@ struct OnboardingView: View {
                 }
                 .buttonStyle(.bordered)
                 .tint(.blue)
+                
+                Button {
+                    onBoardHealthKit()
+                } label: {
+                    HStack {
+                        Spacer()
+                        Label("HealthKit Access", systemImage: "info.circle")
+                        Spacer()
+                    }
+                }
+                .buttonStyle(.bordered)
+                .tint(.blue)
             }
             Spacer()
             HStack {
@@ -307,6 +339,12 @@ struct OnboardingView: View {
         .matchedGeometryEffect(id: "Whole", in: namespace)
         .alert("Notification Sucessfully scheduled!", isPresented: $notificationScheduled) {
             Button("Ok", role: .cancel) { }
+        }
+        .alert("Are you sure you want to not provide us with your health data? We really need your health data for the app to work", isPresented: $healthKitAlert) {
+            Button("Change preferences", role: .cancel) {
+                // Add code to automatically change to settings app to give access
+            }
+            Button("I am sure", role: .destructive) { }
         }
     }
     
