@@ -115,9 +115,10 @@ struct HomeView: View {
             HStack{
                 Text("Start Workout")
                     .multilineTextAlignment(.leading)
-                    .padding(5.0)
+                    .padding(15.0)
                     .font(.title2)
                     .fontWeight(.semibold)
+                Spacer()
             }
             HStack {
                 
