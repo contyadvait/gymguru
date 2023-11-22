@@ -33,6 +33,7 @@ struct HomeView: View {
                     .font(.largeTitle)
                     .bold()
                     .padding(10.0)
+                    .fontWeight(.black)
                 Spacer()
             }
             
@@ -111,11 +112,16 @@ struct HomeView: View {
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
             }
-            HStack {
-                Text("Your Workout")
+            HStack{
+                Text("Start Workout")
                     .multilineTextAlignment(.leading)
                     .padding(5.0)
                     .font(.title2)
+                    .fontWeight(.semibold)
+            }
+            HStack {
+                
+                
                 ScrollView(.horizontal) {
                     HStack {
                         workoutItem(workout: .cycling, sfIcon: "bicycle", name: "Cycle")
