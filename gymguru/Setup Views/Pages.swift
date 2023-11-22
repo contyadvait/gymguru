@@ -224,7 +224,7 @@ struct OnboardingView: View {
         VStack {
             
             ScrollView {
-                Text("We are almost done! So, let's get to know your favourite workout. Select your favourite workouts by tapping on it.")
+                Text("Let's get to know your favourite workout. Select your favourite workouts by tapping on it. If you have none, you are not required to select anything.")
                     .multilineTextAlignment(.center)
                 
                 buttonView(elementToChange: .burpee, label: "Burpees")
