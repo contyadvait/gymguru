@@ -132,6 +132,30 @@ struct CreditsView: View {
             }
             .padding(.horizontal)
             
+            HStack {
+                Text("SDWebImage - SDWebImageSwiftUI")
+                Spacer()
+                Button {
+                    openURL(URL(string: "https://github.com/SDWebImage/SDWebImageSwiftUI")!)
+                } label: {
+                    Text("View Package")
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .padding(.horizontal)
+            
+            HStack {
+                Text("SDWebImage - SDWebImage")
+                Spacer()
+                Button {
+                    openURL(URL(string: "https://github.com/SDWebImage/SDWebImage")!)
+                } label: {
+                    Text("View Package")
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .padding(.horizontal)
+            
             
             Spacer()
         }
