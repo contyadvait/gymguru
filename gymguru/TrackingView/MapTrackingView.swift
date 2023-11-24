@@ -9,32 +9,10 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-
-@Observable
-class NewLocationManager {
-    var location: CLLocation? = nil
-    
-    private let locationManager = CLLocationManager()
-    
-    func requestUserAuthorization() async throws {
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = kCLDistanceFilterNone
-    }
-    
-    func startCurrentLocationUpdates() async throws {
-        for try await locationUpdate in CLLocationUpdate.liveUpdates() {
-            guard let location = locationUpdate.location else { return }
-            
-            self.location = location
-            print(location)
-        }
-    }
-}
-
 struct MapTrackingView: View {
     @State var showStats = false
-    @State var isWorkoutRunning = true
+    @State var isTimerRunning = false
+    @State var timer: Timer?
     @Namespace var namespace
     @State var position: MapCameraPosition = .automatic
     @State private var region = MKCoordinateRegion(
@@ -43,7 +21,42 @@ struct MapTrackingView: View {
     )
     @Namespace var mapscope
     @State private var distance: Double = 0
-    @State var locationManager = NewLocationManager()
+    @State var locationManager = NewLocationManager(distanceTraveled: 0.0)
+    @State var distanceTravelled: Double = 0.0
+    
+    var buttons: some View {
+        HStack(spacing: 10) {
+            HStack(spacing: 10) {
+                Spacer()
+                if isTimerRunning {
+                    Button {
+                            isTimerRunning = false
+                    } label: {
+                        Image(systemName: "pause")
+                            .frame(width: 30, height: 30)
+                    }
+                    .buttonStyle(.bordered)
+                    .matchedGeometryEffect(id: "Pause Button", in: namespace)
+                } else {
+                    Button {
+                        locationManager.startUpdatingLocation()
+
+                        Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { timer in
+                            print(locationManager.distanceTraveled)
+                        }
+                        
+                        isTimerRunning = true
+                    } label: {
+                        Image(systemName: "play.fill")
+                            .frame(width: 30, height: 30)
+                    }
+                    .buttonStyle(.bordered)
+                    .matchedGeometryEffect(id: "Pause Button", in: namespace)
+                }
+                Spacer()
+            }
+        }
+    }
     
     var body: some View {
         if !showStats {
@@ -79,22 +92,7 @@ struct MapTrackingView: View {
                 }
                 .safeAreaInset(edge: .bottom) {
                     ZStack {
-                        HStack(spacing: 10) {
-                            Spacer()
-                            if isWorkoutRunning {
-                                Button {
-                                    withAnimation(.easeInOut(duration: 0.5)) {
-                                        showStats = true
-                                    }
-                                } label: {
-                                    Image(systemName: "pause")
-                                        .frame(width: 30, height: 30)
-                                }
-                                .buttonStyle(.bordered)
-                                .matchedGeometryEffect(id: "Pause Button", in: namespace)
-                            }
-                            Spacer()
-                        }
+                            buttons
                         HStack {
                             Spacer()
                             Button {
@@ -147,7 +145,7 @@ struct MapTrackingView: View {
                         .font(.system(size: 20))
                         .fontWidth(.expanded)
                     Divider()
-                    Text("3.14 km")
+                    Text("\(String(locationManager.distanceTraveled)) k")
                         .font(.system(size: 55))
                         .fontWidth(.expanded)
                     Text("DISTANCE")
@@ -157,22 +155,7 @@ struct MapTrackingView: View {
                 }
                 .safeAreaInset(edge: .bottom) {
                     ZStack {
-                        HStack(spacing: 10) {
-                            Spacer()
-                            if isWorkoutRunning {
-                                Button {
-                                    withAnimation(.easeInOut(duration: 0.5)) {
-                                        showStats = true
-                                    }
-                                } label: {
-                                    Image(systemName: "pause")
-                                        .frame(width: 30, height: 30)
-                                }
-                                .buttonStyle(.bordered)
-                                .matchedGeometryEffect(id: "Pause Button", in: namespace)
-                            }
-                            Spacer()
-                        }
+                        buttons
                         HStack {
                             Spacer()
                             Button {
