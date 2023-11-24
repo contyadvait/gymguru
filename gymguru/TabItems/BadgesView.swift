@@ -7,9 +7,19 @@
 
 import SwiftUI
 
+
 struct BadgesView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            HStack{
+                Text("Badges")
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
+                    .multilineTextAlignment(.leading)
+                    .padding(10.0)
+                Spacer()
+            }
+        }
     }
 }
 
