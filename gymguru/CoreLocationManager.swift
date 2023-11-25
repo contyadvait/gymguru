@@ -9,7 +9,7 @@ class NewLocationManager: NSObject, CLLocationManagerDelegate {
     
     func requestUserAuthorization() async throws {
         locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.distanceFilter = kCLDistanceFilterNone
     }
     
@@ -19,6 +19,7 @@ class NewLocationManager: NSObject, CLLocationManagerDelegate {
             
             self.location = location
             print(location)
+            print("Location From CoreLocationManager")
         }
     }
     
@@ -28,7 +29,7 @@ class NewLocationManager: NSObject, CLLocationManagerDelegate {
     
     private var previousLocation: CLLocation?
     var distanceTraveled: Double = 0
-
+    
     init(location: CLLocation? = nil, previousLocation: CLLocation? = nil, distanceTraveled: Double) {
         self.location = location
         self.previousLocation = previousLocation
@@ -36,21 +37,23 @@ class NewLocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     override init() {
-          super.init()
-         locationManager.delegate = self
-          locationManager.desiredAccuracy = kCLLocationAccuracyBest
-          locationManager.requestWhenInUseAuthorization()
-      }
+        super.init()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let currentLocation = locations.first else { return }
-
+        
         if let previousLocation = previousLocation {
             let distanceBetweenLocations = currentLocation.distance(from: previousLocation)
             distanceTraveled += distanceBetweenLocations
+            print("running")
         }
-
+        
         previousLocation = currentLocation
     }
-
+    
 }

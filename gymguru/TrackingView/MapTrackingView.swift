@@ -42,7 +42,9 @@ struct MapTrackingView: View {
                         locationManager.startUpdatingLocation()
 
                         Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { timer in
+                            print("Normal")
                             print(locationManager.distanceTraveled)
+                            print(Date())
                         }
                         
                         isTimerRunning = true
@@ -145,7 +147,7 @@ struct MapTrackingView: View {
                         .font(.system(size: 20))
                         .fontWidth(.expanded)
                     Divider()
-                    Text("\(String(locationManager.distanceTraveled)) k")
+                    Text("\(String(locationManager.distanceTraveled)) km")
                         .font(.system(size: 55))
                         .fontWidth(.expanded)
                     Text("DISTANCE")
