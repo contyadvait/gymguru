@@ -1,5 +1,6 @@
 import Foundation
 import MapKit
+import CoreMotion
 
 @Observable
 class NewLocationManager: NSObject, CLLocationManagerDelegate {
@@ -52,8 +53,7 @@ class NewLocationManager: NSObject, CLLocationManagerDelegate {
             distanceTraveled += distanceBetweenLocations
             print("running")
         }
-        
         previousLocation = currentLocation
     }
-    
 }
+
