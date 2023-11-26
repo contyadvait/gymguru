@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-enum Exercise: Codable {
+enum Exercise: Codable, Hashable {
     case burpee, jumpRope, jumpingJacks, running, cycling, planks, swimming, jogging, hiking, stairclimbing, rockclimbing, walk, none
     
     var workoutLabel: String {
@@ -86,7 +86,7 @@ struct UserInfo: Codable, Identifiable {
     var name: String
     var challengeData: [ChallengeData]
     var badges: [Badge]
-    var exerciseData: [Exercise: Float]
+    var exerciseData: [TrackedWorkout]
 }
 
 enum ChallengeType: Codable {
@@ -100,6 +100,7 @@ struct ChallengeData: Codable, Identifiable {
     var challengeName: String
     var challengeDescription: String
     var challengeItems: [ExerciseItem]
+    var badges: [Badge]
 }
 
 enum WorkoutTrack: Codable {
@@ -121,6 +122,14 @@ struct Badge: Codable, Identifiable {
     var obtainingExercise: Exercise
     var amountOfObtainingExercise: Float
     // To be changed to custom Images in v2 (major update in about a month after app's release
+    var obtained: Bool
+}
+
+struct TrackedWorkout: Codable, Identifiable {
+    let id = UUID()
+    
+    var exercise: Exercise
+    var amount: Float
 }
 
 // Locations

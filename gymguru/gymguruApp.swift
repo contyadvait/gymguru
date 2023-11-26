@@ -12,7 +12,7 @@ import SwiftData
 struct gymguruApp: App {
     var body: some Scene {
         WindowGroup {
-            MapTrackingView(exercises: .constant([]))
+            ContentView()
         }
     }
 }

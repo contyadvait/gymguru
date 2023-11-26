@@ -4,10 +4,14 @@ struct HomeView: View {
     @Environment(\.colorScheme) var colorScheme
     let item = 0.5
     let cornerRadius = 10.0
+    @State var selectedWorkout: Exercise
+    @State var showWorkout = false
+    @Binding var userData: UserInfo
     
     func workoutItem(workout: Exercise, sfIcon: String, name: String) -> some View {
         Button {
-            
+            showWorkout = true
+            selectedWorkout = workout
         } label: {
             VStack {
                 Image(systemName: sfIcon)
@@ -40,86 +44,83 @@ struct HomeView: View {
             ScrollView {
                 
                 VStack {
-                    VStack {
-                        HStack {
-                            Text("Daily Challenge")
-                                .foregroundStyle(.white)
-                                .font(.system(size: 20, weight: .medium))
-                            Spacer()
-                            Text("Due in\n1h 30min")
-                                .foregroundStyle(.white)
-                                .multilineTextAlignment(.center)
-                        }
-                        
-                        ProgressView(value: item) {
-                            HStack {
-                                Text("Run 15 km")
-                                    .foregroundStyle(.white)
-                                Spacer()
-                                Text("50%")
-                                    .foregroundStyle(.white)
+                    ForEach(userData.challengeData, id: \.id) { challenge in
+                        if challenge.challengeType == .daily {
+                            VStack {
+                                HStack {
+                                    Text("Daily Challenge")
+                                        .foregroundStyle(.white)
+                                        .font(.system(size: 20, weight: .medium))
+                                    Spacer()
+                                    Text("Due in\n1h 30min")
+                                        .foregroundStyle(.white)
+                                        .multilineTextAlignment(.center)
+                                }
+                                
+                                ProgressView(value: item) {
+                                    HStack {
+                                        Text("Run 15 km")
+                                            .foregroundStyle(.white)
+                                        Spacer()
+                                        Text("50%")
+                                            .foregroundStyle(.white)
+                                    }
+                                }
+                                .tint(.white)
+                                .padding(.top)
+                                HStack {
+                                    Image(systemName: "figure.run")
+                                        .foregroundStyle(.white)
+                                    Image(systemName: "soccerball")
+                                        .foregroundStyle(.white)
+                                    Spacer()
+                                }
+                                .padding(.top)
+                                .environment(\.font, .system(size: 28))
+                                .foregroundStyle(.accent)
+                                
                             }
+                            .padding(10)
+                            .frame(maxWidth: UIScreen.main.bounds.width - 20, alignment: .leading)
+                            .background(.accent)
+                            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                            .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
+                        } else {
+                            VStack {
+                                HStack {
+                                    Text(challenge.challengeName)
+                                        .font(.system(size: 20, weight: .medium))
+                                }
+                                
+                                ForEach(challenge.challengeItems, id: \.id) { item in
+                                    ProgressView(value: item.amount) {
+                                        HStack {
+                                            Text("\(item.workoutItem.workoutLabel), \(item.amount) \(item.workoutItem.unit)")
+                                            Spacer()
+                                            Text("Background code")
+                                        }
+                                    }
+                                    .padding(.top)
+                                }
+
+                                HStack {
+                                    ForEach(challenge.badges, id: \.id) { badge in
+                                        Image(systemName: badge.badge)
+                                    }
+                                    Spacer()
+                                }
+                                .padding(.top)
+                                .environment(\.font, .system(size: 28))
+                                .foregroundStyle(.accent)
+                                
+                            }
+                            .padding(10)
+                            .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
+                            .frame(maxWidth: UIScreen.main.bounds.width - 20, alignment: .leading)
+                            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                            .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
                         }
-                        .tint(.white)
-                        .padding(.top)
-                        HStack {
-                            Image(systemName: "figure.run")
-                                .foregroundStyle(.white)
-                            Image(systemName: "soccerball")
-                                .foregroundStyle(.white)
-                            Spacer()
-                        }
-                        .padding(.top)
-                        .environment(\.font, .system(size: 28))
-                        .foregroundStyle(.accent)
-                        
                     }
-                    .padding(10)
-                    .frame(maxWidth: UIScreen.main.bounds.width - 20, alignment: .leading)
-                    .background(.accent)
-                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                    .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
-                    
-                    VStack {
-                        HStack {
-                            Text("Christmas Special Challenge")
-                                .font(.system(size: 20, weight: .medium))
-                            Spacer()
-                            Text("Due in\n1h 30min")
-                                .multilineTextAlignment(.center)
-                        }
-                        
-                        ProgressView(value: 0.3) {
-                            HStack {
-                                Text("Run 10 km")
-                                Spacer()
-                                Text("30%")
-                            }
-                        }
-                        .padding(.top)
-                        ProgressView(value: 0.1) {
-                            HStack {
-                                Text("Do 10 Push-ups")
-                                Spacer()
-                                Text("10%")
-                            }
-                        }
-                        .padding(.top)
-                        HStack {
-                            Image(systemName: "figure.run")
-                            Image(systemName: "soccerball")
-                            Spacer()
-                        }
-                        .padding(.top)
-                        .environment(\.font, .system(size: 28))
-                        .foregroundStyle(.accent)
-                        
-                    }
-                    .padding(10)
-                    .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
-                    .frame(maxWidth: UIScreen.main.bounds.width - 20, alignment: .leading)
-                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                    .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
                 }
                 HStack{
                     Text("Start Workout")
@@ -138,18 +139,24 @@ struct HomeView: View {
                             workoutItem(workout: .running, sfIcon: "figure.run", name: "Run")
                             workoutItem(workout: .walk, sfIcon: "figure.walk", name: "Walk")
                             workoutItem(workout: .hiking, sfIcon: "mountain.2.fill", name: "Hiking")
-                            workoutItem(workout: .cycling, sfIcon: "figure.stairs", name: "Stairs")
-                            workoutItem(workout: .none, sfIcon: "ellipsis.circle.fill", name: "More")
+                            workoutItem(workout: .stairclimbing, sfIcon: "figure.stairs", name: "Stairs")
+                            workoutItem(workout: .jumpRope, sfIcon: "figure.jumprope", name: "Jump Rope")
+                            workoutItem(workout: .jumpingJacks, sfIcon: "figure.mixed.cardio", name: "Jumping Jacks")
+                            workoutItem(workout: .burpee, sfIcon: "figure.strengthtraining.functional", name: "Burpees")
                         }
                     }
                     .scrollIndicators(.automatic, axes: .horizontal)
                     .padding(10.0)
                 }
             }
+            .fullScreenCover(isPresented: $showWorkout) {
+                if selectedWorkout == .cycling || selectedWorkout == .running || selectedWorkout == .walk || selectedWorkout == .hiking || selectedWorkout == .stairclimbing {
+                    MapTrackingView(userData: $userData, exercise: $selectedWorkout)
+                } else {
+                    CounterTrackingView(userData: $userData, exercise: $selectedWorkout)
+                }
+            }
         }
     }
 }
 
-#Preview {
-    HomeView()
-}

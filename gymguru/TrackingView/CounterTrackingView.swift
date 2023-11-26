@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct CounterTrackingView: View {
+    @Binding var userData: UserInfo
     @State var amount = 0
-    @State var workoutName: Exercise = .hiking
     @State var showOnlyPlus = true
     @Namespace var namespace
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
+    @Binding var exercise: Exercise
     var body: some View {
         VStack {
             HStack {
@@ -30,7 +31,7 @@ struct CounterTrackingView: View {
                 .font(.system(size: 80))
                 .textCase(.uppercase)
                 .fontWidth(.expanded)
-            Text(workoutName.workoutLabel)
+            Text(exercise.workoutLabel)
                 .textCase(.uppercase)
                 .fontWidth(.expanded)
             
@@ -71,11 +72,13 @@ struct CounterTrackingView: View {
                     .matchedGeometryEffect(id: "Plus", in: namespace)
                 }
             }
+            Button {
+                dismiss()
+            } label: {
+                Label("End Workout", systemImage: "xmark")
+            }
+            .buttonStyle(.bordered)
             Spacer()
         }
     }
-}
-
-#Preview {
-    CounterTrackingView()
 }
