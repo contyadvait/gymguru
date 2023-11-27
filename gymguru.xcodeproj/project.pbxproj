@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C1E9503A2B1429FF007584BA /* Colour+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E950392B1429FF007584BA /* Colour+Codable.swift */; };
 		F10990B02B0AEEC6002665D9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10990AF2B0AEEC6002665D9 /* HomeView.swift */; };
 		F10990B82B0B3A40002665D9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10990B72B0B3A40002665D9 /* SettingsView.swift */; };
 		F10B86E42B08879F0084255D /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B86E32B08879F0084255D /* Notifications.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C1E950392B1429FF007584BA /* Colour+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colour+Codable.swift"; sourceTree = "<group>"; };
 		F10990AF2B0AEEC6002665D9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F10990B22B0AF91A002665D9 /* gymguru.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = gymguru.entitlements; sourceTree = "<group>"; };
 		F10990B52B0B0AAE002665D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				F12613B72B070F2B00619FD6 /* Item.swift */,
 				F12613B92B070F2D00619FD6 /* Assets.xcassets */,
 				F12613BB2B070F2D00619FD6 /* Preview Content */,
+				C1E950392B1429FF007584BA /* Colour+Codable.swift */,
 			);
 			path = gymguru;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				F1223A042B071E81004A2065 /* Pages.swift in Sources */,
 				F10990B02B0AEEC6002665D9 /* HomeView.swift in Sources */,
 				F18F847E2B0F3F560085AAB8 /* CounterTrackingView.swift in Sources */,
+				C1E9503A2B1429FF007584BA /* Colour+Codable.swift in Sources */,
 				F12613B82B070F2B00619FD6 /* Item.swift in Sources */,
 				F12613B42B070F2B00619FD6 /* gymguruApp.swift in Sources */,
 				F182A5162B0F249900D42C94 /* ColorHexExtension.swift in Sources */,
