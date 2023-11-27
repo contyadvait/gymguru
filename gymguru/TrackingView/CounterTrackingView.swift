@@ -22,7 +22,7 @@ struct CounterTrackingView: View {
             HStack {
                 Spacer()
                 Button {
-                    dismiss()
+                    showAlert = true
                 } label: {
                     Text("Exit")
                 }
@@ -74,11 +74,6 @@ struct CounterTrackingView: View {
                     .matchedGeometryEffect(id: "Plus", in: namespace)
                 }
             }
-            Button {
-                showAlert = true
-            } label: {
-                Label("End Workout", systemImage: "xmark")
-            }
             .alert("Are you sure you want to end this workout?", isPresented: $showAlert) {
                 Button("OK", role: .destructive) {
                     
@@ -91,6 +86,8 @@ struct CounterTrackingView: View {
                     }
                     dismiss()
                 }
+                
+                Button("Cancel", role: .cancel) {  }
             }
             .buttonStyle(.bordered)
             Spacer()

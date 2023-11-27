@@ -56,7 +56,7 @@ struct MapTrackingView: View {
                 if let data = data {
                     let userAcceleration = data.userAcceleration
                     let acceleration = sqrt(userAcceleration.x * userAcceleration.x + userAcceleration.y * userAcceleration.y + userAcceleration.z * userAcceleration.z)
-                    speed = speed + acceleration * updateInterval
+                    speed = acceleration * Double(updateInterval)
                 }
             }
         }
@@ -70,6 +70,11 @@ struct MapTrackingView: View {
     var buttons: some View {
         HStack(spacing: 10) {
             HStack(spacing: 10) {
+                Button {
+                    showAlert = true
+                } label: {
+                    Image(systemName: "stop.fill")
+                }
                 Spacer()
                 if isTimerRunning {
                     Button {
@@ -84,10 +89,6 @@ struct MapTrackingView: View {
                 } else {
                     Button {
                         locationManager.startUpdatingLocation()
-                        
-                        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { timer in
-                            speed = 0
-                        }
                         startMotionUpdates()
                         isTimerRunning = true
                         timeElapsed.seconds -= 1
@@ -96,18 +97,8 @@ struct MapTrackingView: View {
                             .frame(width: 30, height: 30)
                     }
                     .buttonStyle(.bordered)
-                    .matchedGeometryEffect(id: "Pause Button", in: namespace)
+                    .matchedGeometryEffect(id: "Stop Button", in: namespace)
                 }
-                Button {
-                    isTimerRunning = false
-                    timeElapsed = TimerDisplayObject(seconds: 0, minutes: 0, hours: 0)
-                    userData.exerciseData.append(TrackedWorkout(exercise: exercise, amount: Float(locationManager.distanceTraveled)))
-                    dismiss()
-                } label: {
-                    Image(systemName: "stop.fill")
-                        .frame(width: 30, height: 30)
-                }
-                .buttonStyle(.borderedProminent)
                 Spacer()
             }
         }
@@ -234,9 +225,20 @@ struct MapTrackingView: View {
                 }
             }
         }
-        .alert("Are you sure you want to close this workout? Your workout will not be saved", isPresented: $showAlert) {
-            Button("OK", role: .destructive) { dismiss() }
-            Button("Cancel", role: .cancel) { }
+        .alert("Are you sure you want to end this workout?", isPresented: $showAlert) {
+            Button("OK", role: .destructive) {
+                
+                for (challengeIndex, challenge) in userData.challengeData.enumerated() {
+                    for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
+                        if workout.workoutItem == exercise {
+                            userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed += Int(locationManager.distanceTraveled)
+                        }
+                    }
+                }
+                dismiss()
+            }
+            
+            Button("Cancel", role: .cancel) {  }
         }
     }
 }

@@ -9,7 +9,6 @@ import SwiftUI
 import CompactSlider
 import UserNotifications
 import SwiftData
-import HealthKit
 
 struct OnboardingView: View {
     @Namespace var namespace
@@ -48,28 +47,6 @@ struct OnboardingView: View {
         }
     }
     // -------------------------------------------------------------------
-    // HealthKit Manager
-    // -------------------------------------------------------------------
-    func onBoardHealthKit() {
-        if HKHealthStore.isHealthDataAvailable() {
-            let healthStore = HKHealthStore()
-            
-            let allTypes = Set([HKObjectType.workoutType(),
-                                HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-                                HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
-                                HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-                                HKObjectType.quantityType(forIdentifier: .heartRate)!])
-            
-            healthStore.requestAuthorization(toShare: allTypes, read: allTypes) { (success, error) in
-                if !success {
-                    healthKitAlert = true
-                }
-            }
-        } else {
-            healthKitAlert = true
-        }
-    }
-    // -------------------------------------------------------------------
     // Page 3 Buttons
     // -------------------------------------------------------------------
     func buttonView(elementToChange: Exercise, label: String) -> some View {
@@ -103,7 +80,7 @@ struct OnboardingView: View {
     var one: some View {
         VStack {
             HStack {
-                Text("Welcome to GymGuru!")
+                Text("Welcome to FitStreak!")
                     .font(.system(size: 30, weight: .bold))
                     .multilineTextAlignment(.leading)
                     .onAppear {
@@ -302,19 +279,6 @@ struct OnboardingView: View {
                     }
                 }
                 .buttonStyle(.bordered)
-                .tint(.blue)
-                
-                Button {
-                    onBoardHealthKit()
-                } label: {
-                    HStack {
-                        Spacer()
-                        Label("HealthKit Access", systemImage: "info.circle")
-                        Spacer()
-                    }
-                }
-                .buttonStyle(.bordered)
-                .tint(.blue)
             }
             Spacer()
             HStack {
