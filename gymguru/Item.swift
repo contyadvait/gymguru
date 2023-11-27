@@ -174,6 +174,6 @@ let locations: [LocationData] = [LocationData(location: bukitTimah, name: "Bukit
                                  LocationData(location: clementiForest, name: "Clementi Forest", icon: "tree.fill", colour: .blue),
                                  LocationData(location: dairyFarm, name: "Dairy Farm", icon: "tree.fill", colour: .blue),
                                  LocationData(location: sungeiBuloh, name: "Sungei Buloh", icon: "bird.fill", colour: .blue),
-                                 LocationData(location: pasirRisPark, name: "Pasir Ris Park", icon: "tree.fill", colour: .green)
+                                 LocationData(location: pasirRisPark, name: "Pasir Ris Park", icon: "tree.fill", colour: .green),
                                  LocationData(location: botanicGardens, name: "Botanic Gardens", icon: "tree.fill", colour: .yellow)]
                     
