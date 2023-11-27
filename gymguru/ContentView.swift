@@ -8,7 +8,13 @@
 import SwiftUI
 import Forever
 
+
+
+
 struct ContentView: View {
+    @State var challengesAvailable = [ChallengeData(challengeName: "Christmas Calorie Loss", challengeDescription: "Lose some calories to consume extra for christmas!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: []),
+                                      ChallengeData(challengeName: "Chill Chase", challengeDescription: "Journey at a relaxed pace", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: []),
+                                      ChallengeData(challengeName: "Sprint Quest", challengeDescription: "For those who enjoy pushing their limits, this is the perfect challenge for them.", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [])]
     @Forever("userdata") var userData: UserInfo = UserInfo(preferredWorkouts: [],
                                                            timeToWorkout: 5.0,
                                                            age: 16.0,
@@ -17,7 +23,7 @@ struct ContentView: View {
                                                            name: "Sam",
                                                                      challengeData: [], dailyChallenge: ChallengeData(challengeName: "aff", challengeDescription: "afa", challengeItems: [], badges: []),
                                                            badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true),
-                                                                     Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .burpee, amountOfObtainingExercise: 5, obtained: true),
+                                                                     Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true),
                                                                     Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
                                                            exerciseData: [])
     @Forever("showSetupModal") var showSetupModal = false
@@ -47,7 +53,6 @@ struct ContentView: View {
         }
     }
 }
-
 
 #Preview {
     ContentView()

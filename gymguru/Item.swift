@@ -14,7 +14,7 @@ enum Exercise: Codable, Hashable {
     
     var workoutLabel: String {
         switch self {
-        case .burpee: 
+        case .burpee:
             return "Burpee"
         case .jumpRope:
             return "Jump Rople"

@@ -127,9 +127,6 @@ struct HomeView: View {
                             workoutItem(workout: .walk, sfIcon: "figure.walk", name: "Walk")
                             workoutItem(workout: .hiking, sfIcon: "mountain.2.fill", name: "Hiking")
                             workoutItem(workout: .stairclimbing, sfIcon: "figure.stairs", name: "Stairs")
-                            workoutItem(workout: .jumpRope, sfIcon: "figure.jumprope", name: "Jump Rope")
-                            workoutItem(workout: .jumpingJacks, sfIcon: "figure.mixed.cardio", name: "Jumping Jacks")
-                            workoutItem(workout: .burpee, sfIcon: "figure.strengthtraining.functional", name: "Burpees")
                         }
                     }
                     .scrollIndicators(.automatic, axes: .horizontal)
@@ -155,9 +152,9 @@ struct HomeView: View {
                                                         weight: 90.0,
                                                         name: "Sam",
                                                         challengeData: [],
-                                                                  dailyChallenge: ChallengeData(challengeName: "Daily Challenge", challengeDescription: "afa", challengeItems: [ExerciseItem(workoutItem: .burpee, workoutTrackType: .counter, amount: 10)], badges: []),
+                                                                  dailyChallenge: ChallengeData(challengeName: "Daily Challenge", challengeDescription: "afa", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: []),
                                                         badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true),
-                                                                  Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .burpee, amountOfObtainingExercise: 5, obtained: true),
+                                                                  Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true),
                                                                  Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
                                                         exerciseData: [])))
 }
