@@ -110,7 +110,6 @@ enum WorkoutTrack: Codable {
 
 struct ExerciseItem: Codable, Identifiable {
     let id = UUID()
-    
     var workoutItem: Exercise
     var workoutTrackType: WorkoutTrack
     var amount: Int
