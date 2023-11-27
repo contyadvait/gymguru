@@ -57,18 +57,50 @@ struct HomeView: View {
             return nil
         }
     
-    var challengesView: some View {
+    var dailyChallengeView: some View {
         VStack {
             HStack {
                 Text(userData.dailyChallenge.challengeName)
                 Spacer()
-                Text(calculateTimeRemaining ?? "Error calculator")
+                Text(calculateTimeRemaining() ?? "Calculation Error")
+            }
+            HStack {
+                Text("")
+            }
+            ForEach(userData.dailyChallenge.challengeItems, id: \.id) { challenge in
+                ProgressView(value: Float(challenge.amount)) {
+                    HStack {
+                        Text("\(challenge.workoutItem.workoutLabel), \(challenge.amount) \(challenge.workoutItem.unit) \(challenge.workoutItem.unit)")
+                        Spacer()
+                        Text("\(challenge.amount*100)")
+                        
+                    }
+                }
+                .tint(.white)
+            }
+        }
+        .foregroundStyle(.white)
+        .padding(10)
+        .frame(width: UIScreen.main.bounds.width - 20, height: 220)
+        .background(.accent)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
+        .foregroundStyle(colorScheme == .dark ? .white : .black)
+    }
+    
+    var monthlyChallengesView: some View {
+        VStack {
+            ForEach(userData.challengeData, id: \.id) { challenge in
+                VStack {
+                    
+                }
             }
         }
     }
     
     var body: some View {
         VStack {
+            dailyChallengeView
             HStack {
                 Text("Home")
                     .font(.largeTitle)
@@ -88,8 +120,6 @@ struct HomeView: View {
                     Spacer()
                 }
                 HStack {
-                    
-                    
                     ScrollView(.horizontal) {
                         HStack {
                             workoutItem(workout: .cycling, sfIcon: "bicycle", name: "Cycle")
@@ -117,3 +147,17 @@ struct HomeView: View {
     }
 }
 
+#Preview {
+    HomeView(selectedWorkout: .none, userData: .constant(UserInfo(preferredWorkouts: [],
+                                                        timeToWorkout: 5.0,
+                                                        age: 16.0,
+                                                        height: 189.0,
+                                                        weight: 90.0,
+                                                        name: "Sam",
+                                                        challengeData: [],
+                                                                  dailyChallenge: ChallengeData(challengeName: "Daily Challenge", challengeDescription: "afa", challengeItems: [ExerciseItem(workoutItem: .burpee, workoutTrackType: .counter, amount: 10)], badges: []),
+                                                        badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true),
+                                                                  Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .burpee, amountOfObtainingExercise: 5, obtained: true),
+                                                                 Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
+                                                        exerciseData: [])))
+}

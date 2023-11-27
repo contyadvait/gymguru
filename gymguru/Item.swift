@@ -114,6 +114,7 @@ struct ExerciseItem: Codable, Identifiable {
     var workoutItem: Exercise
     var workoutTrackType: WorkoutTrack
     var amount: Int
+    var completed: Int = 0
 }
 
 struct Badge: Codable, Identifiable {

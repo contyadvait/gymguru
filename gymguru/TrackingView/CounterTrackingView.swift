@@ -15,6 +15,8 @@ struct CounterTrackingView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @Binding var exercise: Exercise
+    @State var showAlert = false
+    
     var body: some View {
         VStack {
             HStack {
@@ -73,9 +75,22 @@ struct CounterTrackingView: View {
                 }
             }
             Button {
-                dismiss()
+                showAlert = true
             } label: {
                 Label("End Workout", systemImage: "xmark")
+            }
+            .alert("Are you sure you want to end this workout?", isPresented: $showAlert) {
+                Button("OK", role: .destructive) {
+                    
+                    for (challengeIndex, challenge) in userData.challengeData.enumerated() {
+                        for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
+                            if workout.workoutItem == exercise {
+                                userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed += amount
+                            }
+                        }
+                    }
+                    dismiss()
+                }
             }
             .buttonStyle(.bordered)
             Spacer()
