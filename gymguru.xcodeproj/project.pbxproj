@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C1E9503A2B1429FF007584BA /* Colour+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E950392B1429FF007584BA /* Colour+Codable.swift */; };
+		C1E9503C2B144AB9007584BA /* DailyChallenges.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E9503B2B144AB9007584BA /* DailyChallenges.swift */; };
 		F10990B02B0AEEC6002665D9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10990AF2B0AEEC6002665D9 /* HomeView.swift */; };
 		F10990B82B0B3A40002665D9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10990B72B0B3A40002665D9 /* SettingsView.swift */; };
 		F10B86E42B08879F0084255D /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B86E32B08879F0084255D /* Notifications.swift */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		C1E950392B1429FF007584BA /* Colour+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colour+Codable.swift"; sourceTree = "<group>"; };
+		C1E9503B2B144AB9007584BA /* DailyChallenges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallenges.swift; sourceTree = "<group>"; };
 		F10990AF2B0AEEC6002665D9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F10990B22B0AF91A002665D9 /* gymguru.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = gymguru.entitlements; sourceTree = "<group>"; };
 		F10990B52B0B0AAE002665D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				F182A5172B0F249D00D42C94 /* New Group */,
 				F10990B52B0B0AAE002665D9 /* Info.plist */,
 				F10990B22B0AF91A002665D9 /* gymguru.entitlements */,
+				C1E9503B2B144AB9007584BA /* DailyChallenges.swift */,
 				F12613B32B070F2B00619FD6 /* gymguruApp.swift */,
 				F12613B52B070F2B00619FD6 /* ContentView.swift */,
 				F10990B12B0AEEDD002665D9 /* TabItems */,
@@ -251,6 +254,7 @@
 				F12613B62B070F2B00619FD6 /* ContentView.swift in Sources */,
 				F14A59C02B0DD161006246F8 /* BadgesView.swift in Sources */,
 				F1223A042B071E81004A2065 /* Pages.swift in Sources */,
+				C1E9503C2B144AB9007584BA /* DailyChallenges.swift in Sources */,
 				F10990B02B0AEEC6002665D9 /* HomeView.swift in Sources */,
 				F18F847E2B0F3F560085AAB8 /* CounterTrackingView.swift in Sources */,
 				C1E9503A2B1429FF007584BA /* Colour+Codable.swift in Sources */,
