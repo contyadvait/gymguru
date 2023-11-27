@@ -210,11 +210,8 @@ struct OnboardingView: View {
                 buttonView(elementToChange: .jumpRope, label: "Jump Rope")
                 buttonView(elementToChange: .running, label: "Running")
                 buttonView(elementToChange: .cycling, label: "Cycling")
-                buttonView(elementToChange: .swimming, label: "Swimming")
-                buttonView(elementToChange: .rockclimbing, label: "Rock Climbing")
                 buttonView(elementToChange: .hiking, label: "Hiking")
                 buttonView(elementToChange: .jogging, label: "Jogging")
-                buttonView(elementToChange: .stairclimbing, label: "Stair Climbing")
                 buttonView(elementToChange: .walk, label: "Walking")
             }
                 
