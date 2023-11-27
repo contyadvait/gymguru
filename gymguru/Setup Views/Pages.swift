@@ -220,6 +220,8 @@ struct OnboardingView: View {
     // -------------------------------------------------------------------
     // Page 3
     // -------------------------------------------------------------------
+    
+    
     var three: some View {
         VStack {
             
@@ -252,6 +254,9 @@ struct OnboardingView: View {
                 
                 Button {
                     withAnimation {
+                        if  userData.preferredWorkouts == []{
+                            
+                        }
                         page = page + 1
                     }
                 } label: {
