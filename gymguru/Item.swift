@@ -151,6 +151,7 @@ let clementiForest = CLLocationCoordinate2D(latitude: 1.3295609216855464, longit
 let dairyFarm = CLLocationCoordinate2D(latitude: 1.363902747981783, longitude: 103.77629313494597)
 let sungeiBuloh = CLLocationCoordinate2D(latitude: 1.4459398764786946, longitude: 103.72388418365436)
 let pasirRisPark = CLLocationCoordinate2D(latitude: 1.3815003353929574, longitude: 103.95039731628862)
+let botanicGardens = CLLocationCoordinate2D(latitude: 1.3149315824605528, longitude: 103.8162916867477)
 
 struct LocationData: Identifiable{
     let id = UUID()
@@ -174,5 +175,6 @@ let locations: [LocationData] = [LocationData(location: bukitTimah, name: "Bukit
                                  LocationData(location: clementiForest, name: "Clementi Forest", icon: "tree.fill", colour: .blue),
                                  LocationData(location: dairyFarm, name: "Dairy Farm", icon: "tree.fill", colour: .blue),
                                  LocationData(location: sungeiBuloh, name: "Sungei Buloh", icon: "bird.fill", colour: .blue),
-                                 LocationData(location: pasirRisPark, name: "Pasir Ris Park", icon: "tree.fill", colour: .green)]
+                                 LocationData(location: pasirRisPark, name: "Pasir Ris Park", icon: "tree.fill", colour: .green),
+                                 LocationData(location: botanicGardens, name: "Botanic Gardens", icon: "tree.fill", colour: .yellow)]
                     
