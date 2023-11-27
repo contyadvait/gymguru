@@ -119,25 +119,11 @@ struct MapTrackingView: View {
                 VStack {
                     VStack {
                         Map(position: $position, scope: mapscope) {
-                            Marker("Bukit Timah", systemImage: "mountain.2.fill", coordinate: bukitTimah)
-                                .tint(.blue)
-                            Marker("MacRitche", systemImage: "tree.fill", coordinate: macRitche)
-                                .tint(.orange)
-                            Marker("Chestnut Nature",systemImage: "tree.fill", coordinate: chestnut)
-                                .tint(.blue)
-                            UserAnnotation()
-                            Marker("Coney Island", systemImage: "figure.outdoor.cycle", coordinate: coneyWest)
-                                .tint(.purple)
-                            Marker("Pulau Ubin", systemImage: "bicycle", coordinate: pulauUbin)
-                                .tint(.green)
-                            Marker("East Coast Park", systemImage: "bicycle", coordinate: eastCoastPark)
-                                .tint(.brown)
-                            Marker("Sungei Buloh Wetlands", systemImage: "bird.fill", coordinate: sungeiBuloh)
-                                .tint(.red)
-                            Marker("Pasir Ris Park", systemImage: "tree.fill", coordinate: pasirRisPark)
-                                .tint(.green)
-                            Marker("Gardens By The Bay", systemImage: "tree.fill", coordinate: gardensByTheBay)
-                                .tint(.orange)
+                        UserAnnotation()
+                            ForEach(locations, id: \.id) { location in
+                                Marker(location.name, systemImage: location.icon, coordinate: location.location)
+                                    .tint(location.colour)
+                            }
                         }
                     }
                     .mapControls {

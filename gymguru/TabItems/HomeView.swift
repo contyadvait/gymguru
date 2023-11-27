@@ -30,8 +30,42 @@ struct HomeView: View {
         }
     }
     
+    func calculateTimeRemaining() -> String? {
+            let currentDate = Date()
+            var calendar = Calendar.current
+
+            if let nextDayAtMidnight = calendar.date(byAdding: .day, value: 1, to: currentDate) {
+                let timeDifference = calendar.dateComponents([.hour, .minute, .second], from: currentDate, to: nextDayAtMidnight)
+
+                var timeRemainingString = "Due in"
+
+                if let hours = timeDifference.hour, hours > 0 {
+                    timeRemainingString += " \(hours)h"
+                }
+
+                if let minutes = timeDifference.minute, minutes > 0 {
+                    timeRemainingString += " \(minutes)min"
+                }
+
+                if let seconds = timeDifference.second, seconds > 0 {
+                    timeRemainingString += " \(seconds)s"
+                }
+
+                return timeRemainingString
+            }
+
+            return nil
+        }
     
-    
+    var challengesView: some View {
+        VStack {
+            HStack {
+                Text(userData.dailyChallenge.challengeName)
+                Spacer()
+                Text(calculateTimeRemaining ?? "Error calculator")
+            }
+        }
+    }
     
     var body: some View {
         VStack {
@@ -45,86 +79,6 @@ struct HomeView: View {
             }
             
             ScrollView {
-                
-                VStack {
-                    ForEach(userData.challengeData, id: \.id) { challenge in
-                        if challenge.challengeType == .daily {
-                            VStack {
-                                HStack {
-                                    Text("Daily Challenge")
-                                        .foregroundStyle(.white)
-                                        .font(.system(size: 20, weight: .medium))
-                                    Spacer()
-                                    Text("Due in\n1h 30min")
-                                        .foregroundStyle(.white)
-                                        .multilineTextAlignment(.center)
-                                }
-                                
-                                ProgressView(value: item) {
-                                    HStack {
-                                        Text("Run 15 km")
-                                            .foregroundStyle(.white)
-                                        Spacer()
-                                        Text("50%")
-                                            .foregroundStyle(.white)
-                                    }
-                                }
-                                .tint(.white)
-                                .padding(.top)
-                                HStack {
-                                    Image(systemName: "figure.run")
-                                        .foregroundStyle(.white)
-                                    Image(systemName: "soccerball")
-                                        .foregroundStyle(.white)
-                                    Spacer()
-                                }
-                                .padding(.top)
-                                .environment(\.font, .system(size: 28))
-                                .foregroundStyle(.accent)
-                                
-                            }
-                            .padding(10)
-                            .frame(maxWidth: UIScreen.main.bounds.width - 20, alignment: .leading)
-                            .background(.accent)
-                            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                            .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
-                        } else {
-                            VStack {
-                                HStack {
-                                    Text(challenge.challengeName)
-                                        .font(.system(size: 20, weight: .medium))
-                                }
-                                
-                                ForEach(challenge.challengeItems, id: \.id) { item in
-                                    ProgressView(value: item.amount) {
-                                        HStack {
-                                            Text("\(item.workoutItem.workoutLabel), \(item.amount) \(item.workoutItem.unit)")
-                                            Spacer()
-                                            Text("Background code")
-                                        }
-                                    }
-                                    .padding(.top)
-                                }
-
-                                HStack {
-                                    ForEach(challenge.badges, id: \.id) { badge in
-                                        Image(systemName: badge.badge)
-                                    }
-                                    Spacer()
-                                }
-                                .padding(.top)
-                                .environment(\.font, .system(size: 28))
-                                .foregroundStyle(.accent)
-                                
-                            }
-                            .padding(10)
-                            .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
-                            .frame(maxWidth: UIScreen.main.bounds.width - 20, alignment: .leading)
-                            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                            .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
-                        }
-                    }
-                }
                 HStack{
                     Text("Start Workout")
                         .multilineTextAlignment(.leading)

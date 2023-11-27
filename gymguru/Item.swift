@@ -86,6 +86,7 @@ struct UserInfo: Codable, Identifiable {
     var weight: Float
     var name: String
     var challengeData: [ChallengeData]
+    var dailyChallenge: ChallengeData
     var badges: [Badge]
     var exerciseData: [TrackedWorkout]
 }
