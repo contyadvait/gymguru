@@ -7,6 +7,7 @@ struct HomeView: View {
     @State var selectedWorkout: Exercise
     @State var showWorkout = false
     @Binding var userData: UserInfo
+    @State var timeRemaining = ""
     
     func workoutItem(workout: Exercise, sfIcon: String, name: String) -> some View {
         Button {
@@ -30,39 +31,34 @@ struct HomeView: View {
         }
     }
     
-    func calculateTimeRemaining() -> String? {
-            let currentDate = Date()
-            var calendar = Calendar.current
-
-            if let nextDayAtMidnight = calendar.date(byAdding: .day, value: 1, to: currentDate) {
-                let timeDifference = calendar.dateComponents([.hour, .minute, .second], from: currentDate, to: nextDayAtMidnight)
-
-                var timeRemainingString = "Due in"
-
-                if let hours = timeDifference.hour, hours > 0 {
-                    timeRemainingString += " \(hours)h"
-                }
-
-                if let minutes = timeDifference.minute, minutes > 0 {
-                    timeRemainingString += " \(minutes)min"
-                }
-
-                if let seconds = timeDifference.second, seconds > 0 {
-                    timeRemainingString += " \(seconds)s"
-                }
-
-                return timeRemainingString
-            }
-
-            return nil
-        }
+    // Define a function that calculates the time remaining to midnight and updates the @State variable
+    func calculateTimeRemaining() {
+        // Get the current date and time
+        let now = Date()
+        
+        // Get the calendar and the components of the current date and time
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute, .second], from: now)
+        
+        // Calculate the hours, minutes and seconds remaining to midnight
+        let hours = 23 - components.hour!
+        let minutes = 59 - components.minute!
+        let seconds = 59 - components.second!
+        
+        // Format the output string
+        let output = "Due in \(hours)h \(minutes)min \(seconds)s"
+        
+        // Update the @State variable with the output string
+        timeRemaining = output
+    }
     
     var dailyChallengeView: some View {
         VStack {
             HStack {
                 Text(userData.dailyChallenge.challengeName)
+                    .font(.system(size: 25, weight: .medium))
                 Spacer()
-                Text(calculateTimeRemaining() ?? "Calculation Error")
+                Text(timeRemaining)
             }
             HStack {
                 Text("")
@@ -70,18 +66,17 @@ struct HomeView: View {
             ForEach(userData.dailyChallenge.challengeItems, id: \.id) { challenge in
                 ProgressView(value: Float(challenge.amount)) {
                     HStack {
-                        Text("\(challenge.workoutItem.workoutLabel), \(challenge.amount) \(challenge.workoutItem.unit) \(challenge.workoutItem.unit)")
+                        Text("\(challenge.workoutItem.workoutLabel), \(challenge.amount) \(challenge.workoutItem.unit)")
                         Spacer()
-                        Text("\(challenge.amount*100)")
-                        
+                        Text("\((challenge.completed/challenge.amount)*100)%")
                     }
                 }
-                .tint(.white)
+                .foregroundStyle(.white)
             }
         }
         .foregroundStyle(.white)
         .padding(10)
-        .frame(width: UIScreen.main.bounds.width - 20, height: 220)
+        .frame(width: UIScreen.main.bounds.width - 20, height: 110)
         .background(.accent)
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
@@ -95,12 +90,17 @@ struct HomeView: View {
                     
                 }
             }
+            .onAppear {
+                // Create a timer that fires every second and calls the calculateTimeRemaining function
+                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                    calculateTimeRemaining()
+                }
+            }
         }
     }
     
     var body: some View {
         VStack {
-            dailyChallengeView
             HStack {
                 Text("Home")
                     .font(.largeTitle)
@@ -111,7 +111,9 @@ struct HomeView: View {
             }
             
             ScrollView {
+                dailyChallengeView
                 HStack{
+                    
                     Text("Start Workout")
                         .multilineTextAlignment(.leading)
                         .padding(15.0)
@@ -146,15 +148,15 @@ struct HomeView: View {
 
 #Preview {
     HomeView(selectedWorkout: .none, userData: .constant(UserInfo(preferredWorkouts: [],
-                                                        timeToWorkout: 5.0,
-                                                        age: 16.0,
-                                                        height: 189.0,
-                                                        weight: 90.0,
-                                                        name: "Sam",
-                                                        challengeData: [],
+                                                                  timeToWorkout: 5.0,
+                                                                  age: 16.0,
+                                                                  height: 189.0,
+                                                                  weight: 90.0,
+                                                                  name: "Sam",
+                                                                  challengeData: [],
                                                                   dailyChallenge: ChallengeData(challengeName: "Daily Challenge", challengeDescription: "afa", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: []),
-                                                        badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true),
-                                                                  Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true),
-                                                                 Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
-                                                        exerciseData: [])))
+                                                                  badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true),
+                                                                           Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true),
+                                                                           Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
+                                                                  exerciseData: [])))
 }

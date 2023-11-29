@@ -8,9 +8,6 @@
 import SwiftUI
 import Forever
 
-
-
-
 struct ContentView: View {
     @State var challengesAvailable = [ChallengeData(challengeName: "Christmas Calorie Loss", challengeDescription: "Lose some calories to consume extra for christmas!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: []),
                                       ChallengeData(challengeName: "Chill Chase", challengeDescription: "Journey at a relaxed pace", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: []),
@@ -22,9 +19,9 @@ struct ContentView: View {
                                                            weight: 90.0,
                                                            name: "Sam",
                                                                      challengeData: [], dailyChallenge: ChallengeData(challengeName: "aff", challengeDescription: "afa", challengeItems: [], badges: []),
-                                                           badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true),
-                                                                     Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true),
-                                                                    Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
+                                                           badges: [Badge(badge: "Welcome to FitStreak!", sfIcon: "door.left.hand.", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true),
+                                                                     Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: false),
+                                                                    Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "treopene.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
                                                            exerciseData: [])
     @Forever("showSetupModal") var showSetupModal = false
 
@@ -34,7 +31,7 @@ struct ContentView: View {
             HomeView(selectedWorkout: .none, userData: $userData)
                 .tabItem { Label("Home", systemImage: "house.fill") }
             
-            BadgesView(userData: $userData)
+            BadgesView(userData: $userData, currentChallenges: $challengesAvailable)
                 .tabItem { Label("Badges", systemImage: "star") }
             
             ChallengesView(userData: $userData)

@@ -49,6 +49,7 @@ struct MapTrackingView: View {
     @Environment(\.dismiss) var dismiss
     @State var showAlert = false
     @Binding var exercise: Exercise
+    @State var issues = false
     
     func startMotionUpdates() {
         if motionManager.isAccelerometerAvailable {
@@ -56,7 +57,7 @@ struct MapTrackingView: View {
                 if let data = data {
                     let userAcceleration = data.userAcceleration
                     let acceleration = sqrt(userAcceleration.x * userAcceleration.x + userAcceleration.y * userAcceleration.y + userAcceleration.z * userAcceleration.z)
-                    speed = acceleration * Double(updateInterval)
+                    speed = speed + acceleration * Double(updateInterval)
                 }
             }
         }
@@ -90,6 +91,10 @@ struct MapTrackingView: View {
                     Button {
                         locationManager.startUpdatingLocation()
                         startMotionUpdates()
+                        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
+                            print("Distance traveled: \(locationManager.distanceTraveled) meters")
+                            speed = 0
+                        }
                         isTimerRunning = true
                         timeElapsed.seconds -= 1
                     } label: {
@@ -180,7 +185,7 @@ struct MapTrackingView: View {
                         //                                    .fontWidth(.expanded)
                         //                                Divider()
                         //                            }
-                        Text("\(String(locationManager.distanceTraveled)) km")
+                        Text("\(String(format: "%.2f" ,locationManager.distanceTraveled*1000)) km")
                             .font(.system(size: 55))
                             .fontWidth(.expanded)
                         Text("DISTANCE")
@@ -239,6 +244,10 @@ struct MapTrackingView: View {
             }
             
             Button("Cancel", role: .cancel) {  }
+        }
+        .sheet(isPresented: $issues) {
+            Text("Why is my tracking not working?")
+            Text("Please check your app settings as you may have disabled location access for this app or your location services has been turned off. Tracking may also not work because of location accuracy issues in places deep underground (e.g.: tunnels, etc.)")
         }
     }
 }

@@ -13,6 +13,7 @@ struct BadgesView: View {
     @Binding var userData: UserInfo
     @Binding var currentChallenges: [ChallengeData]
     @Environment(\.colorScheme) var colorScheme
+    @State var filter = false
     var body: some View {
         VStack {
             HStack {
@@ -20,6 +21,22 @@ struct BadgesView: View {
                     .font(.largeTitle)
                     .bold()
                 Spacer()
+                Button {
+                    if filter {
+                        filter = false
+                    } else {
+                        filter = true
+                    }
+                } label: {
+                    if filter {
+                        Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                            .font(.system(size: 20))
+                    } else {
+                        Image(systemName: "line.3.horizontal.decrease.circle")
+                            .font(.system(size: 20))
+                    }
+                }
+                .buttonStyle(.borderless)
             }
             .padding()
             ScrollView {
@@ -41,7 +58,7 @@ struct BadgesView: View {
                                     .foregroundStyle(.white)
                                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                                     .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
-                                } else {
+                                } else if !filter {
                                     VStack {
                                         Image(systemName: badge.sfIcon)
                                             .font(.system(size: 48))
