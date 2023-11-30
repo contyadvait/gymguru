@@ -97,8 +97,11 @@ struct ExerciseItem: Codable, Identifiable {
     let id = UUID()
     var workoutItem: Exercise
     var workoutTrackType: WorkoutTrack
-    var amount: Int
-    var completed: Int = 0
+    var amount: Float
+    var completed: Float = 0
+    var percentage: Float {
+        return Float(Float(completed)/Float(amount))
+    }
 }
 
 struct Badge: Codable, Identifiable {

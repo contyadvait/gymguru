@@ -80,7 +80,7 @@ struct CounterTrackingView: View {
                     for (challengeIndex, challenge) in userData.challengeData.enumerated() {
                         for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
                             if workout.workoutItem == exercise {
-                                userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed += amount
+                                userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed += Float(amount)
                             }
                         }
                     }

@@ -249,7 +249,7 @@ struct OnboardingView: View {
     var four: some View {
         VStack {
             Spacer()
-            Text("Welcome to GymGuru!")
+            Text("Welcome to FitStreak!")
                 .font(.system(size: 30, weight: .bold))
                 .padding()
                 .multilineTextAlignment(.center)
@@ -318,7 +318,7 @@ struct OnboardingView: View {
     var body: some View {
         VStack {
             if page != 4 && page != 1{
-                Text("Welcome to GymGuru!")
+                Text("Welcome to FitStreak!")
                     .font(.system(size: 30, weight: .bold))
                     .padding()
                     .multilineTextAlignment(.center)

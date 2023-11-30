@@ -236,7 +236,7 @@ struct MapTrackingView: View {
                 for (challengeIndex, challenge) in userData.challengeData.enumerated() {
                     for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
                         if workout.workoutItem == exercise {
-                            userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed += Int(locationManager.distanceTraveled)
+                            userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed += Float(locationManager.distanceTraveled)
                         }
                     }
                 }
