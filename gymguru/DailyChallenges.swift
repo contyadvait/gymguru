@@ -10,8 +10,7 @@ import SwiftUI
 import Forever
 
 class ChallengeManager {
-    
-    var distanceRange: ClosedRange<Double> = 5...10
+
     
     func reRoll(userData: UserInfo, challengeStreak: Int) -> ChallengeData {
         if userData.preferredWorkouts == [] {
