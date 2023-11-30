@@ -9,7 +9,7 @@ import Foundation
 import MapKit
 import SwiftUI
 
-enum Exercise: Codable, Hashable {
+enum Exercise: Codable, Hashable, CaseIterable {
     case burpee, jumpRope, jumpingJacks, running, cycling, jogging, hiking, walk, none
     
     var workoutLabel: String {
@@ -58,6 +58,16 @@ enum Exercise: Codable, Hashable {
             return ""
         }
     }
+    
+    static func random<G: RandomNumberGenerator>(using generator: inout G) -> Exercise {
+        return Exercise.allCases.randomElement(using: &generator)!
+    }
+
+
+    static func random() -> Exercise {
+        var g = SystemRandomNumberGenerator()
+        return Exercise.random(using: &g)
+    }
 }
 
 struct UserInfo: Codable, Identifiable {
@@ -96,7 +106,7 @@ enum WorkoutTrack: Codable {
 struct ExerciseItem: Codable, Identifiable {
     let id = UUID()
     var workoutItem: Exercise
-    var workoutTrackType: WorkoutTrack
+    var workoutTrackType: WorkoutTrack = .map
     var amount: Float
     var completed: Float = 0
     var percentage: Float {

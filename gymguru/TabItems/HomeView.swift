@@ -23,7 +23,7 @@ struct HomeView: View {
                     .font(.system(size: 20))
             }
             .padding(10)
-            .frame(width: 90, height: 110)
+            .frame(width: 100, height: 140)
             .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
             .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
@@ -76,6 +76,15 @@ struct HomeView: View {
                 }
                 .foregroundStyle(.white)
             }
+            
+            HStack {
+                ForEach(userData.dailyChallenge.badges, id: \.id) { badge in
+                    Image(systemName: badge.sfIcon)
+                        .tint(.accentColor)
+                        .font(.system(size: 19))
+                }
+                Spacer()
+            }
         }
         .onAppear {
             // Create a timer that fires every second and calls the calculateTimeRemaining function
@@ -107,14 +116,22 @@ struct HomeView: View {
                             Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
                         }
                     }
+                    .padding([.top, .bottom])
+                    
+                    HStack {
+                        ForEach(challenge.badges, id: \.id) { badge in
+                            Image(systemName: badge.sfIcon)
+                                .tint(.accentColor)
+                                .font(.system(size: 19))
+                        }
+                        Spacer()
+                    }
                 }
                 .padding(10)
                 .frame(width: UIScreen.main.bounds.width - 20)
                 .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
-                .foregroundStyle(colorScheme == .dark ? .white : .black)
-            
             }
         }
     }
@@ -150,8 +167,8 @@ struct HomeView: View {
                             workoutItem(workout: .walk, sfIcon: "figure.walk", name: "Walk")
                             workoutItem(workout: .hiking, sfIcon: "mountain.2.fill", name: "Hiking")
                             workoutItem(workout: .burpee, sfIcon: "figure.wrestling", name: "Burpees")
-                            workoutItem(workout: .jumpRope, sfIcon: "figure.jumprope", name: "Jump Rope")
-                            workoutItem(workout: .jumpingJacks, sfIcon: "figure.mixed.cardio", name: "Jumping Jacks")
+                            workoutItem(workout: .jumpRope, sfIcon: "figure.jumprope", name: "Jump\nRope")
+                            workoutItem(workout: .jumpingJacks, sfIcon: "figure.mixed.cardio", name: "Jumping\nJacks")
                         }
                     }
                     .scrollIndicators(.automatic, axes: .horizontal)
@@ -170,5 +187,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(selectedWorkout: .none, userData: .constant(UserInfo(preferredWorkouts: [], timeToWorkout: 5.0, age: 16.0, height: 189.0, weight: 90.0, name: "Sam", challengeData: [ChallengeData(challengeName: "OOPS", challengeDescription: "oops", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: []), ChallengeData(challengeName: "Christmas Special Challenge", challengeDescription: "Lose some weight ASAP to stuff yourself for Christmas!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10), ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [])], dailyChallenge: ChallengeData(challengeName: "New Year Challenge", challengeDescription: "Lose some weight in time for the new year!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: []), badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true), Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true), Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)], exerciseData: [])))
+    HomeView(selectedWorkout: .none, userData: .constant(UserInfo(preferredWorkouts: [], timeToWorkout: 5.0, age: 16.0, height: 189.0, weight: 90.0, name: "Sam", challengeData: [ChallengeData(challengeName: "OOPS", challengeDescription: "oops", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "7.circle", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)]), ChallengeData(challengeName: "Christmas Special Challenge", challengeDescription: "Lose some weight ASAP to stuff yourself for Christmas!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10), ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [])], dailyChallenge: ChallengeData(challengeName: "New Year Challenge", challengeDescription: "Lose some weight in time for the new year!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [Badge(badge: "Streak Maintainer", sfIcon: "7.circle", obtainingExercise: .cycling, amountOfObtainingExercise: 10, obtained: false)]), badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true), Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true), Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)], exerciseData: [])))
 }

@@ -74,6 +74,36 @@ struct BadgesView: View {
                                 }
                             }
                         }
+                        ForEach(userData.dailyChallenge.badges, id: \.id) { badge in
+                            if badge.obtained {
+                                VStack {
+                                    Image(systemName: badge.sfIcon)
+                                        .font(.system(size: 48))
+                                    Text(badge.badge)
+                                        .font(.system(size: 16))
+                                        .multilineTextAlignment(.center)
+                                }
+                                .padding(10)
+                                .frame(width: UIScreen.main.bounds.width/2 - 30, height: 150)
+                                .background(.accent)
+                                .foregroundStyle(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
+                            } else if !filter {
+                                VStack {
+                                    Image(systemName: badge.sfIcon)
+                                        .font(.system(size: 48))
+                                    Text(badge.badge)
+                                        .font(.system(size: 16))
+                                        .multilineTextAlignment(.center)
+                                }
+                                .padding(10)
+                                .frame(width: UIScreen.main.bounds.width/2 - 30, height: 150)
+                                .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
+                            }   
+                        }
                     }
                     .padding()
                 }

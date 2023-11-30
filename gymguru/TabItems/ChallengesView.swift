@@ -15,10 +15,11 @@ struct ChallengesView: View {
     @Environment(\.colorScheme) var colorScheme
     @Binding var userData: UserInfo
     @State var customChallenge = false
+    @Binding var currentChallenges: [ChallengeData]
     var body: some View {
         NavigationStack {
             List {
-                ForEach($challengesAvailable, id: \.id) { $challenge in
+                ForEach($currentChallenges, id: \.id) { $challenge in
                     NavigationLink {
                         ChallengeInternalView(challenge: $challenge, userData: $userData)
                     } label: {
@@ -62,6 +63,7 @@ struct ChallengeInternalView: View {
     @Binding var challenge: ChallengeData
     @Binding var userData: UserInfo
     @Environment(\.dismiss) var dismiss
+    @State var tooManyChallenges = false
     var body: some View {
         VStack {
             Spacer()
@@ -103,8 +105,12 @@ struct ChallengeInternalView: View {
             }
             
             Button {
-                userData.challengeData.append(ChallengeData(challengeType: .seasonal, challengeName: challenge.challengeName, challengeDescription: challenge.challengeDescription, challengeItems: challenge.challengeItems, badges: []))
-                dismiss()
+                if userData.challengeData.count != 2 {
+                    userData.challengeData.append(ChallengeData(challengeType: .seasonal, challengeName: challenge.challengeName, challengeDescription: challenge.challengeDescription, challengeItems: challenge.challengeItems, badges: []))
+                    dismiss()
+                } else {
+                    tooManyChallenges = true
+                }
             } label: {
                 HStack {
                     Spacer()
@@ -118,6 +124,11 @@ struct ChallengeInternalView: View {
             .padding(.horizontal, 10)
             
             Spacer()
+        }
+        .alert("You have participated in too many challenges. Please complete one to add another one.", isPresented: $tooManyChallenges) {
+            Button("OK", role: .cancel) {
+                dismiss()
+            }
         }
     }
 }
@@ -168,5 +179,5 @@ struct ChallengeInternalView: View {
                                                 badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true),
                                                           Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true),
                                                          Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
-                                                exerciseData: [])))
+                                                exerciseData: [])), currentChallenges: .constant([]))
 }

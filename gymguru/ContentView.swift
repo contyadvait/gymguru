@@ -42,6 +42,9 @@ struct ContentView: View {
                                                                     Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
                                                            exerciseData: [])
     @Forever("showSetupModal") var showSetupModal = false
+//    @DontLeaveMe("challengeStreak") var challengeStreak = 30
+    @State var challengeStreak = 30
+    let challengeManager = ChallengeManager()
 
     
     var body: some View {
@@ -52,7 +55,7 @@ struct ContentView: View {
             BadgesView(userData: $userData, currentChallenges: $challengesAvailable)
                 .tabItem { Label("Badges", systemImage: "star") }
             
-            ChallengesView(userData: $userData)
+            ChallengesView(userData: $userData, currentChallenges: $challengesAvailable)
                 .tabItem {
                     Label("Challenges", systemImage: "trophy")
                 }
@@ -65,6 +68,12 @@ struct ContentView: View {
         }
         .fullScreenCover(isPresented: $showSetupModal) {
             OnboardingView(userData: $userData)
+        }
+        .onAppear {
+            userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
+//            if challengeStreak == 30 {
+//                challengeStreak = 0
+//            }
         }
     }
 }
