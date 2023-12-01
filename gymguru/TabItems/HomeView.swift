@@ -149,7 +149,11 @@ struct HomeView: View {
                         .padding(.bottom)
                         ForEach(challenge.challengeItems, id: \.id) { challengeItem in
                             ProgressView(value: challengeItem.percentage) {
-                                Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
+                                HStack {
+                                    Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
+                                    Spacer()
+                                    Text("\(Int(challengeItem.percentage*100))%")
+                                }
                             }
                         }
                         .padding([.top, .bottom])
