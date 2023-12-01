@@ -87,6 +87,14 @@ struct HomeView: View {
                 }
                 Spacer()
             }
+            
+            if userData.dailyChallenge.challengeItems[0].percentage == Float(1) {
+                VStack {
+                    Text("You have sucessfully completed today's daily challenge! Come back for more tommorow!")
+                    Text("Current daily challenge streak: \(challengeStreak)")
+                }
+                .padding([.top, .bottom])
+            }
         }
         .onAppear {
             // Create a timer that fires every second and calls the calculateTimeRemaining function
@@ -94,7 +102,11 @@ struct HomeView: View {
                 calculateTimeRemaining()
                 if timeRemaining == "Due in\n0h 0min 0s" {
                     if userData.dailyChallenge.challengeItems[0].percentage == Float(1) {
+                        challengeStreak += 1
                         userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
+                        if challengeStreak == 30 {
+                            challengeStreak = 0
+                        }
                     }
                 }
             }
@@ -106,6 +118,15 @@ struct HomeView: View {
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
         .foregroundStyle(colorScheme == .dark ? .white : .black)
+        .onAppear {
+            if !userData.dailyChallenge.badges.isEmpty {
+                if userData.dailyChallenge.challengeItems[0].percentage == Float(1) {
+                    for badge in userData.dailyChallenge.badges {
+                        userData.badges.append(badge)
+                    }
+                }
+            }
+        }
     }
     
     var monthlyChallengesView: some View {
@@ -153,6 +174,18 @@ struct HomeView: View {
                     .fontWeight(.black)
                 Spacer()
             }
+            .onAppear {
+                for (challengeIndex, challenge) in userData.challengeData.enumerated() {
+                    for (challengeItemIndex, challengeItem) in challenge.challengeItems.enumerated() {
+                        if challengeItem.percentage == Float(1) {
+                            for (badgeIndex, badge) in challenge.badges.enumerated() {
+                                userData.badges.append(badge)
+                            }
+                            userData.challengeData[challengeIndex].badges = []
+                        }
+                    }
+                }
+            }
             
             ScrollView {
                 dailyChallengeView
@@ -194,5 +227,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(selectedWorkout: .hiking, userData: .constant(UserInfo(preferredWorkouts: [], timeToWorkout: 5.0, age: 16.0, height: 189.0, weight: 90.0, name: "Sam", challengeData: [ChallengeData(challengeName: "OOPS", challengeDescription: "oops", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "7.circle", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)]), ChallengeData(challengeName: "Christmas Special Challenge", challengeDescription: "Lose some weight ASAP to stuff yourself for Christmas!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10), ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [])], dailyChallenge: ChallengeData(challengeName: "New Year Challenge", challengeDescription: "Lose some weight in time for the new year!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [Badge(badge: "Streak Maintainer", sfIcon: "7.circle", obtainingExercise: .cycling, amountOfObtainingExercise: 10, obtained: false)]), badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .jogging, amountOfObtainingExercise: 0, obtained: true), Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true), Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)], exerciseData: [])), challengeStreak: .constant(10))
+    HomeView(selectedWorkout: .hiking, userData: .constant(UserInfo(preferredWorkouts: [], timeToWorkout: 5.0, age: 16.0, height: 189.0, weight: 90.0, name: "Sam", challengeData: [ChallengeData(challengeName: "OOPS", challengeDescription: "oops", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "7.circle", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)]), ChallengeData(challengeName: "Christmas Special Challenge", challengeDescription: "Lose some weight ASAP to stuff yourself for Christmas!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10), ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)])], dailyChallenge: ChallengeData(challengeName: "New Year Challenge", challengeDescription: "Lose some weight in time for the new year!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [Badge(badge: "Streak Maintainer", sfIcon: "7.circle", obtainingExercise: .cycling, amountOfObtainingExercise: 10, obtained: false)]), badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .jogging, amountOfObtainingExercise: 0, obtained: true), Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true), Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)], exerciseData: [])), challengeStreak: .constant(10))
 }

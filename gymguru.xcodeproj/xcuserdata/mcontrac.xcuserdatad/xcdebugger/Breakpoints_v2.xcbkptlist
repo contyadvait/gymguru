@@ -14,8 +14,8 @@
             filePath = "gymguru/TabItems/HomeView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -34,54 +34,6 @@
             endingLineNumber = "17"
             landmarkName = "challengesAvailable"
             landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DB947DCC-4463-4640-9840-FCC531FFDF87"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "gymguru/ContentView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "DB947DCC-4463-4640-9840-FCC531FFDF87 - ff0f94c875197dc7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 () -&gt; () in gymguru.ContentView.body.getter : some"
-                  moduleName = "gymguru"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcontrac/SAP/gymguru/gymguru/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "1123">
-               </Location>
-               <Location
-                  uuid = "DB947DCC-4463-4640-9840-FCC531FFDF87 - ff0f94c875197dc7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 () -&gt; () in gymguru.ContentView.body.getter : some"
-                  moduleName = "gymguru"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcontrac/SAP/gymguru/gymguru/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "1051">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

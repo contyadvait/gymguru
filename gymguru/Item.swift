@@ -105,7 +105,11 @@ struct ExerciseItem: Codable, Identifiable {
     var amount: Float
     var completed: Float = 0
     var percentage: Float {
-        return Float(Float(completed)/Float(amount))
+        if Float(Float(completed)/Float(amount)) != Float(1) {
+            return Float(Float(completed)/Float(amount))
+        } else {
+            return Float(1)
+        }
     }
 }
 

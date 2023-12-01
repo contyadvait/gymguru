@@ -93,7 +93,7 @@ struct ChallengeInternalView: View {
             
             Button {
                 if userData.challengeData.count != 2 {
-                    userData.challengeData.append(ChallengeData(challengeType: .seasonal, challengeName: challenge.challengeName, challengeDescription: challenge.challengeDescription, challengeItems: challenge.challengeItems, badges: []))
+                    userData.challengeData.append(challenge)
                     dismiss()
                 } else {
                     tooManyChallenges = true
