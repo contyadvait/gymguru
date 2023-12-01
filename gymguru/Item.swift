@@ -16,7 +16,7 @@ enum Exercise: Codable, Hashable, CaseIterable {
         case .burpee:
             return "Burpee"
         case .jumpRope:
-            return "Jump Rople"
+            return "Jump Rope"
         case .jumpingJacks:
             return "Jumping jacks"
         case .running:
