@@ -101,6 +101,19 @@ struct ContentView: View {
             if challengeStreak == 30 {
                 challengeStreak = 0
             }
+            
+            var itemsToCount = 0
+            
+            for (challengeIndex, challenge) in userData.challengeData.enumerated() {
+                for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
+                    if workout.percentage == Float(1) {
+                        itemsToCount += 1
+                    }
+                }
+                if challenge.challengeItems.count == itemsToCount {
+                    userData.challengeData.remove(at: challengeIndex)
+                }
+            }
         }
     }
 }
