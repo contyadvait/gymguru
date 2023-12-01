@@ -77,6 +77,7 @@ struct HomeView: View {
                         Text("\(Int((challenge.percentage)*100))%")
                     }
                 }
+                .tint(.white)
                 .foregroundStyle(.white)
             }
             

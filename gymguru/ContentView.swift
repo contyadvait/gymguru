@@ -36,7 +36,7 @@ struct ContentView: View {
                                                            badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .cycling, amountOfObtainingExercise: 0, obtained: true)],
                                                            exerciseData: [])
     @Forever("showSetupModal") var showSetupModal = false
-    @AppStorage("challengeStreak") var challengeStreak = 30
+    @AppStorage("challengeStreak") var challengeStreak = 0
     @AppStorage("lastUpdatedDate") var lastUpdatedDate: String = ""
     let challengeManager = ChallengeManager()
     
