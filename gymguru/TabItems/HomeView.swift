@@ -371,7 +371,7 @@ struct HelpView: View {
                 
                 
                 HStack {
-                    Text("You can choose to join Seasonal Challenges via the 'Challenges' tab. Every challenge has a badge assigned to it. So completing a challenge would allow you to unlock its designated badge which can be accessed through the 'Badges' tab. Do note though, you can only enroll in 2 challenges at maximum!")
+                    Text("You can choose to join Seasonal Challenges via the 'Challenges' tab. Every challenge has a badge assigned to it. So completing a challenge would allow you to unlock its designated badge which can be accessed through the 'Badges' tab. Do note though, you can only enroll in 2 challenges at maximum! To leave these challenges, press and hold on the title on the home screen, to which you can access a sheet to leave the challenge.")
                         .font(.body)
                         .multilineTextAlignment(.leading)
                     Spacer()
