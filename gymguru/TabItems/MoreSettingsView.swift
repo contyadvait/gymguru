@@ -90,6 +90,7 @@ struct CreditsView: View {
                 .tint(.gray)
             }
             .padding([.top, .leading, .trailing])
+            Divider()
             HStack {
                 Text("Packages")
                     .font(.system(size: 20,weight: .regular, design: .default))
@@ -119,43 +120,113 @@ struct CreditsView: View {
                 .buttonStyle(.borderedProminent)
             }
             .padding(.horizontal)
-            
+//            
+//            HStack {
+//                Text("Contentful - Contentful.swift")
+//                Spacer()
+//                Button {
+//                    openURL(URL(string: "https://github.com/contentful/contentful.swift")!)
+//                } label: {
+//                    Text("View Package")
+//                }
+//                .buttonStyle(.borderedProminent)
+//            }
+//            .padding(.horizontal)
+//            
+//            HStack {
+//                Text("SDWebImage - SDWebImageSwiftUI")
+//                Spacer()
+//                Button {
+//                    openURL(URL(string: "https://github.com/SDWebImage/SDWebImageSwiftUI")!)
+//                } label: {
+//                    Text("View Package")
+//                }
+//                .buttonStyle(.borderedProminent)
+//            }
+//            .padding(.horizontal)
+//            
+//            HStack {
+//                Text("SDWebImage - SDWebImage")
+//                Spacer()
+//                Button {
+//                    openURL(URL(string: "https://github.com/SDWebImage/SDWebImage")!)
+//                } label: {
+//                    Text("View Package")
+//                }
+//                .buttonStyle(.borderedProminent)
+//            }
+//            .padding(.horizontal)
+            Divider()
             HStack {
-                Text("Contentful - Contentful.swift")
+                Text("Developers")
+                    .font(.system(size: 20,weight: .regular, design: .default))
+                Spacer()
+            }
+            .padding(.horizontal)
+            HStack {
+                Text("Advait Contractor")
                 Spacer()
                 Button {
-                    openURL(URL(string: "https://github.com/contentful/contentful.swift")!)
+                    openURL(URL(string: "https://github.com/contyadvait")!)
                 } label: {
-                    Text("View Package")
+                    Text("View Profile")
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .padding(.horizontal)
+
+            HStack {
+                Text("Brian Joseph")
+                Spacer()
+                Button {
+                    openURL(URL(string: "https://github.com/BrianJ09")!)
+                } label: {
+                    Text("View Profile")
                 }
                 .buttonStyle(.borderedProminent)
             }
             .padding(.horizontal)
             
             HStack {
-                Text("SDWebImage - SDWebImageSwiftUI")
+                Text("Gideon Yen")
                 Spacer()
                 Button {
-                    openURL(URL(string: "https://github.com/SDWebImage/SDWebImageSwiftUI")!)
+                    openURL(URL(string: "https://github.com/GideonYen")!)
                 } label: {
-                    Text("View Package")
+                    Text("View Profile")
                 }
                 .buttonStyle(.borderedProminent)
             }
             .padding(.horizontal)
             
             HStack {
-                Text("SDWebImage - SDWebImage")
+                Text("Sachin Dineshraja")
                 Spacer()
                 Button {
-                    openURL(URL(string: "https://github.com/SDWebImage/SDWebImage")!)
+                    openURL(URL(string: "https://github.com/sachindineshraja08")!)
                 } label: {
-                    Text("View Package")
+                    Text("View Profile")
                 }
                 .buttonStyle(.borderedProminent)
             }
             .padding(.horizontal)
             
+            HStack {
+                Text("Advait Contractor")
+                Spacer()
+                Button {
+                    openURL(URL(string: "https://github.com/contyadvait")!)
+                } label: {
+                    Text("View Profile")
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .padding([.horizontal, .bottom])
+            HStack {
+                Text("Part of the Swift Accelerator Programme 2023")
+                Spacer()
+            }
+            .padding(.horizontal)
             
             Spacer()
         }

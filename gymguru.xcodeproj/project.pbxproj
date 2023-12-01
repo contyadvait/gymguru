@@ -406,6 +406,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = gymguru/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = FitStreak;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Required for the app to work";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Required for the app to work";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Required for the app to work";
@@ -446,6 +447,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = gymguru/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = FitStreak;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Required for the app to work";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Required for the app to work";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Required for the app to work";
