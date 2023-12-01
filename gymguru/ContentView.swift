@@ -38,13 +38,14 @@ struct ContentView: View {
     @Forever("showSetupModal") var showSetupModal = false
     @AppStorage("challengeStreak") var challengeStreak = 0
     @AppStorage("lastUpdatedDate") var lastUpdatedDate: String = ""
+    @AppStorage("showHelp") var showHelp = true
     let challengeManager = ChallengeManager()
     
     
     var body: some View {
         VStack {
             TabView {
-                HomeView(selectedWorkout: .cycling, userData: $userData, challengeStreak: $challengeStreak)
+                HomeView(selectedWorkout: .cycling, userData: $userData, challengeStreak: $challengeStreak, showHelp: $showHelp)
                     .tabItem {
                         Label("Home", systemImage: "house.fill")
                     }
@@ -59,7 +60,7 @@ struct ContentView: View {
                         Label("Challenges", systemImage: "trophy")
                     }
                 
-                SettingsView(item: $userData, setup: $showSetupModal)
+                SettingsView(item: $userData, setup: $showSetupModal, showHelp: $showHelp)
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }

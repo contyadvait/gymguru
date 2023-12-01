@@ -84,7 +84,11 @@ enum ChallengeType: Codable {
     case daily, seasonal
 }
 
-struct ChallengeData: Codable, Identifiable {
+struct ChallengeData: Codable, Identifiable, Equatable {
+    static func == (lhs: ChallengeData, rhs: ChallengeData) -> Bool {
+        lhs.challengeName == rhs.challengeName
+    }
+    
     let id = UUID()
     
     var challengeType: ChallengeType = .seasonal

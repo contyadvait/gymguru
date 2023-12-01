@@ -13,6 +13,7 @@ struct SettingsView: View {
     @Binding var setup: Bool
     @State var showMoreOptions = false
     @State var openCredits = false
+    @Binding var showHelp: Bool
     var body: some View {
         NavigationStack {
             List {
@@ -24,6 +25,7 @@ struct SettingsView: View {
                             TextField("Sam...", text: $item.name)
                         }
                     }
+                    Toggle("Show help button on Home Screen", isOn: $showHelp)
                     Button {
                         showMoreOptions = true
                     } label: {
@@ -55,16 +57,6 @@ struct SettingsView: View {
                         Text("Credits")
                     }
                 }
-                
-                #if DEBUG
-                Section("Debug") {
-                    Button {
-                        setup = true
-                    } label: {
-                        Text("Re-do setup")
-                    }
-                }
-                #endif
             }
             .navigationTitle("Settings")
         }
