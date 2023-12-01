@@ -163,8 +163,6 @@ struct ChallengeInternalView: View {
                                                 weight: 90.0,
                                                 name: "Sam",
                                                           challengeData: [], dailyChallenge:  ChallengeData(challengeName: "aff", challengeDescription: "afa", challengeItems: [], badges: []),
-                                                badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .burpee, amountOfObtainingExercise: 0, obtained: true),
-                                                          Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true),
-                                                         Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
+                                                badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .burpee, amountOfObtainingExercise: 0, obtained: true)],
                                                 exerciseData: [])), currentChallenges: .constant([]))
 }
