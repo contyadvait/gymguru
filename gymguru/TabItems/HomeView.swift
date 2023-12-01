@@ -9,6 +9,7 @@ struct HomeView: View {
     @Binding var userData: UserInfo
     @State var timeRemaining = ""
     @Binding var challengeStreak: Int
+    @State var helpSheet = false
     let challengeManager = ChallengeManager()
     
     func workoutItem(workout: Exercise, sfIcon: String, name: String) -> some View {
@@ -102,6 +103,7 @@ struct HomeView: View {
                 calculateTimeRemaining()
                 if timeRemaining == "Due in\n0h 0min 0s" {
                     if userData.dailyChallenge.challengeItems[0].percentage == Float(1) {
+//<<<<<<< Updated upstream
                         challengeStreak += 1
                         userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
                         if challengeStreak == 30 {
@@ -171,14 +173,94 @@ struct HomeView: View {
                     .font(.largeTitle)
                     .bold()
                     .padding(10.0)
-                    .fontWeight(.black)
+                    
+                    
                 Spacer()
+                Button(action: {
+                    helpSheet.toggle()
+                }, label: {
+                    Image(systemName: "questionmark.circle.fill")
+                        .font(.system(size: 30))
+                })
+                .sheet(isPresented: $helpSheet){
+                    ScrollView{
+                        Text("Help")
+                            .font(.largeTitle)
+                            .fontWeight(.black)
+                            .multilineTextAlignment(.center)
+                       
+                            .padding(10.0)
+                        Text("Daily Challenges")
+                            .foregroundStyle(Color.red)
+                            .font(.title2)
+                            .font(.system(size: 20))
+                            .bold()
+                            .multilineTextAlignment(.center)
+                            
+                        Text("Daily challenges are set by the FitStreak AI. These challenges are random from a set of exercises that you can complete. Once you finish the daily challenges 7 days in a row, you will earn the 7-Day Streak badge. This continues on as you can earn badges for 1-Month streaks and so on. You can start a workout and your workout will immediately be counted in your challenge.")
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                            
+                           
+                        .padding(5.0)
+                        
+                        Text("Seasonal Challenges")
+                            .foregroundStyle(Color.red)
+                            .font(.title2)
+                            .font(.system(size: 20))
+                            .bold()
+                            .multilineTextAlignment(.center)
+                        
+                        Text("You can choose to join Seasonal Challenges via the 'Challenges' tab. Every challenge has a badge assigned to it. So completing a challenge would allow you to unlock its designated badge which can be accessed through the 'Badges' tab. Do note though, you can only enroll in 2 challenges at maximum!")
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                        
+                            
+                        .padding(5.0)
+                            
+                            Text("Badges")
+                                .foregroundStyle(Color.red)
+                                .font(.title2)
+                                .font(.system(size: 20))
+                                .bold()
+                                .multilineTextAlignment(.center)
+                            
+                            Text("You can obtain badges either from daily or seasonal challenges and access them in the 'Badges' tab. Obtained badges will be coloured as Red. You can filter out obtained badges from unobtained badges by clicking the three line icon at the top right of your screen in the 'Badges' tab.")
+                                .font(.body)
+                                .multilineTextAlignment(.center)
+                        
+                            .padding(5.0)
+                            Text("Personal Workout")
+                                .foregroundStyle(Color.red)
+                                .font(.title2)
+                                .font(.system(size: 20))
+                                .bold()
+                                .multilineTextAlignment(.center)
+                        
+                        Text("Other than challenges, you can do your own workout by choosing a workout option in the 'Home' tab. Do note that personal workouts will also count to your challenges, but your workout is not limited to the challenge goal.")
+                                .font(.body)
+                                .multilineTextAlignment(.center)
+                                
+                        
+                        .padding(5.0)
+                        Text("Settings")
+                            .foregroundStyle(Color.red)
+                            .font(.title2)
+                            .font(.system(size: 20))
+                            .bold()
+                            .multilineTextAlignment(.center)
+                        
+                        Text("You can edit your personal information like height and weight by going to Settings > More(Under Name). Alternatively, you can also redo your setup. This means you will be brought back to the starting form where you will fill out your name, info, workouts and notification settings.")
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                    }
+                }
             }
             .onAppear {
                 for (challengeIndex, challenge) in userData.challengeData.enumerated() {
-                    for (challengeItemIndex, challengeItem) in challenge.challengeItems.enumerated() {
+                    for (_, challengeItem) in challenge.challengeItems.enumerated() {
                         if challengeItem.percentage == Float(1) {
-                            for (badgeIndex, badge) in challenge.badges.enumerated() {
+                            for (_, badge) in challenge.badges.enumerated() {
                                 userData.badges.append(badge)
                             }
                             userData.challengeData[challengeIndex].badges = []
