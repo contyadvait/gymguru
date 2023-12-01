@@ -58,116 +58,6 @@ struct HomeView: View {
         timeRemaining = output
     }
     
-    var helpSheetContent: some View {
-        VStack {
-            HStack {
-                Text("Help")
-                    .font(.system(size: 20,weight: .medium, design: .default))
-                Spacer()
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .symbolRenderingMode(.hierarchical)
-                        .font(.system(size: 25,weight: .medium, design: .default))
-                }
-                .tint(.gray)
-            }
-            .padding([.top, .leading, .trailing])
-            ScrollView{
-                HStack {
-                    Text("Daily Challenges")
-                        .font(.title2)
-                        .font(.system(size: 20))
-                        .bold()
-                        .multilineTextAlignment(.leading)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("Daily challenges are set by the FitStreak AI. These challenges are random from a set of exercises that you can complete. Once you finish the daily challenges 7 days in a row, you will earn the 7-Day Streak badge. This continues on as you can earn badges for 1-Month streaks and so on. You can start a workout and your workout will immediately be counted in your challenge.")
-                        .font(.body)
-                        .multilineTextAlignment(.leading)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("Seasonal Challenges")
-                        .font(.title2)
-                        .font(.system(size: 20))
-                        .bold()
-                        .multilineTextAlignment(.leading)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("You can choose to join Seasonal Challenges via the 'Challenges' tab. Every challenge has a badge assigned to it. So completing a challenge would allow you to unlock its designated badge which can be accessed through the 'Badges' tab. Do note though, you can only enroll in 2 challenges at maximum!")
-                        .font(.body)
-                        .multilineTextAlignment(.leading)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("Badges")
-                        .font(.title2)
-                        .font(.system(size: 20))
-                        .bold()
-                        .multilineTextAlignment(.leading)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("You can obtain badges either from daily or seasonal challenges and access them in the 'Badges' tab. Obtained badges will be coloured as Red. You can filter out obtained badges from unobtained badges by clicking the three line icon at the top right of your screen in the 'Badges' tab.")
-                        .font(.body)
-                        .multilineTextAlignment(.leading)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("Personal Workout")
-                        .font(.title2)
-                        .font(.system(size: 20))
-                        .bold()
-                        .multilineTextAlignment(.center)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("Other than challenges, you can do your own workout by choosing a workout option in the 'Home' tab. Do note that personal workouts will also count to your challenges, but your workout is not limited to the challenge goal.")
-                        .font(.body)
-                        .multilineTextAlignment(.leading)
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("Settings")
-                        .font(.title2)
-                        .font(.system(size: 20))
-                        .bold()
-                        .multilineTextAlignment(.center)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("You can edit your personal information like height and weight by going to Settings > More(Under Name).")
-                        .font(.body)
-                        .multilineTextAlignment(.leading)
-                    Spacer()
-                }
-                .padding(.horizontal)
-            }
-        }
-        .presentationDetents([.medium, .large])
-    }
-    
     var dailyChallengeView: some View {
         VStack(spacing: 5) {
             HStack {
@@ -304,10 +194,12 @@ struct HomeView: View {
                         helpSheet.toggle()
                     }, label: {
                         Image(systemName: "questionmark.circle")
-                            .font(.system(size: 30))
+                            .symbolRenderingMode(.hierarchical)
+                            .font(.system(size: 25))
                     })
+                    .padding()
                     .sheet(isPresented: $helpSheet){
-                        helpSheetContent
+                        HelpView()
                     }
                 }
             }
@@ -425,6 +317,133 @@ struct LeaveChallengeView: View {
             Button("Cancel", role: .cancel) { dismiss() }
         }
     }
+}
+
+struct HelpView: View {
+    @Environment(\.dismiss) var dismiss
+    var body: some View {
+        VStack {
+            HStack {
+                Text("Help")
+                    .font(.system(size: 20,weight: .medium, design: .default))
+                Spacer()
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .symbolRenderingMode(.hierarchical)
+                        .font(.system(size: 25,weight: .medium, design: .default))
+                }
+                .tint(.gray)
+            }
+            .padding([.top, .leading, .trailing])
+            Divider()
+            ScrollView{
+                HStack {
+                    Text("Daily Challenges")
+                        .font(.title2)
+                        .font(.system(size: 20))
+                        .bold()
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                .padding(.horizontal)
+                
+                HStack {
+                    Text("Daily challenges are set by the FitStreak AI. These challenges are random from a set of exercises that you can complete. Once you finish the daily challenges 7 days in a row, you will earn the 7-Day Streak badge. This continues on as you can earn badges for 1-Month streaks and so on. You can start a workout and your workout will immediately be counted in your challenge.")
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                .padding()
+                
+                Divider()
+                
+                HStack {
+                    Text("Seasonal Challenges")
+                        .font(.title2)
+                        .font(.system(size: 20))
+                        .bold()
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                .padding(.horizontal)
+                
+                
+                HStack {
+                    Text("You can choose to join Seasonal Challenges via the 'Challenges' tab. Every challenge has a badge assigned to it. So completing a challenge would allow you to unlock its designated badge which can be accessed through the 'Badges' tab. Do note though, you can only enroll in 2 challenges at maximum!")
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                .padding()
+                
+                Divider()
+                
+                HStack {
+                    Text("Badges")
+                        .font(.title2)
+                        .font(.system(size: 20))
+                        .bold()
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                .padding(.horizontal)
+                
+                HStack {
+                    Text("You can obtain badges either from daily or seasonal challenges and access them in the 'Badges' tab. Obtained badges will be coloured as Red. You can filter out obtained badges from unobtained badges by clicking the three line icon at the top right of your screen in the 'Badges' tab.")
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                .padding()
+                
+                Divider()
+                
+                HStack {
+                    Text("Personal Workout")
+                        .font(.title2)
+                        .font(.system(size: 20))
+                        .bold()
+                        .multilineTextAlignment(.center)
+                    Spacer()
+                }
+                .padding(.horizontal)
+                
+                HStack {
+                    Text("Other than challenges, you can do your own workout by choosing a workout option in the 'Home' tab. Do note that personal workouts will also count to your challenges, but your workout is not limited to the challenge goal.")
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                }
+                .padding()
+                
+                Divider()
+                
+                HStack {
+                    Text("Settings")
+                        .font(.title2)
+                        .font(.system(size: 20))
+                        .bold()
+                        .multilineTextAlignment(.center)
+                    Spacer()
+                }
+                .padding(.horizontal)
+                
+                HStack {
+                    Text("You can edit your personal information like height and weight by going to Settings > More(Under Name).")
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                .padding()
+            }
+        }
+        .presentationDetents([.medium, .large])
+    }
+}
+
+#Preview {
+    HelpView()
 }
 
 #Preview {
