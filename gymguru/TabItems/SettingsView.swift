@@ -68,7 +68,7 @@ struct SettingsView: View {
         
         .sheet(isPresented: $openCredits) {
             CreditsView()
-                .presentationDetents([.medium])
+                .presentationDetents([.medium, .large])
             
         }
     }

@@ -51,6 +51,7 @@ struct ChallengeInternalView: View {
     @Binding var userData: UserInfo
     @Environment(\.dismiss) var dismiss
     @State var tooManyChallenges = false
+    @State var challengedJoinedAlready = false
     var body: some View {
         VStack {
             Spacer()
@@ -93,8 +94,18 @@ struct ChallengeInternalView: View {
             
             Button {
                 if userData.challengeData.count != 2 {
-                    userData.challengeData.append(challenge)
-                    dismiss()
+                    for savedChallenge in userData.challengeData {
+                        if challenge == savedChallenge {
+                            challengedJoinedAlready = true
+                        } else {
+                            userData.challengeData.append(challenge)
+                            dismiss()
+                        }
+                    }
+                    if userData.challengeData.count == 0 {
+                        userData.challengeData.append(challenge)
+                        dismiss()
+                    }
                 } else {
                     tooManyChallenges = true
                 }
@@ -113,6 +124,11 @@ struct ChallengeInternalView: View {
             Spacer()
         }
         .alert("You have participated in too many challenges. Please complete one to add another one.", isPresented: $tooManyChallenges) {
+            Button("OK", role: .cancel) {
+                dismiss()
+            }
+        }
+        .alert("You have already participated in this challenge. You cannot join this challenge again", isPresented: $challengedJoinedAlready) {
             Button("OK", role: .cancel) {
                 dismiss()
             }

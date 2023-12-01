@@ -248,90 +248,42 @@ struct HomeView: View {
     
     var monthlyChallengesView: some View {
         VStack {
-            ForEach(userData.challengeData, id: \.id) { challenge in
+            ForEach($userData.challengeData, id: \.id) { $challenge in
                 VStack {
-                    HStack {
-                        Text(challenge.challengeName)
-                            .font(.system(size: 25, weight: .medium))
-                        Spacer()
-                    }
-                    .padding(.bottom)
-                    ForEach(challenge.challengeItems, id: \.id) { challengeItem in
-                        ProgressView(value: challengeItem.percentage) {
-                            Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
+                    VStack {
+                        HStack {
+                            Text(challenge.challengeName)
+                                .font(.system(size: 25, weight: .medium))
+                            Spacer()
+                        }
+                        .padding(.bottom)
+                        ForEach(challenge.challengeItems, id: \.id) { challengeItem in
+                            ProgressView(value: challengeItem.percentage) {
+                                Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
+                            }
+                        }
+                        .padding([.top, .bottom])
+                        
+                        HStack {
+                            ForEach(challenge.badges, id: \.id) { badge in
+                                Image(systemName: badge.sfIcon)
+                                    .tint(.accentColor)
+                                    .font(.system(size: 19))
+                            }
+                            Spacer()
                         }
                     }
-                    .padding([.top, .bottom])
-                    
-                    HStack {
-                        ForEach(challenge.badges, id: \.id) { badge in
-                            Image(systemName: badge.sfIcon)
-                                .tint(.accentColor)
-                                .font(.system(size: 19))
-                        }
-                        Spacer()
-                    }
+                    .padding(10)
+                    .frame(width: UIScreen.main.bounds.width - 20)
+                    .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                    .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
                 }
-                .padding(10)
-                .frame(width: UIScreen.main.bounds.width - 20)
-                .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
-                .onTapGesture {
+                .onLongPressGesture {
                     leaveChallengeSheet = true
                 }
                 .sheet(isPresented: $leaveChallengeSheet) {
-                    VStack {
-                        HStack {
-                            Text("Challenge Info")
-                                .font(.system(size: 20,weight: .medium, design: .default))
-                            Spacer()
-                            Button {
-                                dismiss()
-                            } label: {
-                                Image(systemName: "xmark.circle.fill")
-                                    .symbolRenderingMode(.hierarchical)
-                                    .font(.system(size: 25,weight: .medium, design: .default))
-                            }
-                            .tint(.gray)
-                        }
-                        .padding([.top, .leading, .trailing])
-                        Divider()
-                        HStack {
-                            Text(challenge.challengeName)
-                            Spacer()
-                        }
-                        .padding(.horizontal)
-                        
-                        HStack {
-                            Text(challenge.challengeDescription)
-                            Spacer()
-                        }
-                        .padding(.horizontal)
-                        
-                        Button {
-                            warnBeforeLeaving = true
-                        } label: {
-                            HStack {
-                                Spacer()
-                                    Image(systemName: "xmark.circle.fill")
-                                    Text("Leave Challenge")
-                                Spacer()
-                            }
-                        }
-                        .padding(.horizontal)
-                        .buttonStyle(.borderedProminent)
-                        
-                        Spacer()
-                    }
-                    .presentationDetents([.medium])
-                    .alert("Are you sure you want to leave this challenge? Changes made will not be saved", isPresented: $warnBeforeLeaving) {
-                        Button("OK", role: .destructive) {
-                            userData.challengeData.remove(at: userData.challengeData.firstIndex(where: { $0 == challenge }) ?? 0)
-                            dismiss()
-                        }
-                        Button("Cancel", role: .cancel) {  }
-                    }
+                    LeaveChallengeView(userData: $userData, challenge: $challenge, warnBeforeLeaving: $warnBeforeLeaving)
                 }
             }
         }
@@ -407,6 +359,70 @@ struct HomeView: View {
                     CounterTrackingView(userData: $userData, exercise: $selectedWorkout)
                 }
             }
+        }
+    }
+}
+
+struct LeaveChallengeView: View {
+    @Binding var userData: UserInfo
+    @Environment(\.dismiss) var dismiss
+    @Binding var challenge: ChallengeData
+    @Binding var warnBeforeLeaving: Bool
+    var body: some View {
+        VStack {
+            HStack {
+                Text("Challenge Info")
+                    .font(.system(size: 20,weight: .medium, design: .default))
+                Spacer()
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .symbolRenderingMode(.hierarchical)
+                        .font(.system(size: 25,weight: .medium, design: .default))
+                }
+                .tint(.gray)
+            }
+            .padding([.top, .leading, .trailing])
+            Divider()
+            HStack {
+                Text(challenge.challengeName)
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            HStack {
+                Text(challenge.challengeDescription)
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            Button {
+                warnBeforeLeaving = true
+            } label: {
+                HStack {
+                    Spacer()
+                        Image(systemName: "xmark.circle.fill")
+                        Text("Leave Challenge")
+                    Spacer()
+                }
+            }
+            .padding(.horizontal)
+            .buttonStyle(.borderedProminent)
+            
+            Spacer()
+        }
+        .presentationDetents([.medium])
+        .alert("Are you sure you want to leave this challenge? Changes made will not be saved", isPresented: $warnBeforeLeaving) {
+            Button("OK", role: .destructive) {
+                if let index = userData.challengeData.firstIndex(of: challenge) {
+                    userData.challengeData.remove(at: index)
+                } else {
+                    print("Failed")
+                }
+                dismiss()
+            }
+            Button("Cancel", role: .cancel) { dismiss() }
         }
     }
 }
