@@ -66,7 +66,7 @@ enum Exercise: Codable, Hashable, CaseIterable {
 }
 
 struct UserInfo: Codable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     
     var preferredWorkouts: [Exercise]
     var timeToWorkout: Float
@@ -89,7 +89,7 @@ struct ChallengeData: Codable, Identifiable, Equatable {
         lhs.challengeName == rhs.challengeName
     }
     
-    let id = UUID()
+    var id = UUID()
     
     var challengeType: ChallengeType = .seasonal
     var challengeName: String
@@ -103,22 +103,15 @@ enum WorkoutTrack: Codable {
 }
 
 struct ExerciseItem: Codable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     var workoutItem: Exercise
     var workoutTrackType: WorkoutTrack = .map
     var amount: Float
     var completed: Float = 0
-    var percentage: Float {
-        if Float(Float(completed)/Float(amount)) != Float(1) {
-            return Float(Float(completed)/Float(amount))
-        } else {
-            return Float(1)
-        }
-    }
 }
 
 struct Badge: Codable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     var badge: String
     var sfIcon: String
     var obtainingExercise: Exercise
@@ -128,7 +121,7 @@ struct Badge: Codable, Identifiable {
 }
 
 struct TrackedWorkout: Codable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     
     var exercise: Exercise
     var amount: Float

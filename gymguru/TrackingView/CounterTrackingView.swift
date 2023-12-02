@@ -16,6 +16,7 @@ struct CounterTrackingView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var exercise: Exercise
     @State var showAlert = false
+    @State var crash = false
     
     var body: some View {
         VStack {
@@ -76,12 +77,32 @@ struct CounterTrackingView: View {
             }
             .alert("Are you sure you want to end this workout?", isPresented: $showAlert) {
                 Button("OK", role: .destructive) {
+                    var workoutsFinished = 0
                     
                     for (challengeIndex, challenge) in userData.challengeData.enumerated() {
                         for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
                             if workout.workoutItem == exercise {
-                                userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed = userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed + Float(amount)
+                                print(userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed)
+                                print(amount)
+                                let checkItem = userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed + Float(amount)
+                                userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed = Float(checkItem)
+                                print(checkItem)
+                                print("Same exercise, appending.....")
+                                print(userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed)
+                                print(userData.challengeData[challengeIndex].challengeItems[workoutIndex].amount)
                             }
+                            if Float(workout.completed)/Float(workout.amount) == Float(1) {
+                                workoutsFinished = workoutsFinished + 1
+                                print(workoutsFinished)
+                            }
+                        }
+                        
+                        if challenge.challengeItems.count == workoutsFinished {
+                            for (badgeIndex, badge) in challenge.badges.enumerated() {
+                                userData.challengeData[challengeIndex].badges[badgeIndex].obtained = true
+                                userData.badges.append(badge)
+                            }
+                            userData.challengeData.remove(at: challengeIndex)
                         }
                     }
                     
@@ -90,10 +111,17 @@ struct CounterTrackingView: View {
                             userData.dailyChallenge.challengeItems[dailyChallengeIndex].completed += Float(amount)
                         }
                     }
-                    dismiss()
+                    
+                    print(userData)
+                    
+                    
+                    crash = true
                 }
                 
                 Button("Cancel", role: .cancel) {  }
+            }
+            .alert("This app will crash to successfully record your progress. Please re-launch the app once you leave it", isPresented: $crash) {
+                Button("OK", role: .cancel) { exit(0) }
             }
             .buttonStyle(.bordered)
             Spacer()

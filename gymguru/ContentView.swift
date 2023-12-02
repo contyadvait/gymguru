@@ -26,7 +26,7 @@ struct ContentView: View {
                                       ChallengeData(challengeName: "JumpJack Juggernaut", challengeDescription: "[Higher-Level] Surpass your capabilities in doing jumping jacks, by completing this challenge! ", challengeItems: [ExerciseItem(workoutItem: .jumpingJacks, workoutTrackType: .counter, amount: 75)], badges: [Badge(badge: "Jumpernaut", sfIcon: "lightspectrum.horizontal", obtainingExercise: .jumpingJacks, amountOfObtainingExercise: 75, obtained: false)]),
                                       ChallengeData(challengeName: "Elevated Leap", challengeDescription: "[Higher-Level] Compete against gravity and jump new heights!", challengeItems: [ExerciseItem(workoutItem: .jumpRope, workoutTrackType: .counter, amount: 10)], badges: [Badge(badge: "Leap for the Skies!", sfIcon: "cloud.circle", obtainingExercise: .jumpRope, amountOfObtainingExercise: 10, obtained: false)]),
                                       ChallengeData(challengeName: "Burpee Mastery", challengeDescription: "[Higher-Level] Become a master at burpees!", challengeItems: [ExerciseItem(workoutItem: .burpee, workoutTrackType: .counter, amount: 30)], badges: [Badge(badge: "Burpee Legend", sfIcon: "figure.dance", obtainingExercise: .burpee, amountOfObtainingExercise: 30, obtained: false)]),]
-    @Forever("userdata") var userData: UserInfo = UserInfo(preferredWorkouts: [],
+    @DontDie("userData") var userData: UserInfo = UserInfo(preferredWorkouts: [],
                                                            timeToWorkout: 5.0,
                                                            age: 16.0,
                                                            height: 189.0,
@@ -35,7 +35,7 @@ struct ContentView: View {
                                                            challengeData: [], dailyChallenge: ChallengeData(challengeName: "Generating Challenge", challengeDescription: "Fake challenge", challengeItems: [], badges: []),
                                                            badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .cycling, amountOfObtainingExercise: 0, obtained: true)],
                                                            exerciseData: [])
-    @Forever("showSetupModal") var showSetupModal = false
+    @Forever("showSetupModal") var showSetupModal = true
     @AppStorage("challengeStreak") var challengeStreak = 0
     @AppStorage("lastUpdatedDate") var lastUpdatedDate: String = ""
     @AppStorage("showHelp") var showHelp = true
@@ -87,7 +87,7 @@ struct ContentView: View {
             if lastUpdatedDate != dateFormatter.string(from: dateNow) {
                 print(lastUpdatedDate)
                 print(dateFormatter.string(from: dateNow))
-                if userData.dailyChallenge.challengeItems[0].percentage == Float(1) {
+                if userData.dailyChallenge.challengeItems[0].completed/userData.dailyChallenge.challengeItems[0].amount == Float(1) {
                     if challengeStreak != 30 {
                         challengeStreak += 1
                     } else {
@@ -107,7 +107,7 @@ struct ContentView: View {
             
             for (challengeIndex, challenge) in userData.challengeData.enumerated() {
                 for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
-                    if workout.percentage == Float(1) {
+                    if workout.completed == workout.amount {
                         itemsToCount += 1
                     }
                 }

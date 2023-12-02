@@ -121,6 +121,25 @@ struct CreditsView: View {
                     .buttonStyle(.borderedProminent)
                 }
                 .padding(.horizontal)
+                Divider()
+                HStack {
+                    Text("GitHub")
+                        .font(.system(size: 20,weight: .regular, design: .default))
+                    Spacer()
+                }
+                .padding(.horizontal)
+                HStack {
+                    Text("FitStreak (originally named GymGuru)")
+                    Spacer()
+                    Button {
+                        openURL(URL(string: "https://github.com/contyadvait/gymguru")!)
+                    } label: {
+                        Text("View Repo")
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+                .padding(.horizontal)
+                
                 //
                 //            HStack {
                 //                Text("Contentful - Contentful.swift")
