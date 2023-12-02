@@ -6,7 +6,7 @@ struct HomeView: View {
     let cornerRadius = 10.0
     @State var selectedWorkout: Exercise
     @State var showWorkout = false
-//    @Binding var userData: UserInfo
+    //    @Binding var userData: UserInfo
     var userData: UserInfo { userDataManager.userData }
     @ObservedObject var userDataManager: UserDataManager
     @State var timeRemaining = ""
@@ -137,61 +137,68 @@ struct HomeView: View {
     }
     
     var monthlyChallengesView: some View {
-        VStack {
-            ForEach($userDataManager.userData.challengeData, id: \.id) { $challenge in
-                VStack {
-                    HStack {
-                        Text(challenge.challengeName)
-                            .font(.system(size: 25, weight: .medium))
-                        Spacer()
-                    }
-                    .padding(.bottom)
-                    ForEach(challenge.challengeItems, id: \.id) { challengeItem in
-                        ProgressView(value: challengeItem.completed/challengeItem.amount) {
-                            HStack {
-                                Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
-                                Spacer()
-                                if (challengeItem.completed/challengeItem.amount)*100 >= 100 {
-                                    Text("Completed!")
-                                } else {
-                                    Text("\(Int((challengeItem.completed/challengeItem.amount)*100))%")
-                                }
-                            }
+            VStack {
+                ForEach($userDataManager.userData.challengeData, id: \.id) { $challenge in
+                    VStack {
+                        HStack {
+                            Text(challenge.challengeName)
+                                .font(.system(size: 25, weight: .medium))
+                            Spacer()
                         }
-                        if challengeItem.completed >= challengeItem.amount {
-                            Text("You have finished this workout!")
-                                .onAppear {
-                                    for (badgeIndex, _) in userDataManager.userData.badges.enumerated() {
-                                        userDataManager.userData.badges[badgeIndex].obtained = true
+                        .padding(.bottom)
+                        ForEach(challenge.challengeItems, id: \.id) { challengeItem in
+                            ProgressView(value: challengeItem.completed/challengeItem.amount) {
+                                HStack {
+                                    Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
+                                    Spacer()
+                                    if (challengeItem.completed/challengeItem.amount)*100 >= 100 {
+                                        Text("Completed!")
+                                    } else {
+                                        Text("\(Int((challengeItem.completed/challengeItem.amount)*100))%")
                                     }
                                 }
+                            }
+                            if challengeItem.completed >= challengeItem.amount {
+                                Text("You have finished this workout!")
+                                    .onAppear {
+                                        for (badgeIndex, badge) in challenge.badges.enumerated() {
+                                            if !userDataManager.userData.badges.contains(badge) {
+                                                userDataManager.userData.badges.append(badge)
+                                            }
+                                        }
+                                        
+                                        for (badgeIndex, _) in userDataManager.userData.badges.enumerated() {
+                                            userDataManager.userData.badges[badgeIndex].obtained = true
+                                        }
+                                    }
+                            }
+                        }
+                        .padding([.top, .bottom])
+                        
+                        HStack {
+                            ForEach(challenge.badges, id: \.id) { badge in
+                                Image(systemName: badge.sfIcon)
+                                    .tint(.accentColor)
+                                    .font(.system(size: 19))
+                            }
+                            Spacer()
                         }
                     }
-                    .padding([.top, .bottom])
-                    
-                    HStack {
-                        ForEach(challenge.badges, id: \.id) { badge in
-                            Image(systemName: badge.sfIcon)
-                                .tint(.accentColor)
-                                .font(.system(size: 19))
-                        }
-                        Spacer()
+                    .padding(10)
+                    .frame(width: UIScreen.main.bounds.width - 20)
+                    .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                    .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
+                    .onLongPressGesture {
+                        leaveChallengeSheet = true
                     }
-                }
-                .padding(10)
-                .frame(width: UIScreen.main.bounds.width - 20)
-                .background(colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
-                .onLongPressGesture {
-                    leaveChallengeSheet = true
-                }
-                .sheet(isPresented: $leaveChallengeSheet) {
-                    LeaveChallengeView(userData: $userDataManager.userData, challenge: $challenge, warnBeforeLeaving: $warnBeforeLeaving)
+                    .sheet(isPresented: $leaveChallengeSheet) {
+                        LeaveChallengeView(userData: $userDataManager.userData, challenge: $challenge, warnBeforeLeaving: $warnBeforeLeaving)
+                    }
                 }
             }
         }
-    }
+        
     
     var body: some View {
         VStack {
@@ -305,7 +312,6 @@ struct HomeView: View {
         .id(refreshID)
     }
 }
-
 
 struct LeaveChallengeView: View {
     @Binding var userData: UserInfo

@@ -113,6 +113,14 @@ struct ContentView: View {
             for (badgeIndex, badge) in userDataManager.userData.badges.enumerated() {
                 userDataManager.userData.badges[badgeIndex].obtained = true
             }
+            
+            for (challengeIndex, challenge) in userDataManager.userData.challengeData.enumerated() {
+                for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
+                    if workout.completed >= workout.amount {
+                        userDataManager.userData.challengeData.remove(at: challengeIndex)
+                    }
+                }
+            }
         }
     }
 }

@@ -113,7 +113,11 @@ struct ExerciseItem: Codable, Identifiable {
     var completed: Float = 0
 }
 
-struct Badge: Codable, Identifiable {
+struct Badge: Codable, Identifiable, Equatable {
+    static func == (lhs: Badge, rhs: Badge) -> Bool {
+        lhs.badge == rhs.badge
+    }
+    
     var id = UUID()
     var badge: String
     var sfIcon: String
