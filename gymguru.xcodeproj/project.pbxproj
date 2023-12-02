@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF22DB7B2B1B113A0087F99D /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF22DB7A2B1B113A0087F99D /* UserDataManager.swift */; };
 		C1E9503A2B1429FF007584BA /* Colour+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E950392B1429FF007584BA /* Colour+Codable.swift */; };
 		C1E9503C2B144AB9007584BA /* DailyChallenges.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E9503B2B144AB9007584BA /* DailyChallenges.swift */; };
 		F10990B02B0AEEC6002665D9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10990AF2B0AEEC6002665D9 /* HomeView.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF22DB7A2B1B113A0087F99D /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		C1E950392B1429FF007584BA /* Colour+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colour+Codable.swift"; sourceTree = "<group>"; };
 		C1E9503B2B144AB9007584BA /* DailyChallenges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallenges.swift; sourceTree = "<group>"; };
 		F10990AF2B0AEEC6002665D9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				F10B86E52B0887AC0084255D /* Notification Manager */,
 				F12613C52B0717A300619FD6 /* Setup Views */,
 				F12613B72B070F2B00619FD6 /* Item.swift */,
+				AF22DB7A2B1B113A0087F99D /* UserDataManager.swift */,
 				F161A2DC2B1AE59D00668B94 /* Untitled_design-removebg-preview.png */,
 				F1766E3C2B19943000524687 /* iTunesArtwork@2x.png */,
 				F12613B92B070F2D00619FD6 /* Assets.xcassets */,
@@ -271,6 +274,7 @@
 				F12613B82B070F2B00619FD6 /* Item.swift in Sources */,
 				F12613B42B070F2B00619FD6 /* gymguruApp.swift in Sources */,
 				F182A5162B0F249900D42C94 /* ColorHexExtension.swift in Sources */,
+				AF22DB7B2B1B113A0087F99D /* UserDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

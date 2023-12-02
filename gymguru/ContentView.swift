@@ -26,15 +26,18 @@ struct ContentView: View {
                                       ChallengeData(challengeName: "JumpJack Juggernaut", challengeDescription: "[Higher-Level] Surpass your capabilities in doing jumping jacks, by completing this challenge! ", challengeItems: [ExerciseItem(workoutItem: .jumpingJacks, workoutTrackType: .counter, amount: 75)], badges: [Badge(badge: "Jumpernaut", sfIcon: "lightspectrum.horizontal", obtainingExercise: .jumpingJacks, amountOfObtainingExercise: 75, obtained: false)]),
                                       ChallengeData(challengeName: "Elevated Leap", challengeDescription: "[Higher-Level] Compete against gravity and jump new heights!", challengeItems: [ExerciseItem(workoutItem: .jumpRope, workoutTrackType: .counter, amount: 10)], badges: [Badge(badge: "Leap for the Skies!", sfIcon: "cloud.circle", obtainingExercise: .jumpRope, amountOfObtainingExercise: 10, obtained: false)]),
                                       ChallengeData(challengeName: "Burpee Mastery", challengeDescription: "[Higher-Level] Become a master at burpees!", challengeItems: [ExerciseItem(workoutItem: .burpee, workoutTrackType: .counter, amount: 30)], badges: [Badge(badge: "Burpee Legend", sfIcon: "figure.dance", obtainingExercise: .burpee, amountOfObtainingExercise: 30, obtained: false)]),]
-    @DontDie("userData") var userData: UserInfo = UserInfo(preferredWorkouts: [],
-                                                           timeToWorkout: 5.0,
-                                                           age: 16.0,
-                                                           height: 189.0,
-                                                           weight: 90.0,
-                                                           name: "Sam",
-                                                           challengeData: [], dailyChallenge: ChallengeData(challengeName: "Generating Challenge", challengeDescription: "Fake challenge", challengeItems: [], badges: []),
-                                                           badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .cycling, amountOfObtainingExercise: 0, obtained: true)],
-                                                           exerciseData: [])
+//    @DontDie("userData") var userData: UserInfo = UserInfo(preferredWorkouts: [],
+//                                                           timeToWorkout: 5.0,
+//                                                           age: 16.0,
+//                                                           height: 189.0,
+//                                                           weight: 90.0,
+//                                                           name: "Sam",
+//                                                           challengeData: [], dailyChallenge: ChallengeData(challengeName: "Generating Challenge", challengeDescription: "Fake challenge", challengeItems: [], badges: []),
+//                                                           badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .cycling, amountOfObtainingExercise: 0, obtained: true)],
+//                                                           exerciseData: [])
+    
+    @StateObject var userDataManager = UserDataManager()
+    
     @Forever("showSetupModal") var showSetupModal = true
     @AppStorage("challengeStreak") var challengeStreak = 0
     @AppStorage("lastUpdatedDate") var lastUpdatedDate: String = ""
@@ -47,7 +50,7 @@ struct ContentView: View {
         VStack {
             TabView {
                 if !refreshView {
-                    HomeView(selectedWorkout: .cycling, userData: $userData, challengeStreak: $challengeStreak, showHelp: $showHelp, refreshView: $refreshView)
+                    HomeView(selectedWorkout: .cycling, userDataManager: userDataManager, challengeStreak: $challengeStreak, showHelp: $showHelp, refreshView: $refreshView)
                         .tabItem {
                             Label("Home", systemImage: "house.fill")
                         }
@@ -61,24 +64,24 @@ struct ContentView: View {
                     }
                 }
                 
-                BadgesView(userData: $userData, currentChallenges: $challengesAvailable)
+                BadgesView(userDataManager: userDataManager, currentChallenges: $challengesAvailable)
                     .tabItem {
                         Label("Badges", systemImage: "star")
                     }
                 
-                ChallengesView(userData: $userData, currentChallenges: $challengesAvailable)
+                ChallengesView(userDataManager: userDataManager, currentChallenges: $challengesAvailable)
                     .tabItem {
                         Label("Challenges", systemImage: "trophy")
                     }
                 
-                SettingsView(item: $userData, setup: $showSetupModal, showHelp: $showHelp)
+                SettingsView(userDataManager: userDataManager, setup: $showSetupModal, showHelp: $showHelp)
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }
             }
         }
         .fullScreenCover(isPresented: $showSetupModal) {
-            OnboardingView(userData: $userData)
+            OnboardingView(userDataManager: userDataManager)
         }
         .onAppear {
             let currentDate = Date()
@@ -92,13 +95,13 @@ struct ContentView: View {
             if lastUpdatedDate == "" {
                 lastUpdatedDate = dateString
                 print("Found blank, overwriting now")
-                userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
+                userDataManager.userData.dailyChallenge = challengeManager.reRoll(userData: userDataManager.userData, challengeStreak: challengeStreak)
             }
             let dateNow = Date()
             if lastUpdatedDate != dateFormatter.string(from: dateNow) {
                 print(lastUpdatedDate)
                 print(dateFormatter.string(from: dateNow))
-                if userData.dailyChallenge.challengeItems[0].completed/userData.dailyChallenge.challengeItems[0].amount == Float(1) {
+                if userDataManager.userData.dailyChallenge.challengeItems[0].completed/userDataManager.userData.dailyChallenge.challengeItems[0].amount == Float(1) {
                     if challengeStreak != 30 {
                         challengeStreak += 1
                     } else {
@@ -107,7 +110,7 @@ struct ContentView: View {
                 } else {
                     challengeStreak = 0
                 }
-                userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
+                userDataManager.userData.dailyChallenge = challengeManager.reRoll(userData: userDataManager.userData, challengeStreak: challengeStreak)
                 lastUpdatedDate = dateFormatter.string(from: dateNow)
             }
             if challengeStreak == 30 {
@@ -116,14 +119,14 @@ struct ContentView: View {
             
             var itemsToCount = 0
             
-            for (challengeIndex, challenge) in userData.challengeData.enumerated() {
+            for (challengeIndex, challenge) in userDataManager.userData.challengeData.enumerated() {
                 for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
                     if workout.completed == workout.amount {
                         itemsToCount += 1
                     }
                 }
                 if challenge.challengeItems.count == itemsToCount {
-                    userData.challengeData.remove(at: challengeIndex)
+                    userDataManager.userData.challengeData.remove(at: challengeIndex)
                 }
             }
         }

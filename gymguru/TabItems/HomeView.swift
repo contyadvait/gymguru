@@ -6,7 +6,9 @@ struct HomeView: View {
     let cornerRadius = 10.0
     @State var selectedWorkout: Exercise
     @State var showWorkout = false
-    @Binding var userData: UserInfo
+//    @Binding var userData: UserInfo
+    var userData: UserInfo { userDataManager.userData }
+    @ObservedObject var userDataManager: UserDataManager
     @State var timeRemaining = ""
     @Binding var challengeStreak: Int
     @State var helpSheet = false
@@ -98,7 +100,7 @@ struct HomeView: View {
                 Spacer()
             }
             
-            if userData.dailyChallenge.challengeItems[0].amount == userData.dailyChallenge.challengeItems[0].completed {
+            if userData.dailyChallenge.challengeItems[0].amount <= userData.dailyChallenge.challengeItems[0].completed {
                 VStack {
                     Text("You have sucessfully completed today's daily challenge! Come back for more tommorow!")
                     Text("Current daily challenge streak: \(challengeStreak)")
@@ -109,15 +111,15 @@ struct HomeView: View {
         .onAppear {
             // Create a timer that fires every second and calls the calculateTimeRemaining function
             if userData.dailyChallenge.challengeName == "Generating Challenge" {
-                userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
+                userDataManager.userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
             }
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 calculateTimeRemaining()
                 if timeRemaining == "Due in\n0h 0min 0s" {
-                    if userData.dailyChallenge.challengeItems[0].amount == userData.dailyChallenge.challengeItems[0].completed {
+                    if userData.dailyChallenge.challengeItems[0].amount <= userData.dailyChallenge.challengeItems[0].completed {
                         //<<<<<<< Updated upstream
                         challengeStreak += 1
-                        userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
+                        userDataManager.userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
                         if challengeStreak == 30 {
                             challengeStreak = 0
                         }
@@ -134,9 +136,9 @@ struct HomeView: View {
         .foregroundStyle(colorScheme == .dark ? .white : .black)
         .onAppear {
             if !userData.dailyChallenge.badges.isEmpty {
-                if userData.dailyChallenge.challengeItems[0].completed == userData.dailyChallenge.challengeItems[0].amount {
+                if userData.dailyChallenge.challengeItems[0].completed >= userData.dailyChallenge.challengeItems[0].amount {
                     for badge in userData.dailyChallenge.badges {
-                        userData.badges.append(badge)
+                        userDataManager.userData.badges.append(badge)
                     }
                 }
             }
@@ -145,7 +147,7 @@ struct HomeView: View {
     
     var monthlyChallengesView: some View {
         VStack {
-            ForEach($userData.challengeData, id: \.id) { $challenge in
+            ForEach($userDataManager.userData.challengeData, id: \.id) { $challenge in
                 VStack {
                     HStack {
                         Text(challenge.challengeName)
@@ -182,7 +184,7 @@ struct HomeView: View {
                     leaveChallengeSheet = true
                 }
                 .sheet(isPresented: $leaveChallengeSheet) {
-                    LeaveChallengeView(userData: $userData, challenge: $challenge, warnBeforeLeaving: $warnBeforeLeaving)
+                    LeaveChallengeView(userData: $userDataManager.userData, challenge: $challenge, warnBeforeLeaving: $warnBeforeLeaving)
                 }
             }
         }
@@ -190,157 +192,152 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-            if showWorkout {
-                ProgressView()
-                    .fullScreenCover(isPresented: $showWorkout, onDismiss: { showWorkout = false }, content: {
-                        if selectedWorkout == .cycling || selectedWorkout == .running || selectedWorkout == .walk || selectedWorkout == .hiking {
-                            MapTrackingView(userData: $userData, exercise: $selectedWorkout)
-                                .onAppear {
-                                    homeViewOpened = false
-                                }
-                        } else {
-                            CounterTrackingView(userData: $userData, exercise: $selectedWorkout)
-                                .onAppear {
-                                    homeViewOpened = false
-                                }
-                        }
-                    })
-                    .onAppear {
-                        homeViewOpened = true
-                    }
-            } else {
+            
+            if homeViewOpened {
                 VStack {
-                    if homeViewOpened {
-                        VStack {
-                            HStack {
-                                Text("Home")
-                                    .onChange(of: userData) {
-                                        print(userData)
-                                        print(Date())
-                                    }
-                                    .font(.largeTitle)
-                                    .bold()
-                                    .padding(10.0)
-                                
-                                
-                                Spacer()
-                                if showHelp {
-                                    Button(action: {
-                                        helpSheet.toggle()
-                                    }, label: {
-                                        Image(systemName: helpSheet ? "questionmark.circle" : "questionmark.circle.fill")
-                                            .symbolRenderingMode(.hierarchical)
-                                            .font(.system(size: 25))
-                                    })
-                                    .contentTransition(.symbolEffect(.replace))
-                                    .sheet(isPresented: $helpSheet){
-                                        HelpView()
-                                    }
-                                }
-                                Button {
-                                     refreshID = UUID()
-                                    refreshView = true
-                                    print("refreshing.....")
-                                } label: {
-                                    Image(systemName: "arrow.clockwise.circle.fill")
-                                        .symbolRenderingMode(.hierarchical)
-                                        .font(.system(size: 25))
-                                        .padding()
-                                }
-                                .symbolEffect(.bounce, value: refreshID)
-                                .padding(.trailing, 2)
+                    HStack {
+                        Text("Home")
+                            .onChange(of: userData) {
+                                print(userData)
+                                print(Date())
                             }
-                            
-                            ScrollView {
-                                dailyChallengeView
-                                monthlyChallengesView
-                                HStack{
-                                    
-                                    Text("Start Workout")
-                                        .multilineTextAlignment(.leading)
-                                        .padding(15.0)
-                                        .font(.title2)
-                                        .fontWeight(.semibold)
-                                    Spacer()
-                                }
-                                HStack {
-                                    ScrollView(.horizontal) {
-                                        HStack {
-                                            workoutItem(workout: .cycling, sfIcon: "bicycle", name: "Cycle")
-                                            workoutItem(workout: .running, sfIcon: "figure.run", name: "Run")
-                                            workoutItem(workout: .walk, sfIcon: "figure.walk", name: "Walk")
-                                            workoutItem(workout: .hiking, sfIcon: "mountain.2.fill", name: "Hiking")
-                                            workoutItem(workout: .burpee, sfIcon: "figure.wrestling", name: "Burpees")
-                                            workoutItem(workout: .jumpRope, sfIcon: "figure.jumprope", name: "Jump\nRope")
-                                            workoutItem(workout: .jumpingJacks, sfIcon: "figure.mixed.cardio", name: "Jumping\nJacks")
-                                        }
-                                    }
-                                    .scrollIndicators(.automatic, axes: .horizontal)
-                                    .padding(10.0)
-                                }
+                            .font(.largeTitle)
+                            .bold()
+                            .padding(10.0)
+                        
+                        
+                        Spacer()
+                        if showHelp {
+                            Button(action: {
+                                helpSheet.toggle()
+                            }, label: {
+                                Image(systemName: helpSheet ? "questionmark.circle" : "questionmark.circle.fill")
+                                    .symbolRenderingMode(.hierarchical)
+                                    .font(.system(size: 25))
+                            })
+                            .contentTransition(.symbolEffect(.replace))
+                            .sheet(isPresented: $helpSheet){
+                                HelpView()
                             }
                         }
-                    } else {
-                        ProgressView()
-                            .onAppear {
-                                var workoutsFinished: Int = 0
-                                
-                                for (challengeIndex, challenge) in userData.challengeData.enumerated() {
-                                    for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
-                                        if workout.amount == workout.completed {
-                                            workoutsFinished = workoutsFinished + 1
-                                        }
-                                        if challenge.challengeItems.count == workoutsFinished {
-                                            userData.challengeData.remove(at: challengeIndex)
-                                        }
-                                    }
+                        Button {
+                            refreshID = UUID()
+                            refreshView = true
+                            print("refreshing.....")
+                        } label: {
+                            Image(systemName: "arrow.clockwise.circle.fill")
+                                .symbolRenderingMode(.hierarchical)
+                                .font(.system(size: 25))
+                                .padding()
+                        }
+                        .symbolEffect(.bounce, value: refreshID)
+                        .padding(.trailing, 2)
+                    }
+                    
+                    ScrollView {
+                        dailyChallengeView
+                        monthlyChallengesView
+                        HStack{
+                            
+                            Text("Start Workout")
+                                .multilineTextAlignment(.leading)
+                                .padding(15.0)
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            Spacer()
+                        }
+                        HStack {
+                            ScrollView(.horizontal) {
+                                HStack {
+                                    workoutItem(workout: .cycling, sfIcon: "bicycle", name: "Cycle")
+                                    workoutItem(workout: .running, sfIcon: "figure.run", name: "Run")
+                                    workoutItem(workout: .walk, sfIcon: "figure.walk", name: "Walk")
+                                    workoutItem(workout: .hiking, sfIcon: "mountain.2.fill", name: "Hiking")
+                                    workoutItem(workout: .burpee, sfIcon: "figure.wrestling", name: "Burpees")
+                                    workoutItem(workout: .jumpRope, sfIcon: "figure.jumprope", name: "Jump\nRope")
+                                    workoutItem(workout: .jumpingJacks, sfIcon: "figure.mixed.cardio", name: "Jumping\nJacks")
                                 }
-                                for (challengeIndex, challenge) in userData.challengeData.enumerated() {
-                                    for (_, challengeItem) in challenge.challengeItems.enumerated() {
-                                        if challengeItem.amount == challengeItem.completed {
-                                            for (_, badge) in challenge.badges.enumerated() {
-                                                userData.badges.append(badge)
-                                            }
-                                            
-                                            userData.challengeData.remove(at: challengeIndex)
-                                        }
-                                    }
-                                }
-                                
-                                homeViewOpened = true
+                                .padding([.top, .bottom], 20)
                             }
+                            .scrollIndicators(.automatic, axes: .horizontal)
+                            .padding(10.0)
+                        }
                     }
                 }
-                .onAppear {
-                    Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
-                        print("running")
-                        var workouts = 0
+            } else {
+                ProgressView()
+                    .onAppear {
+                        var workoutsFinished: Int = 0
                         
-                        for (_, challenge) in userData.challengeData.enumerated() {
-                            for (_, workout) in challenge.challengeItems.enumerated() {
-                                if workout.completed == workout.amount {
-                                    workouts = workouts + 1
-                                    print(workouts)
+                        for (challengeIndex, challenge) in userData.challengeData.enumerated() {
+                            for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
+                                if workout.amount <= workout.completed {
+                                    workoutsFinished = workoutsFinished + 1
+                                }
+                                if challenge.challengeItems.count == workoutsFinished {
+                                    userDataManager.userData.challengeData.remove(at: challengeIndex)
                                 }
                             }
-                            if workouts == challenge.challengeItems.count {
-                                print("challenges finished!")
-                                for (_, badge) in challenge.badges.enumerated() {
-                                    userData.badges.append(badge)
-                                    print(userData.badges)
+                        }
+                        for (challengeIndex, challenge) in userData.challengeData.enumerated() {
+                            for (_, challengeItem) in challenge.challengeItems.enumerated() {
+                                if challengeItem.amount <= challengeItem.completed {
+                                    for (_, badge) in challenge.badges.enumerated() {
+                                        userDataManager.userData.badges.append(badge)
+                                    }
+                                    
+                                    userDataManager.userData.challengeData.remove(at: challengeIndex)
                                 }
                             }
                         }
                         
-                        homeViewOpened = false
                         homeViewOpened = true
                     }
-                }
             }
         }
+        .fullScreenCover(isPresented: $showWorkout, onDismiss: { showWorkout = false }, content: {
+            if selectedWorkout == .cycling || selectedWorkout == .running || selectedWorkout == .walk || selectedWorkout == .hiking {
+                MapTrackingView(userData: $userDataManager.userData, exercise: $selectedWorkout)
+                    .onAppear {
+                        homeViewOpened = false
+                    }
+            } else {
+                CounterTrackingView(userData: $userDataManager.userData, exercise: $selectedWorkout)
+                    .onAppear {
+                        homeViewOpened = false
+                    }
+            }
+        })
+        .onAppear {
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+                print("running")
+                var workouts = 0
+                
+                for (_, challenge) in userData.challengeData.enumerated() {
+                    for (_, workout) in challenge.challengeItems.enumerated() {
+                        if workout.completed >= workout.amount {
+                            workouts = workouts + 1
+                            print(workouts)
+                        }
+                    }
+                    if workouts == challenge.challengeItems.count {
+                        print("challenges finished!")
+                        for (_, badge) in challenge.badges.enumerated() {
+                            userDataManager.userData.badges.append(badge)
+                            print(userData.badges)
+                        }
+                    }
+                }
+                
+                homeViewOpened = false
+                homeViewOpened = true
+            }
+        }
+        
         .id(refreshID)
     }
 }
+
 
 struct LeaveChallengeView: View {
     @Binding var userData: UserInfo

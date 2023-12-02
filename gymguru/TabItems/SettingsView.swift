@@ -9,7 +9,9 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.colorScheme) var colorScheme
-    @Binding var item: UserInfo
+    //    @Binding var userData: UserInfo
+    var item: UserInfo { userDataManager.userData }
+    @ObservedObject var userDataManager: UserDataManager
     @Binding var setup: Bool
     @State var showMoreOptions = false
     @State var openCredits = false
@@ -22,7 +24,7 @@ struct SettingsView: View {
                         HStack {
                             Text("Name ")
                             Divider()
-                            TextField("Sam...", text: $item.name)
+                            TextField("Sam...", text: $userDataManager.userData.name)
                         }
                     }
                     Toggle("Show Help Button", isOn: $showHelp)
@@ -61,7 +63,7 @@ struct SettingsView: View {
             .navigationTitle("Settings")
         }
         .sheet(isPresented: $showMoreOptions) {
-            MoreSettingsView(userData: $item, isSheetOpened: $showMoreOptions)
+            MoreSettingsView(userData: $userDataManager.userData, isSheetOpened: $showMoreOptions)
                 .presentationDetents([.medium])
             
         }

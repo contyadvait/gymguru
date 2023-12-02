@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ChallengesView: View {
     @Environment(\.colorScheme) var colorScheme
-    @Binding var userData: UserInfo
+    //    @Binding var userData: UserInfo
+    var userData: UserInfo { userDataManager.userData }
+    @ObservedObject var userDataManager: UserDataManager
     @State var customChallenge = false
     @Binding var currentChallenges: [ChallengeData]
     var body: some View {
@@ -17,7 +19,7 @@ struct ChallengesView: View {
             List {
                 ForEach($currentChallenges, id: \.id) { $challenge in
                     NavigationLink {
-                        ChallengeInternalView(challenge: $challenge, userData: $userData)
+                        ChallengeInternalView(challenge: $challenge, userData: $userDataManager.userData)
                     } label: {
                         VStack {
                             HStack {
@@ -171,14 +173,14 @@ struct ChallengeInternalView: View {
 //    ChallengeInternalView(challenge: .constant(ChallengeData(challengeName: "New Year Goals Meet", challengeDescription: "Meet your exercise-related goals just in time for the New Year!", challengeItems: [ExerciseItem(workoutItem: .burpee, workoutTrackType: .counter, amount: 10), ExerciseItem(workoutItem: .jogging, workoutTrackType: .map, amount: 10)])))
 //}
 
-#Preview {
-    ChallengesView(userData: .constant(UserInfo(preferredWorkouts: [],
-                                                timeToWorkout: 5.0,
-                                                age: 16.0,
-                                                height: 189.0,
-                                                weight: 90.0,
-                                                name: "Sam",
-                                                          challengeData: [], dailyChallenge:  ChallengeData(challengeName: "aff", challengeDescription: "afa", challengeItems: [], badges: []),
-                                                badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .burpee, amountOfObtainingExercise: 0, obtained: true)],
-                                                exerciseData: [])), currentChallenges: .constant([]))
-}
+//#Preview {
+//    ChallengesView(userData: .constant(UserInfo(preferredWorkouts: [],
+//                                                timeToWorkout: 5.0,
+//                                                age: 16.0,
+//                                                height: 189.0,
+//                                                weight: 90.0,
+//                                                name: "Sam",
+//                                                          challengeData: [], dailyChallenge:  ChallengeData(challengeName: "aff", challengeDescription: "afa", challengeItems: [], badges: []),
+//                                                badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .burpee, amountOfObtainingExercise: 0, obtained: true)],
+//                                                exerciseData: [])), currentChallenges: .constant([]))
+//}

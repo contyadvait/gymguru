@@ -10,7 +10,9 @@ import SwiftUI
 
 struct BadgesView: View {
     let rows = [GridItem(.fixed(30)), GridItem(.fixed(30))]
-    @Binding var userData: UserInfo
+    //    @Binding var userData: UserInfo
+    var userData: UserInfo { userDataManager.userData }
+    @ObservedObject var userDataManager: UserDataManager
     @Binding var currentChallenges: [ChallengeData]
     @Environment(\.colorScheme) var colorScheme
     @State var filter = false

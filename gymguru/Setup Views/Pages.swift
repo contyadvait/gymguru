@@ -20,7 +20,9 @@ struct OnboardingView: View {
     @State var nameError = false
     @State var notificationScheduled = false
     @State var healthKitAlert = false
-    @Binding var userData: UserInfo
+    //    @Binding var userData: UserInfo
+    var userData: UserInfo { userDataManager.userData }
+    @ObservedObject var userDataManager: UserDataManager
     let notify = NotificationHandler()
     // -------------------------------------------------------------------
     // Notification Manager
@@ -54,10 +56,10 @@ struct OnboardingView: View {
             Button {
                 if userData.preferredWorkouts.contains(elementToChange) {
                     if let index = userData.preferredWorkouts.firstIndex(of: elementToChange) {
-                        userData.preferredWorkouts.remove(at: index)
+                        userDataManager.userData.preferredWorkouts.remove(at: index)
                     }
                 } else {
-                    userData.preferredWorkouts.append(elementToChange)
+                    userDataManager.userData.preferredWorkouts.append(elementToChange)
                 }
             } label: {
                 HStack {
@@ -98,7 +100,7 @@ struct OnboardingView: View {
                 VStack {
                     Text("To start, let's get to know about you. Please enter your name or nickname so we know how to call you.")
                         .multilineTextAlignment(.center)
-                    TextField("Name", text: $userData.name)
+                    TextField("Name", text: $userDataManager.userData.name)
                         .textFieldStyle(.roundedBorder)
                 }
                 .transition(.move(edge: .bottom))
@@ -136,7 +138,7 @@ struct OnboardingView: View {
             
             VStack {
                 
-                CompactSlider(value: $userData.height, in: 120...220, step: 1) {
+                CompactSlider(value: $userDataManager.userData.height, in: 120...220, step: 1) {
                     HStack {
                         Text("Height")
                         Spacer()
@@ -144,7 +146,7 @@ struct OnboardingView: View {
                     }
                 }
                 
-                CompactSlider(value: $userData.weight, in: 20...150, step: 1) {
+                CompactSlider(value: $userDataManager.userData.weight, in: 20...150, step: 1) {
                     HStack {
                         Text("Weight")
                         Spacer()
@@ -152,7 +154,7 @@ struct OnboardingView: View {
                     }
                 }
                 
-                CompactSlider(value: $userData.age, in: 1...90, step: 1) {
+                CompactSlider(value: $userDataManager.userData.age, in: 1...90, step: 1) {
                     HStack {
                         Text("Age")
                         Spacer()
@@ -160,7 +162,7 @@ struct OnboardingView: View {
                     }
                 }
                 
-                CompactSlider(value: $userData.timeToWorkout, in: 0...6, step: 0.5) {
+                CompactSlider(value: $userDataManager.userData.timeToWorkout, in: 0...6, step: 0.5) {
                     HStack {
                         Text("Time available for workouts")
                         Spacer()
@@ -202,7 +204,6 @@ struct OnboardingView: View {
     var three: some View {
         VStack {
             
-            ScrollView {
                 Text("Let's get to know your favourite workout. Select your favourite workouts by tapping on it. If you have none, you are not required to select anything.")
                     .multilineTextAlignment(.center)
                 
@@ -213,7 +214,6 @@ struct OnboardingView: View {
                 buttonView(elementToChange: .hiking, label: "Hiking")
                 buttonView(elementToChange: .jogging, label: "Jogging")
                 buttonView(elementToChange: .walk, label: "Walking")
-            }
                 
             HStack {
                 Button {
