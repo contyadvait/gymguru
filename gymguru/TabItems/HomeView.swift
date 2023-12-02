@@ -100,9 +100,9 @@ struct HomeView: View {
                 Spacer()
             }
             
-            if userData.dailyChallenge.challengeItems[0].amount <= userData.dailyChallenge.challengeItems[0].completed {
+            if userData.dailyChallenge.challengeItems[0].amount == userData.dailyChallenge.challengeItems[0].completed {
                 VStack {
-                    Text("You have sucessfully completed today's daily challenge! Come back for more tomorrow!")
+                    Text("You have sucessfully completed today's daily challenge! Come back for more tommorow!")
                     Text("Current daily challenge streak: \(challengeStreak)")
                 }
                 .padding([.top, .bottom])
@@ -116,7 +116,7 @@ struct HomeView: View {
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 calculateTimeRemaining()
                 if timeRemaining == "Due in\n0h 0min 0s" {
-                    if userData.dailyChallenge.challengeItems[0].amount <= userData.dailyChallenge.challengeItems[0].completed {
+                    if userData.dailyChallenge.challengeItems[0].amount == userData.dailyChallenge.challengeItems[0].completed {
                         //<<<<<<< Updated upstream
                         challengeStreak += 1
                         userDataManager.userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
@@ -136,7 +136,7 @@ struct HomeView: View {
         .foregroundStyle(colorScheme == .dark ? .white : .black)
         .onAppear {
             if !userData.dailyChallenge.badges.isEmpty {
-                if userData.dailyChallenge.challengeItems[0].completed >= userData.dailyChallenge.challengeItems[0].amount {
+                if userData.dailyChallenge.challengeItems[0].completed == userData.dailyChallenge.challengeItems[0].amount {
                     for badge in userData.dailyChallenge.badges {
                         userDataManager.userData.badges.append(badge)
                     }
@@ -160,12 +160,8 @@ struct HomeView: View {
                             HStack {
                                 Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
                                 Spacer()
-                                if "\(Int((challengeItem.completed/challengeItem.amount)*100))%"
                                 Text("\(Int((challengeItem.completed/challengeItem.amount)*100))%")
                             }
-                        }
-                        if challengeItem.completed >= challengeItem.amount {
-                            Text("You have finished this workout!")
                         }
                     }
                     .padding([.top, .bottom])
@@ -261,10 +257,10 @@ struct HomeView: View {
                                     workoutItem(workout: .jumpRope, sfIcon: "figure.jumprope", name: "Jump\nRope")
                                     workoutItem(workout: .jumpingJacks, sfIcon: "figure.mixed.cardio", name: "Jumping\nJacks")
                                 }
-                                .padding(20)
+                                .padding([.top, .bottom], 20)
                             }
                             .scrollIndicators(.automatic, axes: .horizontal)
-                            .padding([.horizontal, .bottom], 5.0)
+                            .padding(10.0)
                         }
                     }
                 }
@@ -274,7 +270,7 @@ struct HomeView: View {
                         var workoutsFinished: Int = 0
                         
                         for (challengeIndex, challenge) in userData.challengeData.enumerated() {
-                            for (_, workout) in challenge.challengeItems.enumerated() {
+                            for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
                                 if workout.amount <= workout.completed {
                                     workoutsFinished = workoutsFinished + 1
                                 }
@@ -319,7 +315,7 @@ struct HomeView: View {
                 
                 for (_, challenge) in userData.challengeData.enumerated() {
                     for (_, workout) in challenge.challengeItems.enumerated() {
-                        if workout.completed >= workout.amount {
+                        if workout.completed == workout.amount {
                             workouts = workouts + 1
                             print(workouts)
                         }
@@ -337,6 +333,7 @@ struct HomeView: View {
                 homeViewOpened = true
             }
         }
+        
         .id(refreshID)
     }
 }
