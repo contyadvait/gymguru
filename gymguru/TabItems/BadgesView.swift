@@ -22,6 +22,8 @@ struct BadgesView: View {
             if loading {
                 ProgressView()
                 .onAppear {
+                    availableBadges = []
+                    
                     for (_, challenge) in currentChallenges.enumerated() {
                         for (_, badge) in challenge.badges.enumerated() {
                             availableBadges.append(badge)
@@ -37,8 +39,6 @@ struct BadgesView: View {
                         availableBadges.append(badge)
                     }
                     
-                    print(availableBadges)
-                    
                     loading = false
                 }
             } else {
@@ -49,7 +49,6 @@ struct BadgesView: View {
                     Spacer()
                     Button {
                         filter.toggle()
-                        loading = true
                     } label: {
                             Image(systemName: filter ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
                                 .font(.system(size: 20))
@@ -86,7 +85,7 @@ struct BadgesView: View {
                                                     .multilineTextAlignment(.center)
                                             }
                                             .padding(10)
-                                            .frame(width: UIScreen.main.bounds.width/2 - 10, height: 150)
+                                            .frame(width: UIScreen.main.bounds.width - 10, height: 150)
                                             .background(.accent)
                                             .foregroundStyle(.white)
                                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
