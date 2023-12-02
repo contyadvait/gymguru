@@ -102,7 +102,7 @@ struct HomeView: View {
             
             if userData.dailyChallenge.challengeItems[0].amount <= userData.dailyChallenge.challengeItems[0].completed {
                 VStack {
-                    Text("You have sucessfully completed today's daily challenge! Come back for more tommorow!")
+                    Text("You have sucessfully completed today's daily challenge! Come back for more tomorrow!")
                     Text("Current daily challenge streak: \(challengeStreak)")
                 }
                 .padding([.top, .bottom])
@@ -270,18 +270,18 @@ struct HomeView: View {
                         var workoutsFinished: Int = 0
                         
                         for (challengeIndex, challenge) in userData.challengeData.enumerated() {
-                            for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
+                            for (_, workout) in challenge.challengeItems.enumerated() {
                                 if workout.amount <= workout.completed {
                                     workoutsFinished = workoutsFinished + 1
                                 }
-                                if challenge.challengeItems.count == workoutsFinished {
+                                if challenge.challengeItems.count >= workoutsFinished {
                                     userDataManager.userData.challengeData.remove(at: challengeIndex)
                                 }
                             }
                         }
                         for (challengeIndex, challenge) in userData.challengeData.enumerated() {
                             for (_, challengeItem) in challenge.challengeItems.enumerated() {
-                                if challengeItem.amount <= challengeItem.completed {
+                                if challengeItem.amount == challengeItem.completed {
                                     for (_, badge) in challenge.badges.enumerated() {
                                         userDataManager.userData.badges.append(badge)
                                     }

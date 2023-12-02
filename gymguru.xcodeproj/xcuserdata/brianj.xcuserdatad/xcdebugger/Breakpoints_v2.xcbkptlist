@@ -32,8 +32,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "56"
             endingLineNumber = "56"
-            landmarkName = "body"
-            landmarkType = "24">
+            landmarkName = "ChallengeInternalView"
+            landmarkType = "14">
             <Locations>
                <Location
                   uuid = "EBE4E7B1-359C-4198-85DC-B1544A99C663 - 5e162eac7c4c727f"
@@ -66,6 +66,22 @@
                   offsetFromSymbolStart = "728">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A2BBAE8F-6064-4B94-83B4-96E98B0262FB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "gymguru/TrackingView/CounterTrackingView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "CounterTrackingView"
+            landmarkType = "14">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
