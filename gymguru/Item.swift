@@ -10,8 +10,7 @@ import MapKit
 import SwiftUI
 
 enum Exercise: Codable, Hashable, CaseIterable {
-    case burpee, jumpRope, jumpingJacks, running, cycling, jogging, hiking, walk, none
-    
+    case burpee, jumpRope, jumpingJacks, running, cycling, jogging, hiking, walk
     var workoutLabel: String {
         switch self {
         case .burpee:
@@ -30,8 +29,6 @@ enum Exercise: Codable, Hashable, CaseIterable {
             return "Hiking"
         case .walk:
             return "Walk"
-        case .none:
-            return "Blank workout"
         }
     }
     
@@ -54,8 +51,6 @@ enum Exercise: Codable, Hashable, CaseIterable {
             return "km"
         case .walk:
             return "km"
-        case .none:
-            return ""
         }
     }
     

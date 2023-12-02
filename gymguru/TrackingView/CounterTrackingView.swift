@@ -84,6 +84,12 @@ struct CounterTrackingView: View {
                             }
                         }
                     }
+                    
+                    for (dailyChallengeIndex, dailyChallenge) in userData.dailyChallenge.challengeItems.enumerated() {
+                        if dailyChallenge.workoutItem == exercise {
+                            userData.dailyChallenge.challengeItems[dailyChallengeIndex].completed += Float(amount)
+                        }
+                    }
                     dismiss()
                 }
                 

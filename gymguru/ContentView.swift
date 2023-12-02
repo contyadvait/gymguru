@@ -8,9 +8,6 @@
 import SwiftUI
 import Forever
 
-
-
-
 struct ContentView: View {
     @State var challengesAvailable = [ChallengeData(challengeName: "Stroll Stride", challengeDescription: "Go for a leisure walk for a few kilometers. You can walk around greenery, or walk around your city.", challengeItems: [ExerciseItem(workoutItem: .walk, workoutTrackType: .map, amount: 5)], badges: []),
                                       ChallengeData(challengeName: "Chill Chase", challengeDescription: "Journey at a relaxed pace", challengeItems: [ExerciseItem(workoutItem: .jogging, workoutTrackType: .map, amount: 10)], badges: []),
@@ -36,20 +33,20 @@ struct ContentView: View {
                                                            height: 189.0,
                                                            weight: 90.0,
                                                            name: "Sam",
-                                                                     challengeData: [], dailyChallenge: ChallengeData(challengeName: "aff", challengeDescription: "afa", challengeItems: [], badges: []),
-                                                           badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .none, amountOfObtainingExercise: 0, obtained: true),
-                                                                     Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true),
+                                                           challengeData: [], dailyChallenge: ChallengeData(challengeName: "aff", challengeDescription: "afa", challengeItems: [], badges: []),
+                                                           badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .cycling, amountOfObtainingExercise: 0, obtained: true),
+                                                                    Badge(badge: "Cricketer", sfIcon: "figure.cricket", obtainingExercise: .running, amountOfObtainingExercise: 5, obtained: true),
                                                                     Badge(badge: "Xmas 23 Challenge Finisher", sfIcon: "tree.fill", obtainingExercise: .running, amountOfObtainingExercise: 10, obtained: false)],
                                                            exerciseData: [])
     @Forever("showSetupModal") var showSetupModal = false
-//    @DontLeaveMe("challengeStreak") var challengeStreak = 30
-    @State var challengeStreak = 30
+    @AppStorage("challengeStreak") var challengeStreak = 30
+    @AppStorage("lastUpdatedDate") var lastUpdatedDate: String = ""
     let challengeManager = ChallengeManager()
-
+    
     
     var body: some View {
         TabView {
-            HomeView(selectedWorkout: .none, userData: $userData)
+            HomeView(selectedWorkout: .cycling, userData: $userData, challengeStreak: $challengeStreak)
                 .tabItem { Label("Home", systemImage: "house.fill") }
             
             BadgesView(userData: $userData, currentChallenges: $challengesAvailable)
@@ -70,10 +67,28 @@ struct ContentView: View {
             OnboardingView(userData: $userData)
         }
         .onAppear {
-            userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
-//            if challengeStreak == 30 {
-//                challengeStreak = 0
-//            }
+            let currentDate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            print(lastUpdatedDate)
+            
+            let dateString = dateFormatter.string(from: currentDate)
+            
+            if lastUpdatedDate == "" {
+                lastUpdatedDate = dateString
+                print("Found blank, overwriting now")
+            }
+            let dateNow = Date()
+            if lastUpdatedDate != dateFormatter.string(from: dateNow) {
+                print(lastUpdatedDate)
+                print(dateFormatter.string(from: dateNow))
+                userData.dailyChallenge = challengeManager.reRoll(userData: userData, challengeStreak: challengeStreak)
+                lastUpdatedDate = dateFormatter.string(from: dateNow)
+            }
+            if challengeStreak == 30 {
+                challengeStreak = 0
+            }
         }
     }
 }

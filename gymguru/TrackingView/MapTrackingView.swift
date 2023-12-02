@@ -71,11 +71,6 @@ struct MapTrackingView: View {
     var buttons: some View {
         HStack(spacing: 10) {
             HStack(spacing: 10) {
-                Button {
-                    showAlert = true
-                } label: {
-                    Image(systemName: "stop.fill")
-                }
                 Spacer()
                 if isTimerRunning {
                     Button {
@@ -102,7 +97,7 @@ struct MapTrackingView: View {
                             .frame(width: 30, height: 30)
                     }
                     .buttonStyle(.bordered)
-                    .matchedGeometryEffect(id: "Stop Button", in: namespace)
+                    .matchedGeometryEffect(id: "Play Button", in: namespace)
                 }
                 Spacer()
             }
@@ -132,6 +127,14 @@ struct MapTrackingView: View {
                         ZStack {
                             buttons
                             HStack {
+                                Button {
+                                    showAlert = true
+                                } label: {
+                                    Image(systemName: "stop.fill")
+                                        .frame(width: 30, height: 30)
+                                }
+                                .buttonStyle(.bordered)
+                                .matchedGeometryEffect(id: "Stop button", in: namespace)
                                 Spacer()
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.5)) {
@@ -197,6 +200,14 @@ struct MapTrackingView: View {
                         ZStack {
                             buttons
                             HStack {
+                                Button {
+                                    showAlert = true
+                                } label: {
+                                    Image(systemName: "stop.fill")
+                                        .frame(width: 30, height: 30)
+                                }
+                                .buttonStyle(.bordered)
+                                .matchedGeometryEffect(id: "Stop button", in: namespace)
                                 Spacer()
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.5)) {
@@ -238,6 +249,12 @@ struct MapTrackingView: View {
                         if workout.workoutItem == exercise {
                             userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed += Float(locationManager.distanceTraveled)
                         }
+                    }
+                }
+                
+                for (dailyChallengeIndex, dailyChallenge) in userData.dailyChallenge.challengeItems.enumerated() {
+                    if dailyChallenge.workoutItem == exercise {
+                        userData.dailyChallenge.challengeItems[dailyChallengeIndex].completed += Float(locationManager.distanceTraveled)
                     }
                 }
                 dismiss()
