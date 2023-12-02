@@ -160,8 +160,7 @@ struct HomeView: View {
                             HStack {
                                 Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
                                 Spacer()
-                                if "\(Int((challengeItem.completed/challengeItem.amount)*100))%"
-                                Text("\(Int((challengeItem.completed/challengeItem.amount)*100))%")
+                                    Text("\(Int((challengeItem.completed/challengeItem.amount)*100))%")
                             }
                         }
                         if challengeItem.completed >= challengeItem.amount {
