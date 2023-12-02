@@ -160,12 +160,20 @@ struct HomeView: View {
                             HStack {
                                 Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
                                 Spacer()
-                                if "\(Int((challengeItem.completed/challengeItem.amount)*100))%"
-                                Text("\(Int((challengeItem.completed/challengeItem.amount)*100))%")
+                                if (challengeItem.completed/challengeItem.amount)*100 >= 100 {
+                                    Text("Completed!")
+                                } else {
+                                    Text("\(Int((challengeItem.completed/challengeItem.amount)*100))%")
+                                }
                             }
                         }
                         if challengeItem.completed >= challengeItem.amount {
                             Text("You have finished this workout!")
+                                .onAppear {
+                                    for (badgeIndex, _) in userDataManager.userData.badges.enumerated() {
+                                        userDataManager.userData.badges[badgeIndex].obtained = true
+                                    }
+                                }
                         }
                     }
                     .padding([.top, .bottom])

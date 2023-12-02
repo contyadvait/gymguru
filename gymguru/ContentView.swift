@@ -44,29 +44,22 @@ struct ContentView: View {
     @AppStorage("showHelp") var showHelp = true
     let challengeManager = ChallengeManager()
     @Binding var refreshView: Bool
-    
+    @State var loading = true
     
     var body: some View {
         VStack {
             TabView {
-                if !refreshView {
                     HomeView(selectedWorkout: .cycling, userDataManager: userDataManager, challengeStreak: $challengeStreak, showHelp: $showHelp, refreshView: $refreshView)
                         .tabItem {
                             Label("Home", systemImage: "house.fill")
                         }
-                } else {
-                    ProgressView()
-                    .onAppear {
-                        refreshView = false
-                    }
-                    .tabItem {
-                        Label("Home", systemImage: "house.fill")
-                    }
-                }
                 
-                BadgesView(userDataManager: userDataManager, currentChallenges: $challengesAvailable)
+                BadgesView(userDataManager: userDataManager, currentChallenges: $challengesAvailable, loading: $loading)
                     .tabItem {
                         Label("Badges", systemImage: "star")
+                    }
+                    .onDisappear {
+                        loading = true
                     }
                 
                 ChallengesView(userDataManager: userDataManager, currentChallenges: $challengesAvailable)
