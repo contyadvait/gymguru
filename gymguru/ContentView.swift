@@ -40,15 +40,26 @@ struct ContentView: View {
     @AppStorage("lastUpdatedDate") var lastUpdatedDate: String = ""
     @AppStorage("showHelp") var showHelp = true
     let challengeManager = ChallengeManager()
+    @Binding var refreshView: Bool
     
     
     var body: some View {
         VStack {
             TabView {
-                HomeView(selectedWorkout: .cycling, userData: $userData, challengeStreak: $challengeStreak, showHelp: $showHelp)
+                if !refreshView {
+                    HomeView(selectedWorkout: .cycling, userData: $userData, challengeStreak: $challengeStreak, showHelp: $showHelp, refreshView: $refreshView)
+                        .tabItem {
+                            Label("Home", systemImage: "house.fill")
+                        }
+                } else {
+                    ProgressView()
+                    .onAppear {
+                        refreshView = false
+                    }
                     .tabItem {
                         Label("Home", systemImage: "house.fill")
                     }
+                }
                 
                 BadgesView(userData: $userData, currentChallenges: $challengesAvailable)
                     .tabItem {
@@ -118,8 +129,3 @@ struct ContentView: View {
         }
     }
 }
-
-#Preview {
-    ContentView()
-}
-

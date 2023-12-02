@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct gymguruApp: App {
+    @State var refreshView = false
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if !refreshView {
+                ContentView(refreshView: $refreshView)
+            } else {
+                ProgressView()
+                    .onAppear {
+                        refreshView = false
+                    }
+            }
         }
     }
 }

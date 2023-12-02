@@ -17,6 +17,7 @@ struct HomeView: View {
     @Binding var showHelp: Bool
     @State var homeViewOpened = false
     @State var refreshID = UUID()
+    @Binding var refreshView: Bool
     
     func workoutItem(workout: Exercise, sfIcon: String, name: String) -> some View {
         Button {
@@ -213,6 +214,10 @@ struct HomeView: View {
                         VStack {
                             HStack {
                                 Text("Home")
+                                    .onChange(of: userData) {
+                                        print(userData)
+                                        print(Date())
+                                    }
                                     .font(.largeTitle)
                                     .bold()
                                     .padding(10.0)
@@ -223,7 +228,7 @@ struct HomeView: View {
                                     Button(action: {
                                         helpSheet.toggle()
                                     }, label: {
-                                        Image(systemName: helpSheet ? "checkmark.circle.fill" : "questionmark.circle.fill")
+                                        Image(systemName: helpSheet ? "questionmark.circle" : "questionmark.circle.fill")
                                             .symbolRenderingMode(.hierarchical)
                                             .font(.system(size: 25))
                                     })
@@ -234,6 +239,7 @@ struct HomeView: View {
                                 }
                                 Button {
                                      refreshID = UUID()
+                                    refreshView = true
                                     print("refreshing.....")
                                 } label: {
                                     Image(systemName: "arrow.clockwise.circle.fill")

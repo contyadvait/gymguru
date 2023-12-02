@@ -65,7 +65,10 @@ enum Exercise: Codable, Hashable, CaseIterable {
     }
 }
 
-struct UserInfo: Codable, Identifiable {
+struct UserInfo: Codable, Identifiable, Equatable {
+    static func == (lhs: UserInfo, rhs: UserInfo) -> Bool {
+        lhs.challengeData == rhs.challengeData
+    }
     var id = UUID()
     
     var preferredWorkouts: [Exercise]

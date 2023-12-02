@@ -115,7 +115,7 @@ struct CounterTrackingView: View {
                     print(userData)
                     
                     
-                    crash = true
+                    dismiss()
                 }
                 
                 Button("Cancel", role: .cancel) {  }
