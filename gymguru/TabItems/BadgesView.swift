@@ -47,12 +47,12 @@ struct BadgesView: View {
                         .font(.largeTitle)
                         .bold()
                     Spacer()
-                    Button {
-                        loading = true
-                    } label: {
-                        Image(systemName: "arrow.clockwise.circle.fill")
-                            .font(.system(size: 20))
-                    }
+//                    Button {
+//                        loading = true
+//                    } label: {
+//                        Image(systemName: "arrow.clockwise.circle.fill")
+//                            .font(.system(size: 20))
+//                    }
                     Button {
                         filter.toggle()
                     } label: {

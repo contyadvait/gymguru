@@ -87,13 +87,10 @@ struct ContentView: View {
             
             if lastUpdatedDate == "" {
                 lastUpdatedDate = dateString
-                print("Found blank, overwriting now")
                 userDataManager.userData.dailyChallenge = challengeManager.reRoll(userData: userDataManager.userData, challengeStreak: challengeStreak)
             }
             let dateNow = Date()
             if lastUpdatedDate != dateFormatter.string(from: dateNow) {
-                print(lastUpdatedDate)
-                print(dateFormatter.string(from: dateNow))
                 if userDataManager.userData.dailyChallenge.challengeItems[0].completed/userDataManager.userData.dailyChallenge.challengeItems[0].amount == Float(1) {
                     if challengeStreak != 30 {
                         challengeStreak += 1

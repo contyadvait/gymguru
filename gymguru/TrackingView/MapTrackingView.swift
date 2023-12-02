@@ -87,7 +87,6 @@ struct MapTrackingView: View {
                         locationManager.startUpdatingLocation()
                         startMotionUpdates()
                         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-                            print("Distance traveled: \(locationManager.distanceTraveled) meters")
                             speed = 0
                         }
                         isTimerRunning = true
@@ -156,7 +155,6 @@ struct MapTrackingView: View {
                     .mapControlVisibility(.visible)
                     .mapScope(mapscope)
                     .task {
-                        print("this is running")
                         try? await locationManager.requestUserAuthorization()
                         try? await locationManager.startCurrentLocationUpdates()
                     }

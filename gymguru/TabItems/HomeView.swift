@@ -207,10 +207,6 @@ struct HomeView: View {
                 VStack {
                     HStack {
                         Text("Home")
-                            .onChange(of: userData) {
-                                print(userData)
-                                print(Date())
-                            }
                             .font(.largeTitle)
                             .bold()
                             .padding(10.0)
@@ -230,18 +226,6 @@ struct HomeView: View {
                                 HelpView()
                             }
                         }
-                        Button {
-                            refreshID = UUID()
-                            refreshView = true
-                            print("refreshing.....")
-                        } label: {
-                            Image(systemName: "arrow.clockwise.circle.fill")
-                                .symbolRenderingMode(.hierarchical)
-                                .font(.system(size: 25))
-                                .padding()
-                        }
-                        .symbolEffect(.bounce, value: refreshID)
-                        .padding(.trailing, 2)
                     }
                     
                     ScrollView {
@@ -293,14 +277,12 @@ struct HomeView: View {
         })
         .onAppear {
             Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
-                print("running")
                 var workouts = 0
                 
                 for (_, challenge) in userData.challengeData.enumerated() {
                     for (_, workout) in challenge.challengeItems.enumerated() {
                         if workout.completed >= workout.amount {
                             workouts = workouts + 1
-                            print(workouts)
                         }
                     }
                 }
@@ -490,6 +472,27 @@ struct HelpView: View {
                 
                 HStack {
                     Text("You can edit your personal information like height and weight by going to Settings > More(Under Name).")
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                .padding()
+                
+                Divider()
+                
+                HStack {
+                    Text("Badges Not Appearing")
+                        .font(.title2)
+                        .font(.system(size: 20))
+                        .bold()
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                .padding(.horizontal)
+                
+                
+                HStack {
+                    Text("Sometimes, badges may not appear instantly in the badges tab. You may have to restart the app for it to work")
                         .font(.body)
                         .multilineTextAlignment(.leading)
                     Spacer()

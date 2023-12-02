@@ -19,8 +19,6 @@ class NewLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
             guard let location = locationUpdate.location else { return }
 
             self.location = location
-            print(location)
-            print("Location From CoreLocationManager")
         }
     }
 
@@ -35,7 +33,6 @@ class NewLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
         if let currentLocation = location, let previousLocation = previousLocation {
             let distanceBetweenLocations = currentLocation.distance(from: previousLocation)
             distanceTraveled += distanceBetweenLocations
-            print("running")
         }
         previousLocation = location
     }
