@@ -8,10 +8,6 @@
 import SwiftUI
 
 struct ChallengesView: View {
-    @State var challengesAvailable = [ChallengeData(challengeName: "Christmas Calorie Loss", challengeDescription: "Lose some calories to consume extra for christmas!", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: []),
-                                      ChallengeData(challengeName: "Chill Chase", challengeDescription: "Journey at a relaxed pace", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: []),
-                                      ChallengeData(challengeName: "Sprint Quest", challengeDescription: "For those who enjoy pushing their limits, this is the perfect challenge for them.", challengeItems: [ExerciseItem(workoutItem: .running, workoutTrackType: .counter, amount: 10)], badges: [])]
-                                        
     @Environment(\.colorScheme) var colorScheme
     @Binding var userData: UserInfo
     @State var customChallenge = false
@@ -43,15 +39,6 @@ struct ChallengesView: View {
             .listStyle(.inset)
             .navigationTitle("Challenges")
             .navigationBarTitleDisplayMode(.automatic)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        customChallenge = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
         }
 //        .fullScreenCover(isPresented: $customChallenge) {
 //            CustomChallengeCreatorView()
