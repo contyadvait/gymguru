@@ -16,13 +16,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="V1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="My2-gT-wRX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="My2-gT-wRX">
                                 <rect key="frame" x="128" y="597" width="119" height="49"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="99E-ca-RMo"/>
                                     <constraint firstAttribute="width" constant="119" id="wqT-se-Fnj"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="35"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -34,8 +34,8 @@
                                     <constraint firstAttribute="width" secondItem="EHL-4D-4OJ" secondAttribute="height" multiplier="1:1" id="dqh-wc-nuL"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ellipsis" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Udy-cp-6bf">
-                                <rect key="frame" x="150.5" y="399.5" width="74" height="67.5"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="ellipsis" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Udy-cp-6bf">
+                                <rect key="frame" x="151" y="442" width="74" height="26"/>
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="82" id="7vc-ri-AZv"/>
@@ -60,7 +60,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="50.232558139534881" y="373.39055793991417"/>
+            <point key="canvasLocation" x="48.799999999999997" y="372.86356821589209"/>
         </scene>
     </scenes>
     <resources>
