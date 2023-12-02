@@ -48,6 +48,12 @@ struct BadgesView: View {
                         .bold()
                     Spacer()
                     Button {
+                        loading = true
+                    } label: {
+                        Image(systemName: "arrow.clockwise.circle.fill")
+                            .font(.system(size: 20))
+                    }
+                    Button {
                         filter.toggle()
                     } label: {
                             Image(systemName: filter ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
@@ -72,7 +78,7 @@ struct BadgesView: View {
                                         .padding(10)
                                         .frame(width: UIScreen.main.bounds.width - 10, height: 150)
                                         .background(badge.obtained ? .accent : colorScheme == .dark ? Color(red: 18/225, green: 18/225, blue: 18/225) : Color.white)
-                                        .foregroundStyle(.white)
+                                        .foregroundStyle(badge.obtained ? .white : colorScheme == .dark ? .white : .black)
                                         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                                         .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
                                     } else {

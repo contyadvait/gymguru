@@ -12,14 +12,7 @@ struct gymguruApp: App {
     @State var refreshView = false
     var body: some Scene {
         WindowGroup {
-            if !refreshView {
                 ContentView(refreshView: $refreshView)
-            } else {
-                ProgressView()
-                    .onAppear {
-                        refreshView = false
-                    }
-            }
         }
     }
 }

@@ -110,17 +110,8 @@ struct ContentView: View {
                 challengeStreak = 0
             }
             
-            var itemsToCount = 0
-            
-            for (challengeIndex, challenge) in userDataManager.userData.challengeData.enumerated() {
-                for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
-                    if workout.completed == workout.amount {
-                        itemsToCount += 1
-                    }
-                }
-                if challenge.challengeItems.count == itemsToCount {
-                    userDataManager.userData.challengeData.remove(at: challengeIndex)
-                }
+            for (badgeIndex, badge) in userDataManager.userData.badges.enumerated() {
+                userDataManager.userData.badges[badgeIndex].obtained = true
             }
         }
     }

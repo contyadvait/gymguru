@@ -134,15 +134,6 @@ struct HomeView: View {
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         .shadow(color: colorScheme == .dark ? .white.opacity(0.01) : .black.opacity(0.1), radius: 15, x: 0, y: 5)
         .foregroundStyle(colorScheme == .dark ? .white : .black)
-        .onAppear {
-            if !userData.dailyChallenge.badges.isEmpty {
-                if userData.dailyChallenge.challengeItems[0].completed >= userData.dailyChallenge.challengeItems[0].amount {
-                    for badge in userData.dailyChallenge.badges {
-                        userDataManager.userData.badges.append(badge)
-                    }
-                }
-            }
-        }
     }
     
     var monthlyChallengesView: some View {
@@ -278,33 +269,6 @@ struct HomeView: View {
                 }
             } else {
                 ProgressView()
-                    .onAppear {
-                        var workoutsFinished: Int = 0
-                        
-                        for (challengeIndex, challenge) in userData.challengeData.enumerated() {
-                            for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
-                                if workout.amount <= workout.completed {
-                                    workoutsFinished = workoutsFinished + 1
-                                }
-                                if challenge.challengeItems.count == workoutsFinished {
-                                    userDataManager.userData.challengeData.remove(at: challengeIndex)
-                                }
-                            }
-                        }
-                        for (challengeIndex, challenge) in userData.challengeData.enumerated() {
-                            for (_, challengeItem) in challenge.challengeItems.enumerated() {
-                                if challengeItem.amount <= challengeItem.completed {
-                                    for (_, badge) in challenge.badges.enumerated() {
-                                        userDataManager.userData.badges.append(badge)
-                                    }
-                                    
-                                    userDataManager.userData.challengeData.remove(at: challengeIndex)
-                                }
-                            }
-                        }
-                        
-                        homeViewOpened = true
-                    }
             }
         }
         .fullScreenCover(isPresented: $showWorkout, onDismiss: { showWorkout = false }, content: {
@@ -330,13 +294,6 @@ struct HomeView: View {
                         if workout.completed >= workout.amount {
                             workouts = workouts + 1
                             print(workouts)
-                        }
-                    }
-                    if workouts == challenge.challengeItems.count {
-                        print("challenges finished!")
-                        for (_, badge) in challenge.badges.enumerated() {
-                            userDataManager.userData.badges.append(badge)
-                            print(userData.badges)
                         }
                     }
                 }

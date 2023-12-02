@@ -92,10 +92,12 @@ struct CounterTrackingView: View {
                                 print(userData.challengeData[challengeIndex].challengeItems[workoutIndex].amount)
                             }
                             
-                            if Float(workout.completed)/Float(workout.amount) >= Float(1) {
+                            if workout.completed >= workout.amount {
                                 for (badgeIndex, badge) in challenge.badges.enumerated() {
-                                    userData.challengeData[challengeIndex].badges[badgeIndex].obtained = true
                                     userData.badges.append(badge)
+                                }
+                                for (badgeIndex, badge) in userData.badges.enumerated() {
+                                    userData.badges[badgeIndex].obtained = true
                                 }
                             }
                         }
@@ -104,6 +106,11 @@ struct CounterTrackingView: View {
                     for (dailyChallengeIndex, dailyChallenge) in userData.dailyChallenge.challengeItems.enumerated() {
                         if dailyChallenge.workoutItem == exercise {
                             userData.dailyChallenge.challengeItems[dailyChallengeIndex].completed += Float(amount)
+                        }
+                        if dailyChallenge.amount <= dailyChallenge.completed {
+                            for badge in userData.dailyChallenge.badges {
+                                userData.badges.append(badge)
+                            }
                         }
                     }
                     
