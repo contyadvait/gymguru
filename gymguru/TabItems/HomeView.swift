@@ -263,7 +263,7 @@ struct HomeView: View {
                                 .padding(20)
                             }
                             .scrollIndicators(.automatic, axes: .horizontal)
-                            .padding([.horizontal, .bottom], 5.0)
+                            .padding([.horizontal, .bottom], 10.0)
                         }
                     }
                 }

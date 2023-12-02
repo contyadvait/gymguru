@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,24 +21,16 @@
                                     <constraint firstAttribute="height" constant="49" id="99E-ca-RMo"/>
                                     <constraint firstAttribute="width" constant="119" id="wqT-se-Fnj"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Untitled_design-removebg-preview.png" translatesAutoresizingMaskIntoConstraints="NO" id="EHL-4D-4OJ">
-                                <rect key="frame" x="94.5" y="240.5" width="186" height="186"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="Untitled_design-removebg-preview.png" translatesAutoresizingMaskIntoConstraints="NO" id="EHL-4D-4OJ">
+                                <rect key="frame" x="147" y="293" width="81" height="81"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="186" id="1YV-2d-zw8"/>
                                     <constraint firstAttribute="width" constant="186" id="2tB-cm-TjN"/>
                                     <constraint firstAttribute="width" secondItem="EHL-4D-4OJ" secondAttribute="height" multiplier="1:1" id="dqh-wc-nuL"/>
-                                </constraints>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="ellipsis" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Udy-cp-6bf">
-                                <rect key="frame" x="151" y="442" width="74" height="26"/>
-                                <color key="tintColor" systemColor="labelColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="82" id="7vc-ri-AZv"/>
-                                    <constraint firstAttribute="width" constant="74" id="9gM-yR-l75"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -47,14 +38,11 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="My2-gT-wRX" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1SS-Fb-swW"/>
-                            <constraint firstItem="Udy-cp-6bf" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="100" id="IkP-VX-2El"/>
                             <constraint firstItem="EHL-4D-4OJ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="PeY-zS-GN6"/>
                             <constraint firstItem="EHL-4D-4OJ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="a7K-yG-P8i"/>
                             <constraint firstAttribute="bottom" secondItem="My2-gT-wRX" secondAttribute="bottom" constant="21" id="axv-p0-dQ3"/>
                             <constraint firstItem="EHL-4D-4OJ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="lEM-ZF-ZHZ"/>
-                            <constraint firstItem="Udy-cp-6bf" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="100" id="lVG-A6-6bd"/>
                             <constraint firstItem="EHL-4D-4OJ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="qBA-Xn-hlc"/>
-                            <constraint firstItem="Udy-cp-6bf" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="xKL-Mb-42g"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -65,9 +53,5 @@
     </scenes>
     <resources>
         <image name="Untitled_design-removebg-preview.png" width="500" height="500"/>
-        <image name="ellipsis" catalog="system" width="128" height="37"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
