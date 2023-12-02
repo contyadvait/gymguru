@@ -25,7 +25,7 @@ struct SettingsView: View {
                             TextField("Sam...", text: $item.name)
                         }
                     }
-                    Toggle("Show help button on Home Screen", isOn: $showHelp)
+                    Toggle("Show Help Button", isOn: $showHelp)
                     Button {
                         showMoreOptions = true
                     } label: {

@@ -31,7 +31,7 @@
 		F182A5162B0F249900D42C94 /* ColorHexExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13B1B362B0C7D48008B1FF5 /* ColorHexExtension.swift */; };
 		F18F847E2B0F3F560085AAB8 /* CounterTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18F847D2B0F3F560085AAB8 /* CounterTrackingView.swift */; };
 		F1A66E662B109BD600952F89 /* CoreLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A66E652B109BCF00952F89 /* CoreLocationManager.swift */; };
-		F1DB8AAE2B19B52300BA7A62 /* LaunchScreenImage.png in Resources */ = {isa = PBXBuildFile; fileRef = F1DB8AAD2B19B52300BA7A62 /* LaunchScreenImage.png */; };
+		F1DB8AAE2B19B52300BA7A62 /* Untitled_design-removebg-preview.png in Resources */ = {isa = PBXBuildFile; fileRef = F1DB8AAD2B19B52300BA7A62 /* Untitled_design-removebg-preview.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,7 +58,7 @@
 		F182A5142B0F249400D42C94 /* MapTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTrackingView.swift; sourceTree = "<group>"; };
 		F18F847D2B0F3F560085AAB8 /* CounterTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterTrackingView.swift; sourceTree = "<group>"; };
 		F1A66E652B109BCF00952F89 /* CoreLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationManager.swift; sourceTree = "<group>"; };
-		F1DB8AAD2B19B52300BA7A62 /* LaunchScreenImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenImage.png; sourceTree = "<group>"; };
+		F1DB8AAD2B19B52300BA7A62 /* Untitled_design-removebg-preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Untitled_design-removebg-preview.png"; path = "../../../Downloads/Untitled_design-removebg-preview.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +130,7 @@
 				F12613C52B0717A300619FD6 /* Setup Views */,
 				F12613B72B070F2B00619FD6 /* Item.swift */,
 				F1766E3C2B19943000524687 /* iTunesArtwork@2x.png */,
-				F1DB8AAD2B19B52300BA7A62 /* LaunchScreenImage.png */,
+				F1DB8AAD2B19B52300BA7A62 /* Untitled_design-removebg-preview.png */,
 				F12613B92B070F2D00619FD6 /* Assets.xcassets */,
 				F12613BB2B070F2D00619FD6 /* Preview Content */,
 				C1E950392B1429FF007584BA /* Colour+Codable.swift */,
@@ -240,7 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1DB8AAE2B19B52300BA7A62 /* LaunchScreenImage.png in Resources */,
+				F1DB8AAE2B19B52300BA7A62 /* Untitled_design-removebg-preview.png in Resources */,
 				F1766E3B2B19932E00524687 /* Launch Screen.storyboard in Resources */,
 				F12613BD2B070F2D00619FD6 /* Preview Assets.xcassets in Resources */,
 				F12613BA2B070F2D00619FD6 /* Assets.xcassets in Resources */,
