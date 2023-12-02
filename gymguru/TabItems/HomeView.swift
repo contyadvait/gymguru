@@ -329,6 +329,10 @@ struct HomeView: View {
                     }
                 }
                 
+                for (badgeIndex, badge) in userData.badges.enumerated() {
+                    userDataManager.userData.badges[badgeIndex].obtained = true
+                }
+                
                 homeViewOpened = false
                 homeViewOpened = true
             }
