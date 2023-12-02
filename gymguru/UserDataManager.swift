@@ -10,11 +10,11 @@ import SwiftUI
 
 class UserDataManager: ObservableObject {
     @Published var userData: UserInfo = UserInfo(preferredWorkouts: [],
-                                                 timeToWorkout: 5.0,
-                                                 age: 16.0,
-                                                 height: 189.0,
-                                                 weight: 90.0,
-                                                 name: "Sam",
+                                                 timeToWorkout: 0.0,
+                                                 age: 23.0,
+                                                 height: 165.0,
+                                                 weight: 50.0,
+                                                 name: "",
                                                  challengeData: [], dailyChallenge: ChallengeData(challengeName: "Generating Challenge", challengeDescription: "Fake challenge", challengeItems: [], badges: []),
                                                  badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .cycling, amountOfObtainingExercise: 0, obtained: true)],
                                                  exerciseData: []) {
