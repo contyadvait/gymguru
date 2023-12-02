@@ -160,8 +160,12 @@ struct HomeView: View {
                             HStack {
                                 Text("\(challengeItem.workoutItem.workoutLabel), \(Int(challengeItem.amount)) \(challengeItem.workoutItem.unit)")
                                 Spacer()
+                                if "\(Int((challengeItem.completed/challengeItem.amount)*100))%"
                                 Text("\(Int((challengeItem.completed/challengeItem.amount)*100))%")
                             }
+                        }
+                        if challengeItem.completed >= challengeItem.amount {
+                            Text("You have finished this workout!")
                         }
                     }
                     .padding([.top, .bottom])
@@ -257,10 +261,10 @@ struct HomeView: View {
                                     workoutItem(workout: .jumpRope, sfIcon: "figure.jumprope", name: "Jump\nRope")
                                     workoutItem(workout: .jumpingJacks, sfIcon: "figure.mixed.cardio", name: "Jumping\nJacks")
                                 }
-                                .padding([.top, .bottom], 20)
+                                .padding(20)
                             }
                             .scrollIndicators(.automatic, axes: .horizontal)
-                            .padding(10.0)
+                            .padding([.horizontal, .bottom], 5.0)
                         }
                     }
                 }
@@ -333,7 +337,6 @@ struct HomeView: View {
                 homeViewOpened = true
             }
         }
-        
         .id(refreshID)
     }
 }
