@@ -408,7 +408,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = gymguru/gymguru.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"gymguru/Preview Content\"";
 				DEVELOPMENT_TEAM = 5S5Y9ZY58F;
 				ENABLE_PREVIEWS = YES;
@@ -416,9 +416,6 @@
 				INFOPLIST_FILE = gymguru/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = FitStreak;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Required for the app to work";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Required for the app to work";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Required for the app to work";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We use it to display your location relative to famous spots around Singapore";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use it to display your location relative to famous spots around Singapore";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -431,7 +428,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.swiftinsg.2023.fitstreak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -451,7 +448,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = gymguru/gymguru.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"gymguru/Preview Content\"";
 				DEVELOPMENT_TEAM = 5S5Y9ZY58F;
 				ENABLE_PREVIEWS = YES;
@@ -459,9 +456,6 @@
 				INFOPLIST_FILE = gymguru/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = FitStreak;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Required for the app to work";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Required for the app to work";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Required for the app to work";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We use it to display your location relative to famous spots around Singapore";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use it to display your location relative to famous spots around Singapore";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -474,7 +468,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.swiftinsg.2023.fitstreak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
