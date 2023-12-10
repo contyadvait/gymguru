@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 import CoreLocation
 import CoreMotion
+import DeviceKit
 
 struct TimerDisplayObject {
     var seconds: Int = 0
@@ -37,9 +38,7 @@ struct MapTrackingView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
     @Namespace var mapscope
-    @State private var distance: Double = 0
-    @State var locationManager = NewLocationManager(distanceTraveled: 0.0)
-    @State var distanceTravelled: Double = 0.0
+    @State var locationManager = NewLocationManager()
     let motionManager = CMMotionManager()
     let updateInterval = 0.1
     @State var speed = 0.0
@@ -50,6 +49,9 @@ struct MapTrackingView: View {
     @State var showAlert = false
     @Binding var exercise: Exercise
     @State var issues = false
+    @AppStorage("locationAccessStatus") var locationAccessStatus = false
+    @State var keepScreenOn = true
+    @State var iphoneSFSymbol: String = ""
     
     func startMotionUpdates() {
         if motionManager.isAccelerometerAvailable {
@@ -84,7 +86,7 @@ struct MapTrackingView: View {
                     .matchedGeometryEffect(id: "Pause Button", in: namespace)
                 } else {
                     Button {
-                        locationManager.startUpdatingLocation()
+                        locationManager.startLocationUpdates()
                         startMotionUpdates()
                         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
                             speed = 0
@@ -100,9 +102,17 @@ struct MapTrackingView: View {
                 }
                 Spacer()
             }
+            .onAppear {
+                if Device.current.isOneOf([.iPhone14Pro, .iPhone14ProMax, .iPhone15, .iPhone15Pro, .iPhone15Plus, .iPhone15ProMax]) {
+                    iphoneSFSymbol = "iphone.gen3"
+                } else if Device.current.isOneOf([.iPhoneSE2, .iPhoneSE3]) {
+                    iphoneSFSymbol = "iphone.gen1"
+                } else {
+                    iphoneSFSymbol = "iphone.gen2"
+                }
+            }
         }
     }
-    
     var body: some View {
         Group {
             if !showStats {
@@ -124,16 +134,8 @@ struct MapTrackingView: View {
                     }
                     .safeAreaInset(edge: .bottom) {
                         ZStack {
-                            buttons
+                                buttons
                             HStack {
-                                Button {
-                                    showAlert = true
-                                } label: {
-                                    Image(systemName: "stop.fill")
-                                        .frame(width: 30, height: 30)
-                                }
-                                .buttonStyle(.bordered)
-                                .matchedGeometryEffect(id: "Stop button", in: namespace)
                                 Spacer()
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.5)) {
@@ -150,14 +152,38 @@ struct MapTrackingView: View {
                         .padding()
                         .background(.thinMaterial)
                     }
+                    .safeAreaInset(edge: .top) {
+                        
+                        HStack {
+//                            Button {
+//                                keepScreenOn.toggle()
+//                            } label: {
+//                                Image(systemName: keepScreenOn ? "apps.iphone" : iphoneSFSymbol)
+//                                    .frame(width: 20, height: 20)
+//                            }
+//                            .transition(.symbolEffect)
+//                            .buttonStyle(.bordered)
+//                            .matchedGeometryEffect(id: "Keep button", in: namespace)
+//                            .frame(width: 30, height: 30)
+                            Spacer()
+                            Button {
+                                showAlert = true
+                            } label: {
+                                Image(systemName: "stop.fill")
+                                    .frame(width: 30, height: 30)
+                            }
+                            .buttonStyle(.bordered)
+                            .matchedGeometryEffect(id: "Stop button", in: namespace)
+                            .frame(width: 30, height: 30)
+                        }
+                        .padding()
+                        .background(.thinMaterial)
+                        
+                    }
                     .mapStyle(.hybrid(elevation: .realistic, showsTraffic: true))
                     .transition(.slide)
                     .mapControlVisibility(.visible)
                     .mapScope(mapscope)
-                    .task {
-                        try? await locationManager.requestUserAuthorization()
-                        try? await locationManager.startCurrentLocationUpdates()
-                    }
                 }
             } else {
                 VStack {
@@ -186,7 +212,7 @@ struct MapTrackingView: View {
                         //                                    .fontWidth(.expanded)
                         //                                Divider()
                         //                            }
-                        Text("\(String(format: "%.2f" ,locationManager.distanceTraveled*1000)) km")
+                        Text("\(String(format: "%.2f" , locationManager.getTotalDistanceTravelled())) km")
                             .font(.system(size: 55))
                             .fontWidth(.expanded)
                         Text("DISTANCE")
@@ -198,14 +224,6 @@ struct MapTrackingView: View {
                         ZStack {
                             buttons
                             HStack {
-                                Button {
-                                    showAlert = true
-                                } label: {
-                                    Image(systemName: "stop.fill")
-                                        .frame(width: 30, height: 30)
-                                }
-                                .buttonStyle(.bordered)
-                                .matchedGeometryEffect(id: "Stop button", in: namespace)
                                 Spacer()
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.5)) {
@@ -221,6 +239,34 @@ struct MapTrackingView: View {
                         }
                         .padding()
                         .background(.thinMaterial)
+                    }
+                    .safeAreaInset(edge: .top) {
+                        
+                        HStack {
+//                            Button {
+//                                keepScreenOn.toggle()
+//                            } label: {
+//                                Image(systemName: keepScreenOn ? "apps.iphone" : iphoneSFSymbol)
+//                                    .frame(width: 20, height: 20)
+//                            }
+//                            .transition(.symbolEffect)
+//                            .buttonStyle(.bordered)
+//                            .matchedGeometryEffect(id: "Keep button", in: namespace)
+//                            .frame(width: 30, height: 30)
+                            Spacer()
+                            Button {
+                                showAlert = true
+                            } label: {
+                                Image(systemName: "stop.fill")
+                                    .frame(width: 30, height: 30)
+                            }
+                            .buttonStyle(.bordered)
+                            .matchedGeometryEffect(id: "Stop button", in: namespace)
+                            .frame(width: 30, height: 30)
+                        }
+                        .padding()
+                        .background(.thinMaterial)
+                        
                     }
                 }
                 .transition(.slide)
@@ -245,14 +291,14 @@ struct MapTrackingView: View {
                 for (challengeIndex, challenge) in userData.challengeData.enumerated() {
                     for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
                         if workout.workoutItem == exercise {
-                            userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed += Float(locationManager.distanceTraveled)
+                            userData.challengeData[challengeIndex].challengeItems[workoutIndex].completed += Float(locationManager.getTotalDistanceTravelled())
                         }
                     }
                 }
                 
                 for (dailyChallengeIndex, dailyChallenge) in userData.dailyChallenge.challengeItems.enumerated() {
                     if dailyChallenge.workoutItem == exercise {
-                        userData.dailyChallenge.challengeItems[dailyChallengeIndex].completed += Float(locationManager.distanceTraveled)
+                        userData.dailyChallenge.challengeItems[dailyChallengeIndex].completed += Float(locationManager.getTotalDistanceTravelled())
                     }
                 }
                 dismiss()

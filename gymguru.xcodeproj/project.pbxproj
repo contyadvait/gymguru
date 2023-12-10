@@ -33,6 +33,7 @@
 		F182A5162B0F249900D42C94 /* ColorHexExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13B1B362B0C7D48008B1FF5 /* ColorHexExtension.swift */; };
 		F18F847E2B0F3F560085AAB8 /* CounterTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18F847D2B0F3F560085AAB8 /* CounterTrackingView.swift */; };
 		F1A66E662B109BD600952F89 /* CoreLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A66E652B109BCF00952F89 /* CoreLocationManager.swift */; };
+		F1A8AE342B25C102007D7820 /* DeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = F1A8AE332B25C102007D7820 /* DeviceKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F14A59C92B0DE581006246F8 /* SDWebImageSwiftUI in Frameworks */,
+				F1A8AE342B25C102007D7820 /* DeviceKit in Frameworks */,
 				F10D700A2B0C49A400EF9DC9 /* Forever in Frameworks */,
 				F1223A072B071FD8004A2065 /* CompactSlider in Frameworks */,
 				F14A59C32B0DD4BB006246F8 /* Contentful in Frameworks */,
@@ -194,6 +196,7 @@
 				F10D70092B0C49A400EF9DC9 /* Forever */,
 				F14A59C22B0DD4BB006246F8 /* Contentful */,
 				F14A59C82B0DE581006246F8 /* SDWebImageSwiftUI */,
+				F1A8AE332B25C102007D7820 /* DeviceKit */,
 			);
 			productName = gymguru;
 			productReference = F12613B02B070F2B00619FD6 /* gymguru.app */;
@@ -228,6 +231,7 @@
 				F10D70082B0C49A400EF9DC9 /* XCRemoteSwiftPackageReference "Forever" */,
 				F14A59C12B0DD4BB006246F8 /* XCRemoteSwiftPackageReference "contentful.swift" */,
 				F14A59C72B0DE581006246F8 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				F1A8AE322B25C102007D7820 /* XCRemoteSwiftPackageReference "DeviceKit" */,
 			);
 			productRefGroup = F12613B12B070F2B00619FD6 /* Products */;
 			projectDirPath = "";
@@ -408,7 +412,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = gymguru/gymguru.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"gymguru/Preview Content\"";
 				DEVELOPMENT_TEAM = 5S5Y9ZY58F;
 				ENABLE_PREVIEWS = YES;
@@ -428,7 +432,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.swiftinsg.2023.fitstreak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -448,7 +452,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = gymguru/gymguru.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"gymguru/Preview Content\"";
 				DEVELOPMENT_TEAM = 5S5Y9ZY58F;
 				ENABLE_PREVIEWS = YES;
@@ -468,7 +472,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.swiftinsg.2023.fitstreak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -536,6 +540,14 @@
 				minimumVersion = 2.2.4;
 			};
 		};
+		F1A8AE322B25C102007D7820 /* XCRemoteSwiftPackageReference "DeviceKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devicekit/DeviceKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -558,6 +570,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F14A59C72B0DE581006246F8 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		F1A8AE332B25C102007D7820 /* DeviceKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F1A8AE322B25C102007D7820 /* XCRemoteSwiftPackageReference "DeviceKit" */;
+			productName = DeviceKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

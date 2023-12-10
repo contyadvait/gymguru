@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "devicekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/devicekit/DeviceKit.git",
+      "state" : {
+        "revision" : "66837ecf1516e41fd4251bbb684dc4b1997f08ab",
+        "version" : "5.1.0"
+      }
+    },
+    {
       "identity" : "forever",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jiachenyee/Forever",

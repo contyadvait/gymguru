@@ -11,6 +11,7 @@ import SwiftUI
 
 enum Exercise: Codable, Hashable, CaseIterable {
     case burpee, jumpRope, jumpingJacks, running, cycling, jogging, hiking, walk
+    
     var workoutLabel: String {
         switch self {
         case .burpee:
@@ -34,7 +35,6 @@ enum Exercise: Codable, Hashable, CaseIterable {
     
     var unit: String {
         switch self {
-            
         case .burpee:
             return ""
         case .jumpRope:
@@ -51,6 +51,27 @@ enum Exercise: Codable, Hashable, CaseIterable {
             return "km"
         case .walk:
             return "km"
+        }
+    }
+    
+    var workoutTime: Double {
+        switch self {
+        case .burpee:
+            return 0.1
+        case .jumpRope:
+            return 0.1
+        case .jumpingJacks:
+            return 0.1
+        case .running:
+            return 7.0
+        case .cycling:
+            return 4.5
+        case .jogging:
+            return 8.0
+        case .hiking:
+            return 70.0
+        case .walk:
+            return 11.0
         }
     }
     

@@ -67,7 +67,7 @@ struct ContentView: View {
                         Label("Challenges", systemImage: "trophy")
                     }
                 
-                SettingsView(userDataManager: userDataManager, setup: $showSetupModal, showHelp: $showHelp)
+                SettingsView(userData: $userDataManager.userData, setup: $showSetupModal, showHelp: $showHelp)
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }

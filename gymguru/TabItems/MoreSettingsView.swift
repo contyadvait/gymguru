@@ -55,7 +55,7 @@ struct MoreSettingsView: View {
                     }
                 }
                 
-                CompactSlider(value: $userData.timeToWorkout, in: 0...6, step: 0.5) {
+                CompactSlider(value: $userData.timeToWorkout, in: 0...3, step: 0.5) {
                     HStack {
                         Text("Time available for workouts")
                         Spacer()
@@ -115,6 +115,17 @@ struct CreditsView: View {
                     Spacer()
                     Button {
                         openURL(URL(string: "https://github.com/buh/CompactSlider")!)
+                    } label: {
+                        Text("View Package")
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+                .padding(.horizontal)
+                HStack {
+                    Text("DeviceKit - DeviceKit")
+                    Spacer()
+                    Button {
+                        openURL(URL(string: "https://github.com/devicekit/DeviceKit")!)
                     } label: {
                         Text("View Package")
                     }

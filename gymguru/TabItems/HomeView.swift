@@ -83,6 +83,7 @@ struct HomeView: View {
                 ProgressView(value: Float(challenge.completed/challenge.amount)) {
                     HStack {
                         Text("\(challenge.workoutItem.workoutLabel), \(Int(challenge.amount)) \(challenge.workoutItem.unit)")
+                            .onAppear { print(challenge) }
                         Spacer()
                         Text("\(Int(challenge.completed/challenge.amount)*100)%")
                     }
@@ -260,6 +261,9 @@ struct HomeView: View {
                 }
             } else {
                 ProgressView()
+                    .onAppear {
+                        homeViewOpened = true
+                    }
             }
         }
         .fullScreenCover(isPresented: $showWorkout, onDismiss: { showWorkout = false }, content: {
