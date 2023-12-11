@@ -134,8 +134,17 @@ struct MapTrackingView: View {
                     }
                     .safeAreaInset(edge: .bottom) {
                         ZStack {
-                                buttons
+                            buttons
+                            
                             HStack {
+                                Button {
+                                    showAlert = true
+                                } label: {
+                                    Image(systemName: "stop.fill")
+                                        .frame(width: 30, height: 30)
+                                }
+                                .buttonStyle(.bordered)
+                                .matchedGeometryEffect(id: "Stop button", in: namespace)
                                 Spacer()
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.5)) {
@@ -152,34 +161,25 @@ struct MapTrackingView: View {
                         .padding()
                         .background(.thinMaterial)
                     }
-                    .safeAreaInset(edge: .top) {
-                        
-                        HStack {
-//                            Button {
-//                                keepScreenOn.toggle()
-//                            } label: {
-//                                Image(systemName: keepScreenOn ? "apps.iphone" : iphoneSFSymbol)
-//                                    .frame(width: 20, height: 20)
-//                            }
-//                            .transition(.symbolEffect)
-//                            .buttonStyle(.bordered)
-//                            .matchedGeometryEffect(id: "Keep button", in: namespace)
-//                            .frame(width: 30, height: 30)
-                            Spacer()
-                            Button {
-                                showAlert = true
-                            } label: {
-                                Image(systemName: "stop.fill")
-                                    .frame(width: 30, height: 30)
-                            }
-                            .buttonStyle(.bordered)
-                            .matchedGeometryEffect(id: "Stop button", in: namespace)
-                            .frame(width: 30, height: 30)
-                        }
-                        .padding()
-                        .background(.thinMaterial)
-                        
-                    }
+//                    .safeAreaInset(edge: .top) {
+//                        
+//                        HStack {
+////                            Button {
+////                                keepScreenOn.toggle()
+////                            } label: {
+////                                Image(systemName: keepScreenOn ? "apps.iphone" : iphoneSFSymbol)
+////                                    .frame(width: 20, height: 20)
+////                            }
+////                            .transition(.symbolEffect)
+////                            .buttonStyle(.bordered)
+////                            .matchedGeometryEffect(id: "Keep button", in: namespace)
+////                            .frame(width: 30, height: 30)
+//                            Spacer()
+//                        }
+//                        .padding()
+//                        .background(.thinMaterial)
+//                        
+//                    }
                     .mapStyle(.hybrid(elevation: .realistic, showsTraffic: true))
                     .transition(.slide)
                     .mapControlVisibility(.visible)
@@ -223,7 +223,16 @@ struct MapTrackingView: View {
                     .safeAreaInset(edge: .bottom) {
                         ZStack {
                             buttons
+                            
                             HStack {
+                                Button {
+                                    showAlert = true
+                                } label: {
+                                    Image(systemName: "stop.fill")
+                                        .frame(width: 30, height: 30)
+                                }
+                                .buttonStyle(.bordered)
+                                .matchedGeometryEffect(id: "Stop button", in: namespace)
                                 Spacer()
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.5)) {
