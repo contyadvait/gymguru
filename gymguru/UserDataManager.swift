@@ -15,7 +15,7 @@ class UserDataManager: ObservableObject {
                                                  height: 165.0,
                                                  weight: 50.0,
                                                  name: "",
-                                                 challengeData: [], dailyChallenge: ChallengeData(challengeName: "Generating Challenge", challengeDescription: "Fake challenge", challengeItems: [], badges: []),
+                                                 challengeData: [], dailyChallenge: ChallengeData(challengeName: "Generating Challenge", challengeDescription: "Fake challenge", challengeItems: [], badges: [], icon: "figure.outdoor.cycle"),
                                                  badges: [Badge(badge: "Newbie", sfIcon: "door.left.hand.open", obtainingExercise: .cycling, amountOfObtainingExercise: 0, obtained: true)],
                                                  exerciseData: []) {
         didSet {

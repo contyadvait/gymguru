@@ -43,11 +43,11 @@ class ChallengeManager {
         }
         
         if challengeStreak == 7 {
-            return ChallengeData(challengeName: "Today's Challenge", challengeDescription: "Refreshes everyday", challengeItems: [ExerciseItem(workoutItem: workoutOfTheDay, amount: Float(amountOfWorkout))], badges: [Badge(badge: "7-Day Streak", sfIcon: "7.circle", obtainingExercise: .cycling, amountOfObtainingExercise: 10, obtained: false)])
+            return ChallengeData(challengeName: "Today's Challenge", challengeDescription: "Refreshes everyday", challengeItems: [ExerciseItem(workoutItem: workoutOfTheDay, amount: Float(amountOfWorkout))], badges: [Badge(badge: "7-Day Streak", sfIcon: "7.circle", obtainingExercise: .cycling, amountOfObtainingExercise: 10, obtained: false)], icon: "figure.outdoor.cycle")
         } else if challengeStreak == 30 {
-            return ChallengeData(challengeName: "Today's Challenge", challengeDescription: "Refreshes everyday", challengeItems: [ExerciseItem(workoutItem: workoutOfTheDay, amount: Float(amountOfWorkout))], badges: [Badge(badge: "30-Day Streak", sfIcon: "7.circle", obtainingExercise: .cycling, amountOfObtainingExercise: 10, obtained: false)])
+            return ChallengeData(challengeName: "Today's Challenge", challengeDescription: "Refreshes everyday", challengeItems: [ExerciseItem(workoutItem: workoutOfTheDay, amount: Float(amountOfWorkout))], badges: [Badge(badge: "30-Day Streak", sfIcon: "7.circle", obtainingExercise: .cycling, amountOfObtainingExercise: 10, obtained: false)], icon: "figure.outdoor.cycle")
         } else {
-            return ChallengeData(challengeName: "Today's Challenge", challengeDescription: "Refreshes everyday", challengeItems: [ExerciseItem(workoutItem: workoutOfTheDay, amount: Float(amountOfWorkout))], badges: [])
+            return ChallengeData(challengeName: "Today's Challenge", challengeDescription: "Refreshes everyday", challengeItems: [ExerciseItem(workoutItem: workoutOfTheDay, amount: Float(amountOfWorkout))], badges: [], icon: "figure.outdoor.cycle")
         }
     }
 }

@@ -120,6 +120,7 @@ struct ChallengeData: Codable, Identifiable, Equatable {
     var challengeDescription: String
     var challengeItems: [ExerciseItem]
     var badges: [Badge]
+    var icon: String
 }
 
 enum WorkoutTrack: Codable {
