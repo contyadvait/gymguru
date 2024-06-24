@@ -10,6 +10,67 @@ import MapKit
 import CoreLocation
 import CoreMotion
 import DeviceKit
+import Foundation
+import Combine
+
+class MotionManager: ObservableObject {
+    private var motionManager: CMMotionManager
+    private var timer: Timer?
+    
+    @Published var speed: Double = 0.0
+    
+    private var velocityX: Double = 0.0
+    private var velocityY: Double = 0.0
+    private var velocityZ: Double = 0.0
+    
+    private var lastAcceleration: CMAcceleration?
+    
+    init() {
+        self.motionManager = CMMotionManager()
+        self.motionManager.accelerometerUpdateInterval = 1.0 / 60.0 // 60 Hz
+    }
+    
+    func startUpdates() {
+        if self.motionManager.isAccelerometerAvailable {
+            self.motionManager.startAccelerometerUpdates()
+            
+            self.timer = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true) { _ in
+                if let data = self.motionManager.accelerometerData {
+                    self.processAccelerometerData(data)
+                }
+            }
+        }
+    }
+    
+    func stopUpdates() {
+        self.motionManager.stopAccelerometerUpdates()
+        self.timer?.invalidate()
+        self.timer = nil
+    }
+    
+    private func processAccelerometerData(_ data: CMAccelerometerData) {
+        let accelerationX = data.acceleration.x * 9.81 // Convert to m/s^2
+        let accelerationY = data.acceleration.y * 9.81
+        let accelerationZ = data.acceleration.z * 9.81
+        
+        if let lastAcceleration = self.lastAcceleration {
+            let deltaTime = 1.0 / 60.0 // Fixed delta time
+            
+            let deltaVelocityX = (accelerationX + lastAcceleration.x) / 2.0 * deltaTime
+            let deltaVelocityY = (accelerationY + lastAcceleration.y) / 2.0 * deltaTime
+            let deltaVelocityZ = (accelerationZ + lastAcceleration.z) / 2.0 * deltaTime
+            
+            self.velocityX += deltaVelocityX
+            self.velocityY += deltaVelocityY
+            self.velocityZ += deltaVelocityZ
+            
+            let velocity = sqrt(pow(self.velocityX, 2) + pow(self.velocityY, 2) + pow(self.velocityZ, 2))
+            self.speed = velocity * 3.6 // Convert m/s to km/h
+        }
+        
+        self.lastAcceleration = CMAcceleration(x: accelerationX, y: accelerationY, z: accelerationZ)
+    }
+}
 
 struct TimerDisplayObject {
     var seconds: Int = 0
@@ -39,7 +100,7 @@ struct MapTrackingView: View {
     )
     @Namespace var mapscope
     @State var locationManager = NewLocationManager()
-    let motionManager = CMMotionManager()
+    @ObservedObject var motionManager = MotionManager()
     let updateInterval = 0.1
     @State var speed = 0.0
     @State var timeElapsed: TimerDisplayObject = TimerDisplayObject()
@@ -54,20 +115,11 @@ struct MapTrackingView: View {
     @State var iphoneSFSymbol: String = ""
     
     func startMotionUpdates() {
-        if motionManager.isAccelerometerAvailable {
-            motionManager.startDeviceMotionUpdates(to: .main) { (data, error) in
-                if let data = data {
-                    let userAcceleration = data.userAcceleration
-                    let acceleration = sqrt(userAcceleration.x * userAcceleration.x + userAcceleration.y * userAcceleration.y + userAcceleration.z * userAcceleration.z)
-                    speed = speed + acceleration * Double(updateInterval)
-                }
-            }
-        }
+        motionManager.startUpdates()
     }
     
     func stopMotionUpdates() {
-        motionManager.stopDeviceMotionUpdates()
-        speed = 0.0
+        motionManager.stopUpdates()
     }
     
     var buttons: some View {
@@ -196,7 +248,7 @@ struct MapTrackingView: View {
                             .font(.system(size: 20))
                             .fontWidth(.expanded)
                         Divider()
-                        Text("\(Int(speed*3.6)) km/h")
+                        Text("\(motionManager.speed, specifier: "%.2f") km/h")
                             .font(.system(size: 55))
                             .fontWidth(.expanded)
                         Text("SPEED")
