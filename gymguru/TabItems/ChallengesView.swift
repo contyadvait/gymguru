@@ -26,6 +26,8 @@ struct ChallengesView: View {
                                 Text(challenge.challengeName)
                                     .font(.system(size: 20, weight: .medium))
                                 Spacer()
+                                Image(systemName: challenge.icon)
+                                    .foregroundStyle(Color.accentColor)
                             }
                             HStack {
                                 Text(challenge.challengeDescription)
