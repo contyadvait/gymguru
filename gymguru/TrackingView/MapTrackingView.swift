@@ -87,7 +87,6 @@ struct TimerDisplayObject {
     
     var timeMinuteCalculator: Float { Float(hours*60+seconds/60+minutes) }
 }
-
 struct MapTrackingView: View {
     @State var showStats = false
     @State var isTimerRunning = false
@@ -99,7 +98,7 @@ struct MapTrackingView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
     @Namespace var mapscope
-    @State var locationManager = NewLocationManager()
+    @StateObject var locationManager = NewLocationManager()
     @ObservedObject var motionManager = MotionManager()
     let updateInterval = 0.1
     @State var speed = 0.0
@@ -113,7 +112,8 @@ struct MapTrackingView: View {
     @AppStorage("locationAccessStatus") var locationAccessStatus = false
     @State var keepScreenOn = true
     @State var iphoneSFSymbol: String = ""
-    
+    @State var isFirstLaunch: Bool = UserDefaults.standard.bool(forKey: "isFirstLaunch") == false
+
     func startMotionUpdates() {
         motionManager.startUpdates()
     }
@@ -165,16 +165,16 @@ struct MapTrackingView: View {
             }
         }
     }
+    
     var body: some View {
         Group {
             if !showStats {
                 VStack {
                     VStack {
                         Map(position: $position, scope: mapscope) {
-                        UserAnnotation()
-                            ForEach(locations, id: \.id) { location in
-                                Marker(location.name, systemImage: location.icon, coordinate: location.location)
-                                    .tint(location.colour)
+                            UserAnnotation()
+                            ForEach(locationManager.travelledLocations, id: \.self) { location in
+                                Marker("Location", systemImage: "location.fill", coordinate: location.coordinate)
                             }
                         }
                     }
@@ -213,25 +213,6 @@ struct MapTrackingView: View {
                         .padding()
                         .background(.thinMaterial)
                     }
-//                    .safeAreaInset(edge: .top) {
-//                        
-//                        HStack {
-////                            Button {
-////                                keepScreenOn.toggle()
-////                            } label: {
-////                                Image(systemName: keepScreenOn ? "apps.iphone" : iphoneSFSymbol)
-////                                    .frame(width: 20, height: 20)
-////                            }
-////                            .transition(.symbolEffect)
-////                            .buttonStyle(.bordered)
-////                            .matchedGeometryEffect(id: "Keep button", in: namespace)
-////                            .frame(width: 30, height: 30)
-//                            Spacer()
-//                        }
-//                        .padding()
-//                        .background(.thinMaterial)
-//                        
-//                    }
                     .mapStyle(.hybrid(elevation: .realistic, showsTraffic: true))
                     .transition(.slide)
                     .mapControlVisibility(.visible)
@@ -255,16 +236,7 @@ struct MapTrackingView: View {
                             .font(.system(size: 20))
                             .fontWidth(.expanded)
                         Divider()
-                        //                            if Float(locationManager.distanceTraveled)/timeElapsed.timeMinuteCalculator < 0 {
-                        //                                Text("\(Float(locationManager.distanceTraveled)/timeElapsed.timeMinuteCalculator) km/h")
-                        //                                    .font(.system(size: 55))
-                        //                                    .fontWidth(.expanded)
-                        //                                Text("AVERAGE KM/H")
-                        //                                    .font(.system(size: 20))
-                        //                                    .fontWidth(.expanded)
-                        //                                Divider()
-                        //                            }
-                        Text("\(String(format: "%.2f" , locationManager.getTotalDistanceTravelled())) km")
+                        Text("\(String(format: "%.2f", locationManager.getTotalDistanceTravelled())) km")
                             .font(.system(size: 55))
                             .fontWidth(.expanded)
                         Text("DISTANCE")
@@ -302,18 +274,7 @@ struct MapTrackingView: View {
                         .background(.thinMaterial)
                     }
                     .safeAreaInset(edge: .top) {
-                        
                         HStack {
-//                            Button {
-//                                keepScreenOn.toggle()
-//                            } label: {
-//                                Image(systemName: keepScreenOn ? "apps.iphone" : iphoneSFSymbol)
-//                                    .frame(width: 20, height: 20)
-//                            }
-//                            .transition(.symbolEffect)
-//                            .buttonStyle(.bordered)
-//                            .matchedGeometryEffect(id: "Keep button", in: namespace)
-//                            .frame(width: 30, height: 30)
                             Spacer()
                             Button {
                                 showAlert = true
@@ -327,7 +288,6 @@ struct MapTrackingView: View {
                         }
                         .padding()
                         .background(.thinMaterial)
-                        
                     }
                 }
                 .transition(.slide)
@@ -348,7 +308,6 @@ struct MapTrackingView: View {
         }
         .alert("Are you sure you want to end this workout?", isPresented: $showAlert) {
             Button("OK", role: .destructive) {
-                
                 for (challengeIndex, challenge) in userData.challengeData.enumerated() {
                     for (workoutIndex, workout) in challenge.challengeItems.enumerated() {
                         if workout.workoutItem == exercise {
@@ -356,7 +315,6 @@ struct MapTrackingView: View {
                         }
                     }
                 }
-                
                 for (dailyChallengeIndex, dailyChallenge) in userData.dailyChallenge.challengeItems.enumerated() {
                     if dailyChallenge.workoutItem == exercise {
                         userData.dailyChallenge.challengeItems[dailyChallengeIndex].completed += Float(locationManager.getTotalDistanceTravelled())
@@ -364,12 +322,15 @@ struct MapTrackingView: View {
                 }
                 dismiss()
             }
-            
             Button("Cancel", role: .cancel) {  }
         }
         .sheet(isPresented: $issues) {
-            Text("Why is my tracking not working?")
-            Text("Please check your app settings as you may have disabled location access for this app or your location services has been turned off. Tracking may also not work because of location accuracy issues in places deep underground (e.g.: tunnels, etc.)")
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Why is my tracking not working?")
+                    .font(.headline)
+                Text("Please check your app settings as you may have disabled location access for this app or your location services have been turned off. Tracking may also not work because of location accuracy issues in places deep underground (e.g., tunnels, etc.).")
+            }
+            .padding()
         }
     }
 }
