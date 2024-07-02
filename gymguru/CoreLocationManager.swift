@@ -1,12 +1,14 @@
 import CoreLocation
+import MapKit
+import SwiftUI
 
-class NewLocationManager: NSObject, CLLocationManagerDelegate {
+class NewLocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     // Location manager instance
     private let locationManager = CLLocationManager()
     
     // Variable to store distance travelled
-    private var distanceTravelled: CLLocationDistance = 0
+    @Published private(set) var distanceTravelled: CLLocationDistance = 0
     
     // Variable to store the last location when updates were paused
     private var lastKnownLocation: CLLocation?
@@ -17,6 +19,9 @@ class NewLocationManager: NSObject, CLLocationManagerDelegate {
     // Minimum distance change to consider (in meters)
     private let minimumDistanceChange: CLLocationDistance = 10.0
     
+    // Array to store traveled locations
+    @Published var travelledLocations: [CLLocation] = []
+    
     override init() {
         super.init()
         locationManager.delegate = self
@@ -25,8 +30,6 @@ class NewLocationManager: NSObject, CLLocationManagerDelegate {
     
     // Function to request user authorization
     func requestUserAuthorization() -> Bool {
-        locationManager.delegate = self
-        
         switch locationManager.authorizationStatus {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
@@ -77,11 +80,12 @@ class NewLocationManager: NSObject, CLLocationManagerDelegate {
         guard let newLocation = locations.last else { return }
         
         // Calculate distance travelled since last update if not paused
-        if !isPaused, let lastLocation = lastKnownLocation ?? locationManager.location {
+        if !isPaused, let lastLocation = lastKnownLocation {
             let distance = newLocation.distance(from: lastLocation)
             if distance >= minimumDistanceChange {
                 distanceTravelled += distance
                 lastKnownLocation = newLocation
+                travelledLocations.append(newLocation)
             }
         } else {
             lastKnownLocation = newLocation
