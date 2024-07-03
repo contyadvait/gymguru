@@ -43,7 +43,7 @@ class NewLocationManager: NSObject, ObservableObject, CLLocationManagerDelegate 
         }
     }
     
-    // Start updating location
+    // Start updating locationaa
     func startLocationUpdates() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
@@ -77,18 +77,20 @@ class NewLocationManager: NSObject, ObservableObject, CLLocationManagerDelegate 
     // MARK: CLLocationManagerDelegate Methods
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let newLocation = locations.last else { return }
-        
-        // Calculate distance travelled since last update if not paused
-        if !isPaused, let lastLocation = lastKnownLocation {
-            let distance = newLocation.distance(from: lastLocation)
-            if distance >= minimumDistanceChange {
-                distanceTravelled += distance
+        if !isPaused {
+            guard let newLocation = locations.last else { return }
+            
+            // Calculate distance travelled since last update if not paused
+            if !isPaused, let lastLocation = lastKnownLocation {
+                let distance = newLocation.distance(from: lastLocation)
+                if distance >= minimumDistanceChange {
+                    distanceTravelled += distance
+                    lastKnownLocation = newLocation
+                    travelledLocations.append(newLocation)
+                }
+            } else {
                 lastKnownLocation = newLocation
-                travelledLocations.append(newLocation)
             }
-        } else {
-            lastKnownLocation = newLocation
         }
     }
     

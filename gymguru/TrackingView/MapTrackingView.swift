@@ -117,7 +117,7 @@ struct MapTrackingView: View {
     @State var keepScreenOn = true
     @State var iphoneSFSymbol: String = ""
     @State var isFirstLaunch: Bool = UserDefaults.standard.bool(forKey: "isFirstLaunch") == false
-
+    
     func startMotionUpdates() {
         motionManager.startUpdates()
     }
@@ -134,6 +134,7 @@ struct MapTrackingView: View {
                     Button {
                         stopMotionUpdates()
                         isTimerRunning = false
+                        locationManager.pauseLocationUpdates()
                     } label: {
                         Image(systemName: "pause.fill")
                             .frame(width: 30, height: 30)
@@ -142,7 +143,7 @@ struct MapTrackingView: View {
                     .matchedGeometryEffect(id: "Pause Button", in: namespace)
                 } else {
                     Button {
-                        locationManager.startLocationUpdates()
+                        locationManager.resumeLocationUpdates()
                         startMotionUpdates()
                         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
                             speed = 0
@@ -177,6 +178,10 @@ struct MapTrackingView: View {
                     VStack {
                         Map(position: $position, scope: mapscope) {
                             UserAnnotation()
+                            ForEach(locations, id: \.id) { location in
+                                Marker(location.name, systemImage: location.icon, coordinate: location.location)
+                                    .tint(location.colour)
+                            }
                         }
                     }
                     .mapControls {
@@ -332,6 +337,9 @@ struct MapTrackingView: View {
                 Text("Please check your app settings as you may have disabled location access for this app or your location services have been turned off. Tracking may also not work because of location accuracy issues in places deep underground (e.g., tunnels, etc.).")
             }
             .padding()
+        }
+        .onAppear {
+            locationManager.pauseLocationUpdates()
         }
     }
 }
