@@ -29,7 +29,7 @@ class MotionManager: ObservableObject {
     
     init() {
         self.motionManager = CMMotionManager()
-        self.motionManager.accelerometerUpdateInterval = 1.0 / 60.0 // 60 Hz
+        self.motionManager.accelerometerUpdateInterval = 1.0 / 60.0
     }
     
     func startUpdates() {
@@ -177,9 +177,6 @@ struct MapTrackingView: View {
                     VStack {
                         Map(position: $position, scope: mapscope) {
                             UserAnnotation()
-                            ForEach(locationManager.travelledLocations, id: \.self) { location in
-                                Marker("Location", systemImage: "location.fill", coordinate: location.coordinate)
-                            }
                         }
                     }
                     .mapControls {
